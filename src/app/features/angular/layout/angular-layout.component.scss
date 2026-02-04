@@ -1,10 +1,270 @@
+:host ::ng-deep {
+  .lecture {
+    max-width: 80%;
+    color: #1e293b;
+    line-height: 1.65;
+
+    h1 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      margin: 0 0 1.5rem;
+      color: #0f172a;
+    }
+
+    h2 {
+      font-size: 1.375rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      padding-bottom: 0.25rem;
+      color: #0f172a;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 1.25rem 0 0.5rem;
+      color: #334155;
+    }
+
+    section {
+      margin-bottom: 1.5rem;
+      scroll-margin-top: 80px; // Account for fixed header + padding
+    }
+
+    p {
+      margin: 0.5rem 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0.5rem 0 1rem;
+    }
+
+    li {
+      margin: 0.25rem 0;
+    }
+
+    pre {
+      margin: 0.75rem 0;
+      padding: 1rem 1.25rem;
+      background: #1e293b;
+      color: #e2e8f0;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: ui-monospace, monospace;
+    }
+
+    pre code {
+      color: inherit;
+      background: none;
+      padding: 0;
+    }
+
+    :not(pre)>code {
+      padding: 0.15rem 0.4rem;
+      background: #e2e8f0;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+
+    .note {
+      margin: 0.75rem 0;
+      padding: 0.75rem 1rem;
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      border-radius: 0 0.25rem 0.25rem 0;
+    }
+
+    .file-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .file-list>li {
+      margin: 0.5rem 0;
+    }
+
+    .file-list ul {
+      margin: 0.25rem 0 0.5rem 1rem;
+      padding-left: 1rem;
+      list-style: disc;
+    }
+
+    a {
+      color: var(--color-primary, #f3a8b8);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .command-table {
+      width: 100%;
+      margin: 1rem 0;
+      border-collapse: collapse;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      background: #ffffff;
+
+      thead {
+        background: #f8fafc;
+      }
+
+      th {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        font-weight: 600;
+        font-size: 0.875rem;
+        color: #0f172a;
+        border-bottom: 2px solid #e2e8f0;
+      }
+
+      td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #e2e8f0;
+        vertical-align: top;
+
+        &:first-child {
+          font-weight: 500;
+          color: #1e293b;
+          white-space: nowrap;
+        }
+
+        code {
+          font-family: ui-monospace, monospace;
+          padding: 0.15rem 0.4rem;
+          background: #f1f5f9;
+          border-radius: 0.25rem;
+          font-size: 0.9em;
+          color: #0f172a;
+        }
+      }
+
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      tbody tr:hover {
+        background: #f8fafc;
+      }
+    }
+
+    .summary-section {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 1rem;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+      h2 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+        color: #0f172a;
+        border-bottom: 2px solid #43801e;
+        padding-bottom: 0.25rem;
+      }
+
+      .summary-intro {
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: #334155;
+        margin-bottom: 1.25rem;
+      }
+
+      .summary-list {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.15rem;
+
+        li {
+          position: relative;
+          padding-left: 2rem;
+          padding: 0.75rem 1rem 0.75rem 2.5rem;
+          background: #ffffff;
+          border-radius: 0.5rem;
+          border-left: 3px solid #43801e;
+          transition: all 0.2s ease;
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+          &::before {
+            content: '✓';
+            position: absolute;
+            left: 1rem;
+            top: 0.75rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #43801e;
+            color: #ffffff;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: 600;
+          }
+
+          &:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+          }
+        }
+      }
+
+      .summary-actions {
+        margin-top: 1.5rem;
+        display: flex;
+        justify-content: center;
+      }
+
+      .summary-button {
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #ffffff;
+        background: linear-gradient(90deg, #C11E38, #220B34);
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(67, 128, 30, 0.3);
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(67, 128, 30, 0.4);
+          background: linear-gradient(90deg, #c11e39ed, #220B34);
+        }
+
+        &:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 4px rgba(67, 128, 30, 0.3);
+        }
+      }
+    }
+  }
+
+}
+
 .angular-layout {
   display: flex;
   min-height: 100vh;
 }
 
 .sidenav {
+  position: sticky;
+  top: 56px; // Below the fixed header
+  align-self: flex-start;
   width: 260px;
+  height: calc(100vh - 56px);
   background: var(--color-secondary, #1E293B);
   color: #e2e8f0;
   padding: 1.5rem 0;
