@@ -8,6 +8,8 @@ import { ViewportScroller } from '@angular/common';
   styleUrl: './lecture-1.component.scss'
 })
 export class Lecture1Component implements OnInit {
+  showQuestions = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -27,5 +29,18 @@ export class Lecture1Component implements OnInit {
         }, 100);
       }
     });
+  }
+
+  toggleQuestions() {
+    this.showQuestions = !this.showQuestions;
+    if (this.showQuestions) {
+      setTimeout(() => {
+        const element = document.getElementById('questions');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          window.scrollBy(0, -56);
+        }
+      }, 100);
+    }
   }
 }

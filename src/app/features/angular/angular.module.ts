@@ -9,6 +9,7 @@ import { Lecture2Component } from './page/lecture-2/lecture-2.component';
 import { Lecture3Component } from './page/lecture-3/lecture-3.component';
 import { Lecture4Component } from './page/lecture-4/lecture-4.component';
 import { Lecture5Component } from './page/lecture-5/lecture-5.component';
+import { QuestionsComponent } from './page/lecture-1/questions/questions.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { Lecture5Component } from './page/lecture-5/lecture-5.component';
     Lecture2Component,
     Lecture3Component,
     Lecture4Component,
-    Lecture5Component
+    Lecture5Component,
+    QuestionsComponent
   ],
   imports: [
     CommonModule,

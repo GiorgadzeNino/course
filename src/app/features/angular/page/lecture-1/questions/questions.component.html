@@ -1,0 +1,123 @@
+<div class="questions-wizard">
+  <div class="questions-header">
+    <h2>შემაჯამებელი კითხვები</h2>
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="progress"></div>
+    </div>
+    <p class="progress-text">კითხვა {{ currentQuestionIndex + 1 }} / {{ questions.length }}</p>
+  </div>
+
+  @if (!showResults) {
+    <div class="question-card">
+      <div class="question-number">კითხვა {{ currentQuestionIndex + 1 }}</div>
+      <h3 class="question-text">{{ currentQuestion.question }}</h3>
+      
+      <div class="options">
+        @for (option of currentQuestion.options; track $index) {
+          <button
+            type="button"
+            class="option-button"
+            [class.selected]="currentAnswer?.selectedAnswer === $index"
+            [class.correct]="isAnswered && $index === currentQuestion.correctAnswer"
+            [class.incorrect]="isAnswered && currentAnswer?.selectedAnswer === $index && !isCorrect"
+            [class.disabled]="isAnswered"
+            (click)="selectAnswer($index)">
+            <span class="option-label">{{ getOptionLetter($index) }}.</span>
+            <span class="option-text">{{ option }}</span>
+            @if (isAnswered && $index === currentQuestion.correctAnswer) {
+              <span class="check-icon">✓</span>
+            }
+            @if (isAnswered && currentAnswer?.selectedAnswer === $index && !isCorrect) {
+              <span class="cross-icon">✗</span>
+            }
+          </button>
+        }
+      </div>
+
+      @if (isAnswered) {
+        <div class="feedback" [class.correct-feedback]="isCorrect" [class.incorrect-feedback]="!isCorrect">
+          @if (isCorrect) {
+            <span class="feedback-icon">✓</span>
+            <span>სწორია!</span>
+          } @else {
+            <span class="feedback-icon">✗</span>
+            <span>არასწორია. სწორი პასუხი: {{ getOptionLetter(currentQuestion.correctAnswer) }}</span>
+          }
+        </div>
+      }
+
+      <div class="navigation">
+        <button
+          type="button"
+          class="nav-button"
+          [disabled]="currentQuestionIndex === 0"
+          (click)="previousQuestion()">
+          ← წინა
+        </button>
+        <button
+          type="button"
+          class="nav-button primary"
+          [disabled]="currentQuestionIndex === questions.length - 1 || !isAnswered"
+          (click)="nextQuestion()">
+          შემდეგი →
+        </button>
+      </div>
+    </div>
+
+    <div class="question-indicators">
+      @for (question of questions; track question.id; let i = $index) {
+        <button
+          type="button"
+          class="indicator"
+          [class.answered]="getQuestionStatus(question.id) !== 'unanswered'"
+          [class.correct]="getQuestionStatus(question.id) === 'correct'"
+          [class.incorrect]="getQuestionStatus(question.id) === 'incorrect'"
+          [class.active]="i === currentQuestionIndex"
+          (click)="goToQuestion(i)">
+          {{ i + 1 }}
+        </button>
+      }
+    </div>
+  } @else {
+    <div class="results-card">
+      <h3>შედეგები</h3>
+      <div class="score">
+        <span class="score-number">{{ getTotalScore() }}</span>
+        <span class="score-total">/ {{ questions.length }}</span>
+      </div>
+      <p class="score-percentage">{{ (getTotalScore() / questions.length * 100).toFixed(0) }}%</p>
+
+      <div class="results-list">
+        @for (question of questions; track question.id) {
+          <div class="result-item" [class.correct]="getQuestionStatus(question.id) === 'correct'" [class.incorrect]="getQuestionStatus(question.id) === 'incorrect'">
+            <div class="result-icon">
+              @if (getQuestionStatus(question.id) === 'correct') {
+                ✓
+              } @else {
+                ✗
+              }
+            </div>
+            <div class="result-content">
+              <p class="result-question">{{ question.question }}</p>
+              <p class="result-answer">
+                თქვენი პასუხი: {{ getOptionLetter(getSelectedAnswer(question.id)) }}. 
+                {{ getSelectedOptionText(question) }}
+              </p>
+              @if (getQuestionStatus(question.id) === 'incorrect') {
+                <p class="result-correct">
+                  სწორი პასუხი: {{ getOptionLetter(question.correctAnswer) }}. 
+                  {{ getCorrectOptionText(question) }}
+                </p>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <button type="button" class="reset-button" (click)="resetQuiz()">
+        თავიდან დაწყება
+      </button>
+    </div>
+  }
+</div>
+
