@@ -1,0 +1,37 @@
+<div class="angular-layout">
+  <aside class="sidenav">
+    <nav class="sidenav-nav">
+      <a routerLink="/angular/1" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="nav-parent">
+        Module 1: Angular-ის საფუძვლები
+      </a>
+      <ul class="sidenav-sub">
+        <li><a routerLink="/angular/1" fragment="overview">1. Angular მიმოხილვა</a></li>
+        <li><a routerLink="/angular/1" fragment="installation">Angular-ის ინსტალაცია</a></li>
+        <li><a routerLink="/angular/1" fragment="cli-capabilities">CLI-ის ძირითადი შესაძლებლობები</a></li>
+        <li><a routerLink="/angular/1" fragment="new-app">ახალი აპლიკაციის შექმნა</a></li>
+        <li><a routerLink="/angular/1" fragment="cli-ng-new">რას აკეთებს CLI (ng new)</a></li>
+        <li><a routerLink="/angular/1" fragment="project-files">პროექტის ძირითადი ფაილები</a></li>
+        <li><a routerLink="/angular/1" fragment="run">დაინსტალირება და გაშვება</a></li>
+      </ul>
+      
+      <a routerLink="/angular/2" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-parent">
+        Module 2: Routing & Navigation
+      </a>
+      
+      <a routerLink="/angular/3" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-parent">
+        Module 3: Forms
+      </a>
+      
+      <a routerLink="/angular/4" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-parent">
+        Module 4: RxJS & State Management
+      </a>
+      
+      <a routerLink="/angular/5" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-parent">
+        Module 5: Best Practices & Project
+      </a>
+    </nav>
+  </aside>
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

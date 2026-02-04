@@ -1,1 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global resets/additions */
+html,
+body,
+app-root {
+    height: 100%;
+}
+
+/* Project colors (usable outside Tailwind) */
+:root {
+    --color-primary: #f3a8b8;
+    --color-secondary: #1E293B;
+}
+
+.text-primary {
+    color: var(--color-primary);
+}
+
+.bg-primary {
+    background-color: var(--color-primary);
+}
+
+.border-primary {
+    border-color: var(--color-primary);
+}
+
+.text-secondary {
+    color: var(--color-secondary);
+}
+
+.bg-secondary {
+    background-color: var(--color-secondary);
+}
+
+.border-secondary {
+    border-color: var(--color-secondary);
+}

@@ -1,0 +1,79 @@
+.angular-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidenav {
+  width: 260px;
+  background: var(--color-secondary, #1E293B);
+  color: #e2e8f0;
+  padding: 1.5rem 0;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.sidenav-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  padding: 0 1.25rem;
+  margin: 0 0 1rem;
+  color: #f8fafc;
+}
+
+.sidenav-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sidenav-nav a {
+  padding: 0.5rem 1.25rem;
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidenav-nav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+}
+
+.sidenav-nav a.active {
+  background: #a60000;
+  color: #fff;
+}
+
+.sidenav-sub {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.25rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  margin-left: 1.25rem;
+}
+
+.sidenav-sub li {
+  margin: 0;
+}
+
+.sidenav-sub a {
+  display: block;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.sidenav-sub a:hover {
+  color: #f8fafc;
+}
+
+.sidenav-sub a.active {
+  background: transparent;
+  color: #93c5fd;
+}
+
+.content {
+  flex: 1;
+  overflow: auto;
+  background: #f8fafc;
+  padding: 2rem;
+}
