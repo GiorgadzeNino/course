@@ -28,8 +28,10 @@
             (click)="closeSidenav()">დაინსტალირება და გაშვება</a></li>
         <li><a routerLink="/angular/1" fragment="summary_1" [class.active]="isFragmentActive('summary_1')"
             (click)="closeSidenav()">შეჯამება</a></li>
-        <li><a routerLink="/angular/1" fragment="questions_1" [class.active]="isFragmentActive('questions_1')"
-            (click)="closeSidenav()">შემაჯამებელი კითხვები</a></li>
+        <li>
+          <a href="" [class.active]="isFragmentActive('questions_1')"
+             (click)="navigateToQuestions('1', $event)">შემაჯამებელი კითხვები</a>
+        </li>
       </ul>
 
       <a routerLink="/angular/2" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
@@ -51,8 +53,9 @@
             (click)="closeSidenav()"> პრაქტიკული მაგალითი</a></li>
         <li><a routerLink="/angular/2" fragment="summary_2" [class.active]="isFragmentActive('summary_2')"
             (click)="closeSidenav()"> შეჯამება</a></li>
-        <li><a routerLink="/angular/2" fragment="questions_2" [class.active]="isFragmentActive('questions_2')"
-            (click)="closeSidenav()"> შემაჯამებელი კითხვები</a>
+        <li>
+          <a href="" [class.active]="isFragmentActive('questions_2')"
+             (click)="navigateToQuestions('2', $event)"> შემაჯამებელი კითხვები</a>
         </li>
       </ul>
       <a routerLink="/angular/3" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"

@@ -81,7 +81,7 @@ export class QuestionsComponent implements OnInit {
   showResults = false;
   storageKey = 'lecture1_answers';
 
-  constructor(private questionsService: QuestionsService) {}
+  constructor(private questionsService: QuestionsService) { }
 
   ngOnInit() {
     const initialized = this.questionsService.initializeQuiz(this.questions, this.storageKey);
@@ -117,13 +117,13 @@ export class QuestionsComponent implements OnInit {
     this.answers = this.questionsService.loadAnswers(this.storageKey);
 
     // Auto-advance after showing result
-    setTimeout(() => {
-      if (this.currentQuestionIndex < this.questions.length - 1) {
-        this.nextQuestion();
-      } else {
-        this.showResults = true;
-      }
-    }, 1500);
+    // setTimeout(() => {
+    //   if (this.currentQuestionIndex < this.questions.length - 1) {
+    //     this.nextQuestion();
+    //   } else {
+    //     this.showResults = true;
+    //   }
+    // }, 1500);
   }
 
   nextQuestion() {

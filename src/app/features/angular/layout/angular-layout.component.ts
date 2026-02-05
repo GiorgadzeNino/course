@@ -85,6 +85,26 @@ export class AngularLayoutComponent implements OnInit, OnDestroy {
     this.sidenav.close();
   }
 
+  navigateToQuestions(module: '1' | '2', event: MouseEvent) {
+    event.preventDefault();
+
+    const fragment = `questions_${module}`;
+    const summaryId = `summary_${module}`;
+
+    // Update URL fragment so the correct sidenav item is active
+    this.router.navigate(['/angular', module], { fragment });
+
+    // Scroll to the summary section (where the questions button is)
+    setTimeout(() => {
+      const element = document.getElementById(summaryId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 0);
+
+    this.closeSidenav();
+  }
+
   isFragmentActive(fragment: string): boolean {
     return this.currentFragment === fragment;
   }

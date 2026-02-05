@@ -33,21 +33,21 @@ import { SidenavService } from '../../../core/services/sidenav.service';
             <a routerLink="/home" fragment="contact" class="hover:text-gray-900">Contact</a>
           </nav>
 
-           Right side actions (always visible) -->
+           Right side actions (always visible)
           <a
             routerLink="/home"
             fragment="pricing"
             class="inline-flex items-center rounded-md border border-gray-200 bg-white/70 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-white transition"
           >
-            Pricing
+           ფასები
           </a>
           <a
             routerLink="/home"
             fragment="contact"
             class="inline-flex items-center rounded-md bg-secondary px-3 py-2 text-sm font-medium text-white hover:bg-secondary/90 transition"
           >
-            Contact
-          </a>
+კონტაქტი       
+   </a> -->
         </div>
       </div>
     </header>

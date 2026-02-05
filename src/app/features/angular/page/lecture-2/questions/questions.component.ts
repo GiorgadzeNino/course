@@ -161,13 +161,13 @@ export class Questions2Component implements OnInit {
         this.answers = this.questionsService.loadAnswers(this.storageKey);
 
         // Auto-advance after showing result
-        setTimeout(() => {
-            if (this.currentQuestionIndex < this.questions.length - 1) {
-                this.nextQuestion();
-            } else {
-                this.showResults = true;
-            }
-        }, 1500);
+        // setTimeout(() => {
+        //     if (this.currentQuestionIndex < this.questions.length - 1) {
+        //         this.nextQuestion();
+        //     } else {
+        //         this.showResults = true;
+        //     }
+        // }, 1500);
     }
 
     nextQuestion() {
