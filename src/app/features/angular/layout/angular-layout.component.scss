@@ -1,6 +1,10 @@
 :host ::ng-deep {
   .lecture {
     max-width: 80%;
+
+    @media (max-width: 1439px) {
+      max-width: 100%;
+    }
     color: #1e293b;
     line-height: 1.65;
 
@@ -257,6 +261,22 @@
 .angular-layout {
   display: flex;
   min-height: 100vh;
+  position: relative;
+}
+
+.sidenav-overlay {
+  display: none;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
 }
 
 .sidenav {
@@ -270,6 +290,20 @@
   padding: 1.5rem 0;
   flex-shrink: 0;
   overflow-y: auto;
+  transition: transform 0.3s ease;
+  z-index: 999;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    left: 0;
+    top: 56px;
+    transform: translateX(-100%);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
 }
 
 .sidenav-title {
@@ -336,4 +370,15 @@
   overflow: auto;
   background: #f8fafc;
   padding: 2rem;
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+
+  @media (min-width: 769px) {
+    margin-left: 0; // Sidenav is sticky, not taking space
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 1rem;
+  }
 }

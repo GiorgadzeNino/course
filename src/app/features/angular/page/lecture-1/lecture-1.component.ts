@@ -12,9 +12,8 @@ export class Lecture1Component implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private viewportScroller: ViewportScroller
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.fragment.subscribe(fragment => {
@@ -31,16 +30,15 @@ export class Lecture1Component implements OnInit {
     });
   }
 
-  toggleQuestions() {
-    this.showQuestions = !this.showQuestions;
-    if (this.showQuestions) {
-      setTimeout(() => {
-        const element = document.getElementById('questions');
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          window.scrollBy(0, -56);
-        }
-      }, 100);
+  openQuestions() {
+    if (!this.showQuestions) {
+      this.showQuestions = true;
     }
+    setTimeout(() => {
+      const element = document.getElementById('questions_1');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 50);
   }
 }

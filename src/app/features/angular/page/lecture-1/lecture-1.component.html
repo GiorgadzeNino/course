@@ -189,14 +189,14 @@ ng generate service my-service</code></pre>
       <li>აპლიკაციის გაშვება ლოკალურად</li>
     </ul>
     <div class="summary-actions">
-      <button type="button" class="summary-button" (click)="toggleQuestions()">
+      <button type="button" class="summary-button" (click)="openQuestions()">
         შემაჯამებელი კითხვები
       </button>
     </div>
   </section>
 
   @if (showQuestions) {
-    <section id="questions" class="questions-section">
+    <section id="questions_1" class="questions-section">
       <app-questions></app-questions>
     </section>
   }

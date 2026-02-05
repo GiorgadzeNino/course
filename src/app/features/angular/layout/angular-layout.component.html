@@ -1,39 +1,43 @@
 <div class="angular-layout">
-  <aside class="sidenav">
+  @if (sidenavOpen) {
+    <div class="sidenav-overlay" (click)="closeSidenav()"></div>
+  }
+
+  <aside class="sidenav" [class.open]="sidenavOpen">
     <nav class="sidenav-nav">
       <a routerLink="/angular/1" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }"
         class="nav-parent">
         მოდული 1: Angular-ის საფუძვლები
       </a>
       <ul class="sidenav-sub">
-        <li><a routerLink="/angular/1" fragment="overview">1. Angular მიმოხილვა</a></li>
-        <li><a routerLink="/angular/1" fragment="installation">Angular-ის ინსტალაცია</a></li>
-        <li><a routerLink="/angular/1" fragment="cli-capabilities">CLI-ის ძირითადი შესაძლებლობები</a></li>
-        <li><a routerLink="/angular/1" fragment="new-app">ახალი აპლიკაციის შექმნა</a></li>
-        <li><a routerLink="/angular/1" fragment="cli-ng-new">რას აკეთებს CLI (ng new)</a></li>
-        <li><a routerLink="/angular/1" fragment="project-files">პროექტის ძირითადი ფაილები</a></li>
-        <li><a routerLink="/angular/1" fragment="run">დაინსტალირება და გაშვება</a></li>
-        <li><a routerLink="/angular/1" fragment="summary_1">შეჯამება</a></li>
-        <li><a routerLink="/angular/1" fragment="questions_1">შემაჯამებელი კითხვები</a></li>
+        <li><a routerLink="/angular/1" fragment="overview" (click)="closeSidenav()">1. Angular მიმოხილვა</a></li>
+        <li><a routerLink="/angular/1" fragment="installation" (click)="closeSidenav()">Angular-ის ინსტალაცია</a></li>
+        <li><a routerLink="/angular/1" fragment="cli-capabilities" (click)="closeSidenav()">CLI-ის ძირითადი შესაძლებლობები</a></li>
+        <li><a routerLink="/angular/1" fragment="new-app" (click)="closeSidenav()">ახალი აპლიკაციის შექმნა</a></li>
+        <li><a routerLink="/angular/1" fragment="cli-ng-new" (click)="closeSidenav()">რას აკეთებს CLI (ng new)</a></li>
+        <li><a routerLink="/angular/1" fragment="project-files" (click)="closeSidenav()">პროექტის ძირითადი ფაილები</a></li>
+        <li><a routerLink="/angular/1" fragment="run" (click)="closeSidenav()">დაინსტალირება და გაშვება</a></li>
+        <li><a routerLink="/angular/1" fragment="summary_1" (click)="closeSidenav()">შეჯამება</a></li>
+        <li><a routerLink="/angular/1" fragment="summary_1" (click)="closeSidenav()">შემაჯამებელი კითხვები</a></li>
       </ul>
 
       <a routerLink="/angular/2" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-        class="nav-parent">
+        class="nav-parent" (click)="closeSidenav()">
         მოდული 2: Routing & Navigation
       </a>
 
       <a routerLink="/angular/3" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-        class="nav-parent">
+        class="nav-parent" (click)="closeSidenav()">
         მოდული 3: Forms
       </a>
 
       <a routerLink="/angular/4" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-        class="nav-parent">
+        class="nav-parent" (click)="closeSidenav()">
         მოდული 4: RxJS & State Management
       </a>
 
       <a routerLink="/angular/5" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-        class="nav-parent">
+        class="nav-parent" (click)="closeSidenav()">
         მოდული 5: Best Practices & Project
       </a>
     </nav>
