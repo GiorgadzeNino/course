@@ -28,7 +28,7 @@
             </div>
             <div class="hero-badge">
                 <div class="logo-circle">
-                    <span class="logo-a">A</span>
+                    <img src="assets/angular.svg" alt="Angular">
                 </div>
                 <p class="hero-note">
                     პრაქტიკული Angular პროექტები, რეალური გასაუბრების კითხვები და
@@ -96,6 +96,9 @@
                 <li>Data Binding და Directives</li>
                 <li>Dependency Injection</li>
             </ol>
+            <a routerLink="/angular/1" class="module-arrow" aria-label="Go to Module 1">
+                →
+            </a>
         </div>
 
         <div class="module">
@@ -110,6 +113,9 @@
                 <li>Lazy Loading</li>
                 <li>Guards და Resolvers</li>
             </ol>
+            <a routerLink="/angular/2" class="module-arrow" aria-label="Go to Module 2">
+                →
+            </a>
         </div>
 
         <div class="module">
@@ -124,6 +130,9 @@
                 <li>Reactive Forms</li>
                 <li>Validation და UX პრაქტიკები</li>
             </ol>
+            <a routerLink="/angular/3" class="module-arrow" aria-label="Go to Module 3">
+                →
+            </a>
         </div>
 
         <div class="module">
@@ -138,6 +147,9 @@
                 <li>Operators</li>
                 <li>State Management-ის საფუძვლები</li>
             </ol>
+            <a routerLink="/angular/4" class="module-arrow" aria-label="Go to Module 4">
+                →
+            </a>
         </div>
 
         <div class="module">
@@ -152,6 +164,9 @@
                 <li>Performance Optimization</li>
                 <li>Final Project</li>
             </ol>
+            <a routerLink="/angular/5" class="module-arrow" aria-label="Go to Module 5">
+                →
+            </a>
         </div>
     </section>
 
@@ -163,9 +178,9 @@
                     დაიწყე სწავლა დღეს და გადადგი შემდეგი ნაბიჯი პროფესიონალი Frontend დეველოპერისკენ.
                 </p>
             </div>
-            <a class="cta-button" [routerLink]="['/angular', '1']">
-                ისწავლე
-            </a>
+            <button type="button" class="cta-button" [routerLink]="['/angular', '1']">
+                გაიგე დეტალები
+            </button>
         </div>
     </section>
 </section>
