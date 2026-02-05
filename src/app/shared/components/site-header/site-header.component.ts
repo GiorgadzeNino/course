@@ -26,14 +26,14 @@ import { SidenavService } from '../../../core/services/sidenav.service';
         </div>
 
         <div class="flex items-center gap-2">
-          <nav class="hidden md:flex items-center gap-6 text-sm text-gray-600">
+     <!--      <nav class="hidden md:flex items-center gap-6 text-sm text-gray-600">
             <a routerLink="/home" fragment="what-i-teach" class="hover:text-gray-900">What I Teach</a>
             <a routerLink="/courses" class="hover:text-gray-900">Courses</a>
             <a routerLink="/home" fragment="pricing" class="hover:text-gray-900">Pricing</a>
             <a routerLink="/home" fragment="contact" class="hover:text-gray-900">Contact</a>
           </nav>
 
-          <!-- Right side actions (always visible) -->
+           Right side actions (always visible) -->
           <a
             routerLink="/home"
             fragment="pricing"

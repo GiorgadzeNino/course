@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { UiButtonComponent } from './components/ui-button/ui-button.component';
 import { SiteHeaderComponent } from './components/site-header/site-header.component';
 
@@ -11,7 +12,8 @@ import { SiteHeaderComponent } from './components/site-header/site-header.compon
     SiteHeaderComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [
     UiButtonComponent,
