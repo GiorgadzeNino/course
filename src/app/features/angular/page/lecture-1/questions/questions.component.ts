@@ -45,25 +45,24 @@ export class QuestionsComponent implements OnInit {
     },
     {
       id: 3,
-      question: 'რა არის Angular პროექტის მთავარი კონფიგურაციის ფაილი?',
+      question: 'რა როლი აქვს TypeScript-ს Angular-ში?',
       options: [
-        'package.json',
-        'angular.json',
-        'tsconfig.json',
-        'app.config.ts'
+        'დიზაინის შექმნა',
+        'კოდის ტიპიზაცია და ხარისხის გაუმჯობესება',
+        'HTML-ის ჩანაცვლება',
+        'მონაცემთა ბაზასთან კავშირი',
       ],
-      correctAnswer: 1
+      correctAnswer: 2
     },
     {
       id: 4,
-      question: 'რა ბრძანებით ვაშვებთ Angular აპლიკაციას development რეჟიმში?',
+      question: 'რა ბრძანებით ვუშვებთ Angular აპლიკაციას development რეჟიმში?',
       options: [
-        'npm start',
         'ng serve',
         'ng run',
         'angular start'
       ],
-      correctAnswer: 1
+      correctAnswer: 0
     },
     {
       id: 5,
@@ -73,6 +72,17 @@ export class QuestionsComponent implements OnInit {
         '4200',
         '8080',
         '5000'
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: 6,
+      question: '______ serve',
+      options: [
+        'npm',
+        'ng',
+        'angular',
+        'node'
       ],
       correctAnswer: 1
     }
