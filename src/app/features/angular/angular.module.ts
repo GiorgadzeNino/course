@@ -10,6 +10,8 @@ import { Lecture3Component } from './page/lecture-3/lecture-3.component';
 import { Lecture4Component } from './page/lecture-4/lecture-4.component';
 import { Lecture5Component } from './page/lecture-5/lecture-5.component';
 import { QuestionsComponent } from './page/lecture-1/questions/questions.component';
+import { Questions2Component } from './page/lecture-2/questions/questions.component';
+import { QuestionsService } from '../../core/services/questions.service';
 
 @NgModule({
   declarations: [
@@ -19,12 +21,14 @@ import { QuestionsComponent } from './page/lecture-1/questions/questions.compone
     Lecture3Component,
     Lecture4Component,
     Lecture5Component,
-    QuestionsComponent
+    QuestionsComponent,
+    Questions2Component
   ],
   imports: [
     CommonModule,
     RouterModule,
     AngularRoutingModule
-  ]
+  ],
+  providers: [QuestionsService]
 })
 export class AngularModule { }

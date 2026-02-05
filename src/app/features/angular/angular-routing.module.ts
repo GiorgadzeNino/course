@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AngularLayoutComponent } from './layout/angular-layout.component';
 import { Lecture1Component } from './page/lecture-1/lecture-1.component';
-import { Lecture2Component } from './page/lecture-2/lecture-2.component';
 import { Lecture3Component } from './page/lecture-3/lecture-3.component';
 import { Lecture4Component } from './page/lecture-4/lecture-4.component';
 import { Lecture5Component } from './page/lecture-5/lecture-5.component';
+import { Lecture2Component } from './page/lecture-2/lecture-2.component';
 
 const routes: Routes = [
   {

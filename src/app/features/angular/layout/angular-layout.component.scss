@@ -361,8 +361,13 @@
 }
 
 .sidenav-sub a.active {
-  background: transparent;
-  color: #93c5fd;
+  background: rgba(163, 30, 56, 0.25);
+  color: #f3a8b8;
+  font-weight: 600;
+  border-left: 3px solid #f3a8b8;
+  padding-left: calc(0.5rem - 3px);
+  border-radius: 4px;
+  margin-right: 0.5rem;
 }
 
 .content {

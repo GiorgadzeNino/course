@@ -1,18 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface Question {
-  id: number;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-}
-
-interface Answer {
-  questionId: number;
-  selectedAnswer: number;
-  isCorrect: boolean;
-}
+import { QuestionsService, Question, Answer } from '../../../../../core/services/questions.service';
 
 @Component({
   selector: 'app-questions',
@@ -93,42 +81,40 @@ export class QuestionsComponent implements OnInit {
   showResults = false;
   storageKey = 'lecture1_answers';
 
+  constructor(private questionsService: QuestionsService) {}
+
   ngOnInit() {
-    this.loadAnswers();
+    const initialized = this.questionsService.initializeQuiz(this.questions, this.storageKey);
+    this.currentQuestionIndex = initialized.currentQuestionIndex;
+    this.answers = initialized.answers;
+    this.showResults = initialized.showResults;
   }
 
   get currentQuestion(): Question {
-    return this.questions[this.currentQuestionIndex];
+    return this.questionsService.getCurrentQuestion(this.questions, this.currentQuestionIndex);
   }
 
   get currentAnswer(): Answer | undefined {
-    return this.answers.find(a => a.questionId === this.currentQuestion.id);
+    return this.questionsService.getCurrentAnswer(this.answers, this.currentQuestion.id);
   }
 
   get isAnswered(): boolean {
-    return this.currentAnswer !== undefined;
+    return this.questionsService.isAnswered(this.answers, this.currentQuestion.id);
   }
 
   get isCorrect(): boolean {
-    return this.currentAnswer?.isCorrect ?? false;
+    return this.questionsService.isCorrect(this.answers, this.currentQuestion.id);
   }
 
   get progress(): number {
-    return ((this.answers.length / this.questions.length) * 100);
+    return this.questionsService.calculateProgress(this.answers, this.questions.length);
   }
 
   selectAnswer(optionIndex: number) {
     if (this.isAnswered) return;
 
-    const isCorrect = optionIndex === this.currentQuestion.correctAnswer;
-    const answer: Answer = {
-      questionId: this.currentQuestion.id,
-      selectedAnswer: optionIndex,
-      isCorrect
-    };
-
-    this.answers.push(answer);
-    this.saveAnswers();
+    this.questionsService.selectAnswer(this.currentQuestion, optionIndex, this.answers, this.storageKey);
+    this.answers = this.questionsService.loadAnswers(this.storageKey);
 
     // Auto-advance after showing result
     setTimeout(() => {
@@ -157,59 +143,34 @@ export class QuestionsComponent implements OnInit {
   }
 
   getQuestionStatus(questionId: number): 'correct' | 'incorrect' | 'unanswered' {
-    const answer = this.answers.find(a => a.questionId === questionId);
-    if (!answer) return 'unanswered';
-    return answer.isCorrect ? 'correct' : 'incorrect';
+    return this.questionsService.getQuestionStatus(this.answers, questionId);
   }
 
   getTotalScore(): number {
-    return this.answers.filter(a => a.isCorrect).length;
+    return this.questionsService.getTotalScore(this.answers);
   }
 
   getOptionLetter(index: number): string {
-    return String.fromCharCode(65 + index);
+    return this.questionsService.getOptionLetter(index);
   }
 
   getSelectedAnswer(questionId: number): number {
-    const answer = this.answers.find(a => a.questionId === questionId);
-    return answer?.selectedAnswer ?? -1;
+    return this.questionsService.getSelectedAnswer(this.answers, questionId);
   }
 
   getSelectedOptionText(question: Question): string {
-    const selectedIndex = this.getSelectedAnswer(question.id);
-    if (selectedIndex === -1) return '';
-    return question.options[selectedIndex];
+    return this.questionsService.getSelectedOptionText(question, this.answers);
   }
 
   getCorrectOptionText(question: Question): string {
-    return question.options[question.correctAnswer];
+    return this.questionsService.getCorrectOptionText(question);
   }
 
   resetQuiz() {
     this.answers = [];
     this.currentQuestionIndex = 0;
     this.showResults = false;
-    localStorage.removeItem(this.storageKey);
-  }
-
-  private saveAnswers() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.answers));
-  }
-
-  private loadAnswers() {
-    const saved = localStorage.getItem(this.storageKey);
-    if (saved) {
-      this.answers = JSON.parse(saved);
-      // Find first unanswered question
-      const unansweredIndex = this.questions.findIndex(
-        q => !this.answers.find(a => a.questionId === q.id)
-      );
-      if (unansweredIndex !== -1) {
-        this.currentQuestionIndex = unansweredIndex;
-      } else {
-        this.showResults = true;
-      }
-    }
+    this.questionsService.resetQuiz(this.storageKey);
   }
 }
 

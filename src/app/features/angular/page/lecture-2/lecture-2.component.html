@@ -1,0 +1,601 @@
+<article class="lecture">
+  <h1>ლექცია 2 – კომპონენტები, Template და Data Binding</h1>
+
+  <section id="what-is-component">
+    <h2>რა არის კომპონენტი?</h2>
+    <p>
+      Angular აპლიკაციის მთავარი „სამშენებლო ბლოკი“ არის კომპონენტი.
+      თითოეული კომპონენტი პასუხს აგებს UI-ის კონკრეტულ ნაწილზე და შეიცავს როგორც ლოგიკას, ასევე ვიზუალურ ნაწილს.
+    </p>
+    <p><strong>კომპონენტი შედგება 3 ძირითადი ნაწილისგან:</strong></p>
+    <ul>
+      <li><strong>TypeScript ფაილი</strong> – კომპონენტის ლოგიკა, მონაცემები და ქცევა.</li>
+      <li><strong>HTML Template</strong> – ის, თუ როგორ გამოიყურება კომპონენტი ეკრანზე.</li>
+      <li><strong>CSS/SCSS</strong> – სტილები, რომლებიც განსაზღვრავს კომპონენტის დიზაინს.</li>
+    </ul>
+    <p>
+      მთლიანობაში Angular აპლიკაცია წარმოადგენს ერთმანეთთან დაკავშირებული კომპონენტების ერთობლიობას.
+      ქვემოთ მოცემულ ფოტოზე ნაჩვენებია, თუ როგორ არის Angular-ის ოფიციალური დოკუმენტაციის ერთი გვერდი დაყოფილი
+      ცალკეულ კომპონენტებად.
+    </p>
+    <img src="assets/angular-components.png" alt="Angular Components" class="rounded-md border border-[#1E293B]">
+
+    <h3>მთავარი კომპონენტი – AppComponent</h3>
+    <p>
+      პროექტის შექმნისას Angular ავტომატურად ქმნის მთავარ კომპონენტს:
+    </p>
+    <!-- Desktop Table -->
+    <table class="command-table file-table">
+      <thead>
+        <tr>
+          <th>ფაილი</th>
+          <th>აღწერა</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>app.component.ts</code></td>
+          <td>
+            <p>ეს არის აპლიკაციის საწყისი კომპონენტი, რომელიც იტვირთება <code>index.html</code>-ში და მართავს მთელ UI-ს.
+            </p>
+            <p><strong>Component Class (TypeScript) – როგორ მუშაობს აპლიკაცია</strong></p>
+            <p>TypeScript ფაილში ვწერთ:</p>
+            <ul>
+              <li>ცვლადებს</li>
+              <li>ფუნქციებს</li>
+              <li>ლოგიკას</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>app.component.html</code></td>
+          <td>
+            <p><strong>Template (HTML) – როგორ ჩანს აპლიკაცია</strong></p>
+            <p>Template არის კომპონენტის HTML ფაილი, სადაც ვწერთ:</p>
+            <ul>
+              <li>მარკაპს</li>
+              <li>Angular-ის დირექტივებს</li>
+              <li>მონაცემების გამოტანას</li>
+            </ul>
+            <p><strong>მაგალითი:</strong></p>
+            <pre ngNonBindable><code>&lt;h1&gt;Welcome to Angular&lt;/h1&gt;
+&lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><code>app.component.scss</code></td>
+          <td>კომპონენტის სტილები (CSS/SCSS/SASS)</td>
+        </tr>
+        <tr>
+          <td><code>app.component.spec.ts</code></td>
+          <td>ტესტების ფაილი (Unit Tests), სადაც იტესტება კომპონენტის ლოგიკა</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Mobile/Tablet Cards -->
+    <div class="file-cards">
+      <div class="file-card">
+        <div class="file-card-header">
+          <code>app.component.ts</code>
+        </div>
+        <div class="file-card-body">
+          <p>ეს არის აპლიკაციის საწყისი კომპონენტი, რომელიც იტვირთება <code>index.html</code>-ში და მართავს მთელ UI-ს.
+          </p>
+          <p><strong>Component Class (TypeScript) – როგორ მუშაობს აპლიკაცია</strong></p>
+          <p>TypeScript ფაილში ვწერთ:</p>
+          <ul>
+            <li>ცვლადებს</li>
+            <li>ფუნქციებს</li>
+            <li>ლოგიკას</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="file-card">
+        <div class="file-card-header">
+          <code>app.component.html</code>
+        </div>
+        <div class="file-card-body">
+          <p><strong>Template (HTML) – როგორ ჩანს აპლიკაცია</strong></p>
+          <p>Template არის კომპონენტის HTML ფაილი, სადაც ვწერთ:</p>
+          <ul>
+            <li>მარკაპს</li>
+            <li>Angular-ის დირექტივებს</li>
+            <li>მონაცემების გამოტანას</li>
+          </ul>
+          <p><strong>მაგალითი:</strong></p>
+          <pre ngNonBindable><code>&lt;h1&gt;Welcome to Angular&lt;/h1&gt;
+&lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;</code></pre>
+        </div>
+      </div>
+
+      <div class="file-card">
+        <div class="file-card-header">
+          <code>app.component.scss</code>
+        </div>
+        <div class="file-card-body">
+          <p>კომპონენტის სტილები (CSS/SCSS/SASS)</p>
+        </div>
+      </div>
+
+      <div class="file-card">
+        <div class="file-card-header">
+          <code>app.component.spec.ts</code>
+        </div>
+        <div class="file-card-body">
+          <p>ტესტების ფაილი (Unit Tests), სადაც იტესტება კომპონენტის ლოგიკა</p>
+        </div>
+      </div>
+    </div>
+    <img src="assets/app-component.png" alt="App Component" class="rounded-md border border-[#1E293B]">
+    <p>მაგალითისთვის დავაკვირდეთ შემდეგ კომპონენტს, პირველ ფოტოზე ნაჩვენებია app კომპონენტის კოდი ხოლო მეორე ფოტოზე ამ
+      კოდის შედეგი ბრაუზერში:</p>
+    <img src="assets/first-component.png" alt="First Component Example" class="rounded-md border border-[#1E293B]">
+    <img src="assets/first-component-result.png" alt="First Component Result"
+      class="mt-2 rounded-md border border-[#1E293B]">
+    <p> როგორც ვხედავთ კომპონენტი არის სტილების, ლოგიკის და ვებ-გვერდის სტრუქტურის ერთობლიობა. </p>
+
+    <p>Angular-ში კომპონენტის შექმნისთვის ვიყენებთ &#64;Component დეკორატორს.როდესაც შევქმნით კომპონენტს ts ფაილში
+      დაგვხვდება შემდეგი კოდი: </p>
+    <pre ngNonBindable><code>import &#123; Component &#125; from '&#64;angular/core';
+
+&#64;Component(&#123;
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+&#125;)
+export class AppComponent &#123;
+  title = 'courses';
+&#125;</code></pre>
+
+    <h3>განმარტება:</h3>
+
+    <p><strong><code ngNonBindable>import &#123; Component &#125; from '&#64;angular/core';</code></strong></p>
+    <p>Angular-ის Component დეკორატორის იმპორტი.</p>
+    <p>ეს საშუალებას გვაძლევს კლასი კომპონენტად გადავაქციოთ.</p>
+
+    <p><strong><code ngNonBindable>&#64;Component(&#123;...&#125;)</code></strong></p>
+    <p>დეკორატორი, რომელიც Angular-ს ეუბნება: "ეს კლასი კომპონენტია და მას აქვს ასეთი კონფიგურაცია."</p>
+
+    <h4>დეტალურად კონფიგურაცია:</h4>
+
+    <!-- Desktop Table -->
+    <table class="command-table property-table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>აღწერა</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code ngNonBindable>selector: 'app-root'</code></td>
+          <td>
+            <p>HTML ელემენტის სახელი, რომლის საშუალებითაც კომპონენტს ვიძახებთ.</p>
+            <p><strong>მაგალითი:</strong> <code ngNonBindable>&lt;app-root&gt;&lt;/app-root&gt;</code></p>
+          </td>
+        </tr>
+        <tr>
+          <td><code ngNonBindable>templateUrl: './app.component.html'</code></td>
+          <td>
+            <p>კომპონენტის HTML ფაილი, სადაც წერია UI.</p>
+          </td>
+        </tr>
+        <tr>
+          <td><code ngNonBindable>styleUrls: ['./app.component.scss']</code><br>
+            ან <br>
+            <code ngNonBindable>styleUrl: './app.component.scss'</code>
+          </td>
+          <td>
+            <p>კომპონენტის CSS/SCSS ფაილები, რომლითაც ვიზუალი იშლება.</p>
+            <p><strong>შენიშვნა: თუ რამდენიმე css ფაილი გვაქვს და გვინდა ყველა ფაილი გამოიყენოთ ერთზე მაგ:
+                <code>styleUrls: ['./app.component.scss', './app.component.css']</code> სწორია
+                <code>styleUrls</code>, ხოლო თუ მხოლოდ ერთი css ფაილი გვაქვს და გვინდა გადავცეთ კომპონენტს ეს სახელი
+                შეგვიძლია გამოვიყენოთ styleUrl მაგ:
+                <code>styleUrl: './app.component.scss'</code></strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td><code ngNonBindable>export class AppComponent</code></td>
+          <td>
+            <p>კლასი, რომელიც შეიცავს კომპონენტის ლოგიკას.</p>
+            <p>Angular-ის View-ში გამოიყენება HTML ბაინდინგისთვის.</p>
+          </td>
+        </tr>
+        <tr>
+          <td><code ngNonBindable>title = 'courses';</code></td>
+          <td>
+            <p>კომპონენტის მონაცემი (state), რომელიც მაგ: HTML-ში შეიძლება გამოვიყენოთ:</p>
+            <pre ngNonBindable><code>&lt;p&gt;&#123;&#123; title &#125;&#125;&lt;/p&gt;</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Mobile/Tablet Cards -->
+    <div class="property-cards">
+      <div class="property-card">
+        <div class="property-card-header">
+          <code ngNonBindable>selector: 'app-root'</code>
+        </div>
+        <div class="property-card-body">
+          <p>HTML ელემენტის სახელი, რომლის საშუალებითაც კომპონენტს ვიძახებთ.</p>
+          <p><strong>მაგალითი:</strong> <code ngNonBindable>&lt;app-root&gt;&lt;/app-root&gt;</code></p>
+        </div>
+      </div>
+
+      <div class="property-card">
+        <div class="property-card-header">
+          <code ngNonBindable>templateUrl: './app.component.html'</code>
+        </div>
+        <div class="property-card-body">
+          <p>კომპონენტის HTML ფაილი, სადაც წერია UI.</p>
+        </div>
+      </div>
+
+      <div class="property-card">
+        <div class="property-card-header">
+          <code ngNonBindable>styleUrls: ['./app.component.scss']</code><br>
+          ან <br>
+          <code ngNonBindable>styleUrl: './app.component.scss'</code>
+        </div>
+        <div class="property-card-body">
+          <p>კომპონენტის CSS/SCSS ფაილები, რომლითაც ვიზუალი იშლება.</p>
+          <p><strong>შენიშვნა: თუ რამდენიმე css ფაილი გვაქვს და გვინდა ყველა ფაილი გამოიყენოთ ერთზე მაგ:
+              <code>styleUrls: ['./app.component.scss', './app.component.css']</code> სწორია
+              <code>styleUrls</code>, ხოლო თუ მხოლოდ ერთი css ფაილი გვაქვს და გვინდა გადავცეთ კომპონენტს ეს სახელი
+              შეგვიძლია გამოვიყენოთ styleUrl მაგ:
+              <code>styleUrl: './app.component.scss'</code></strong></p>
+        </div>
+      </div>
+
+      <div class="property-card">
+        <div class="property-card-header">
+          <code ngNonBindable>export class AppComponent</code>
+        </div>
+        <div class="property-card-body">
+          <p>კლასი, რომელიც შეიცავს კომპონენტის ლოგიკას.</p>
+          <p>Angular-ის View-ში გამოიყენება HTML ბაინდინგისთვის.</p>
+        </div>
+      </div>
+
+      <div class="property-card">
+        <div class="property-card-header">
+          <code ngNonBindable>title = 'courses';</code>
+        </div>
+        <div class="property-card-body">
+          <p>კომპონენტის მონაცემი (state), რომელიც მაგ: HTML-ში შეიძლება გამოვიყენოთ:</p>
+          <pre ngNonBindable><code>&lt;p&gt;&#123;&#123; title &#125;&#125;&lt;/p&gt;</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="data-binding">
+    <h2> Data Binding-ის ტიპები</h2>
+    <p>
+      Data Binding უზრუნველყოფს კავშირს TypeScript და HTML Template-ს შორის.
+      Angular-ში არსებობს ოთხი ძირითადი ტიპი:
+    </p>
+
+    <h3 ngNonBindable>1. Interpolation ({{ }})</h3>
+    <p>გამოიყენება მონაცემების გამოსატანად HTML-ში.</p>
+    <p><strong>HTML:</strong></p>
+    <pre ngNonBindable><code>&lt;p&gt;&#123;&#123; title &#125;&#125;&lt;/p&gt;</code></pre>
+    <p><strong>TypeScript:</strong></p>
+    <pre ngNonBindable><code>title = 'Angular Course';</code></pre>
+
+    <h3>2. Property Binding ([ ])</h3>
+    <p>გამოიყენება HTML ელემენტის ატრიბუტებზე მნიშვნელობის გადასაცემად.</p>
+    <p><strong>HTML:</strong></p>
+    <pre ngNonBindable><code>&lt;img [src]=&quot;imageUrl&quot; /&gt;</code></pre>
+    <p><strong>TypeScript:</strong></p>
+    <pre ngNonBindable><code>imageUrl = 'assets/logo.png';</code></pre>
+
+    <h3>3. Event Binding (( ))</h3>
+    <p>გამოიყენება მოვლენებზე რეაგირებისთვის.</p>
+    <p><strong>HTML:</strong></p>
+    <pre ngNonBindable><code>&lt;button (click)=&quot;onClick()&quot;&gt;Click me&lt;/button&gt;</code></pre>
+    <p><strong>TypeScript:</strong></p>
+    <pre ngNonBindable><code>onClick() &#123;
+  console.log('Button clicked');
+&#125;</code></pre>
+
+    <h3>4. Two-Way Binding ([( )])</h3>
+    <p>მონაცემების ორმხრივი კავშირი UI-სა და ლოგიკას შორის.</p>
+    <p><strong>HTML:</strong></p>
+    <pre ngNonBindable><code>&lt;input [(ngModel)]=&quot;name&quot; /&gt;
+&lt;p&gt;Hello &#123;&#123; name &#125;&#125;&lt;/p&gt;</code></pre>
+    <p><strong>TypeScript:</strong></p>
+    <pre ngNonBindable><code>name = '';</code></pre>
+  </section>
+  <section id="cli_2">
+    <h2>კომპონენტის შექმნა</h2>
+    <!-- აქ დაამატე პატარა demo კომპონენტი, სადაც გამოყენებულია სხვადასხვა binding. -->
+    როგორც აღვნიშნეთ პროექტის შექმნისას ავტომატურად იქმნება მთავარი კომპონენტი app.component, თუმცა ჩვენ შეგვიძლია
+    შექმნათ სხვა კომპონენტებიც. კომპონენტის შესაქმნელად არსებობს რამდენიმე საშუალება.
+    <br>
+    <b>1. Angular cli-ის საშუალებით</b>
+    <p>Angular cli-ის საშუალებით შესაძლებელია კომპონენტის შექმნა ბრძანებით</p>
+    <pre ngNonBindable><code>ng generate component name-of-the-component</code></pre>
+    <b>2. ედიტორში დავამატოთ extension, მაგალითად vsCode-ისთვის Angular Files</b>
+    <img src="assets/angular-files.png" alt="Angular Files extension" class="rounded-md border border-[#1E293B]">
+    <p>შემდეგ იმ ფოლდერზე სადაც გვინდა რომ კომპონენტი შევქმნათ დავაკლლიკებთ მარჯვენა ღილაკს და ავირჩევთ
+      generate-component-ს, შემდეგ კი ჩავწერთ კომპონენტის სახელს, რაც გვინდა რომ ერქვას კომპონენტს</p>
+    <img src="assets/generate-component.png" alt="Generate Component" class="rounded-md border border-[#1E293B]">
+    <b>3. ხელით შევქმნათ ყველა საჭირო ფაილი: ts,css,html</b>
+
+  </section>
+  <section id="example">
+    <h2> პრაქტიკული მაგალითი</h2>
+
+    <h3>1️⃣ კომპონენტის შექმნა Angular CLI-ით</h3>
+    <pre ngNonBindable><code>ng generate component course</code></pre>
+
+    <p class="note">
+      <strong>💡 შენიშვნა:</strong> როდესაც ვწერთ მოდულებით, Two-way Binding მუშაობს მხოლოდ თუ FormsModule არის
+      import-ებული app.module.ts-ში. ანგულარის ახალ ვერსიებში(16+) არის დამოუკიდებელი standalone კომპონენტები, ასეთ
+      შემთხვევაში FormsModule-ის მაგივრად ვიყენებთ provideForms() appConfig-ში. <strong>ქვემოთ მაგალითის სახით არის
+        ორივე ვერსია.</strong>
+    </p>
+
+    <div class="tabs-container">
+      <div class="tabs-header">
+        <button class="tab-button" [class.active]="activeTab === 'old'" (click)="setActiveTab('old')">
+          📦 Angular (NgModule) - ძველი ვერსია
+        </button>
+        <button class="tab-button" [class.active]="activeTab === 'new'" (click)="setActiveTab('new')">
+          🚀 Angular (Standalone) - ახალი ვერსია (Angular 16+)
+        </button>
+      </div>
+
+      <!-- Old Angular (NgModule) Tab -->
+      <div class="tab-content" [class.active]="activeTab === 'old'">
+        <h3>1️⃣ პროექტის სტრუქტურა</h3>
+        <pre ngNonBindable><code>src/app/course/
+├── course.component.ts
+├── course.component.html
+├── course.component.scss
+└── course.component.spec.ts</code></pre>
+
+        <h3>2️⃣ app.module.ts (NgModule)</h3>
+        <pre ngNonBindable><code>import &#123; NgModule &#125; from '&#64;angular/core';
+import &#123; BrowserModule &#125; from '&#64;angular/platform-browser';
+import &#123; FormsModule &#125; from '&#64;angular/forms';
+import &#123; AppComponent &#125; from './app.component';
+import &#123; CourseComponent &#125; from './course/course.component';
+
+&#64;NgModule(&#123;
+  declarations: [
+    AppComponent,
+    CourseComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  bootstrap: [AppComponent]
+&#125;)
+export class AppModule &#123;&#125;</code></pre>
+        <p><strong>📌 FormsModule არის import-ებული AppModule-ში გლობალურად.</strong></p>
+
+        <h3>3️⃣ course.component.ts (Class + Component დეკორატორი)</h3>
+        <pre ngNonBindable><code>import &#123; Component &#125; from '&#64;angular/core';
+
+&#64;Component(&#123;
+  selector: 'app-course',
+  templateUrl: './course.component.html',
+  styleUrls: ['./course.component.scss']
+&#125;)
+export class CourseComponent &#123;
+  // Data Binding - ცვლადები
+  title: string = 'Angular Courses';
+  description: string = 'ეს არის პირველი პრაქტიკული კომპონენტი';
+
+  // Two-way Binding ცვლადი
+  inputValue: string = '';
+
+  // Method - Event Binding
+  showAlert() &#123;
+    alert('კომპონენტის Title: ' + this.title);
+  &#125;
+&#125;</code></pre>
+
+        <h3>4️⃣ course.component.html (Template)</h3>
+        <pre ngNonBindable><code>&lt;div class=&quot;course-container&quot;&gt;
+  &lt;!-- Interpolation --&gt;
+  &lt;h1&gt;&#123;&#123; title &#125;&#125;&lt;/h1&gt;
+  &lt;p&gt;&#123;&#123; description &#125;&#125;&lt;/p&gt;
+
+  &lt;!-- Property Binding --&gt;
+  &lt;input [value]=&quot;inputValue&quot; placeholder=&quot;Type something&quot;&gt;
+
+  &lt;!-- Two-way Binding --&gt;
+  &lt;input [(ngModel)]=&quot;inputValue&quot; placeholder=&quot;Two-way Binding&quot;&gt;
+
+  &lt;p&gt;თქვენ დაწერეთ: &#123;&#123; inputValue &#125;&#125;&lt;/p&gt;
+
+  &lt;!-- Event Binding --&gt;
+  &lt;button (click)=&quot;showAlert()&quot;&gt;შეამოწმე Title&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+
+      <!-- New Angular (Standalone) Tab -->
+      <div class="tab-content" [class.active]="activeTab === 'new'">
+        <h3>1️⃣ პროექტის სტრუქტურა</h3>
+        <pre ngNonBindable><code>src/
+ ├── app/
+ │   ├── app.component.ts
+ │   ├── app.component.html
+ │   ├── app.config.ts
+ │   └── course/
+ │       ├── course.component.ts
+ │       ├── course.component.html
+ │       └── course.component.scss
+ └── main.ts</code></pre>
+
+        <h3>2️⃣ main.ts (Standalone Bootstrap)</h3>
+        <pre ngNonBindable><code>import &#123; bootstrapApplication &#125; from '&#64;angular/platform-browser';
+import &#123; appConfig &#125; from './app/app.config';
+import &#123; AppComponent &#125; from './app/app.component';
+
+bootstrapApplication(AppComponent, appConfig)
+  .catch(err => console.error(err));</code></pre>
+
+        <h3>3️⃣ app.config.ts (Providers / Global Config)</h3>
+        <pre ngNonBindable><code>import &#123; ApplicationConfig &#125; from '&#64;angular/core';
+import &#123; provideRouter &#125; from '&#64;angular/router';
+import &#123; provideForms &#125; from '&#64;angular/forms';
+
+export const appConfig: ApplicationConfig = &#123;
+  providers: [
+    provideRouter([]),
+    provideForms() // Two-way binding (ngModel)
+  ]
+&#125;;</code></pre>
+        <p><strong>✅ აქ FormsModule-ის მაგივრად ვიყენებთ provideForms()</strong></p>
+
+        <h3>4️⃣ app.component.ts (Root Component – Standalone)</h3>
+        <pre ngNonBindable><code>import &#123; Component &#125; from '&#64;angular/core';
+import &#123; CourseComponent &#125; from './course/course.component';
+
+&#64;Component(&#123;
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseComponent],
+  templateUrl: './app.component.html'
+&#125;)
+export class AppComponent &#123;&#125;</code></pre>
+
+        <h3>5️⃣ app.component.html</h3>
+        <pre ngNonBindable><code>&lt;app-course&gt;&lt;/app-course&gt;</code></pre>
+
+        <h3>6️⃣ course.component.ts (Standalone Component)</h3>
+        <pre ngNonBindable><code>import &#123; Component &#125; from '&#64;angular/core';
+import &#123; FormsModule &#125; from '&#64;angular/forms';
+
+&#64;Component(&#123;
+  selector: 'app-course',
+  standalone: true,
+  imports: [FormsModule],
+  templateUrl: './course.component.html',
+  styleUrls: ['./course.component.scss']
+&#125;)
+export class CourseComponent &#123;
+  title: string = 'Angular Courses';
+  description: string = 'ეს არის პირველი პრაქტიკული კომპონენტი (Standalone)';
+  inputValue: string = '';
+
+  showAlert(): void &#123;
+    alert(`კომპონენტის Title: $&#123;this.title&#125;`);
+  &#125;
+&#125;</code></pre>
+        <p><strong>📌 FormsModule აქ ლოკალურად არის იმპორტირებული, რაც საუკეთესო პრაქტიკაა.</strong></p>
+
+        <h3>7️⃣ course.component.html (Template + Data Binding)</h3>
+        <pre ngNonBindable><code>&lt;div class=&quot;course-container&quot;&gt;
+  &lt;h1&gt;&#123;&#123; title &#125;&#125;&lt;/h1&gt;
+  &lt;p&gt;&#123;&#123; description &#125;&#125;&lt;/p&gt;
+  &lt;input
+    type=&quot;text&quot;
+    [(ngModel)]=&quot;inputValue&quot;
+    placeholder=&quot;ჩაწერე ტექსტი&quot;
+  /&gt;
+  &lt;p&gt;თქვენ დაწერეთ: &#123;&#123; inputValue &#125;&#125;&lt;/p&gt;
+  &lt;button (click)=&quot;showAlert()&quot;&gt;Show Title&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+
+    <h3>გამოყენებული Data Binding ტიპები</h3>
+
+    <!-- Desktop Table -->
+    <table class="command-table binding-table">
+      <thead>
+        <tr>
+          <th>Binding ტიპი</th>
+          <th>მაგალითი</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Interpolation</td>
+          <td><code ngNonBindable>&#123;&#123; title &#125;&#125;</code></td>
+        </tr>
+        <tr>
+          <td>Property Binding</td>
+          <td><code ngNonBindable>[value]=&quot;inputValue&quot;</code></td>
+        </tr>
+        <tr>
+          <td>Event Binding</td>
+          <td><code ngNonBindable>(click)=&quot;showAlert()&quot;</code></td>
+        </tr>
+        <tr>
+          <td>Two-way Binding</td>
+          <td><code ngNonBindable>[(ngModel)]=&quot;inputValue&quot;</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Mobile/Tablet Cards -->
+    <div class="binding-cards">
+      <div class="binding-card">
+        <div class="binding-card-header">
+          Interpolation
+        </div>
+        <div class="binding-card-body">
+          <code ngNonBindable>&#123;&#123; title &#125;&#125;</code>
+        </div>
+      </div>
+
+      <div class="binding-card">
+        <div class="binding-card-header">
+          Property Binding
+        </div>
+        <div class="binding-card-body">
+          <code ngNonBindable>[value]=&quot;inputValue&quot;</code>
+        </div>
+      </div>
+
+      <div class="binding-card">
+        <div class="binding-card-header">
+          Event Binding
+        </div>
+        <div class="binding-card-body">
+          <code ngNonBindable>(click)=&quot;showAlert()&quot;</code>
+        </div>
+      </div>
+
+      <div class="binding-card">
+        <div class="binding-card-header">
+          Two-way Binding
+        </div>
+        <div class="binding-card-body">
+          <code ngNonBindable>[(ngModel)]=&quot;inputValue&quot;</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="summary_2" class="summary-section">
+    <h2>შეჯამება</h2>
+    <p class="summary-intro">ამ ლექციაში ვისწავლეთ:</p>
+    <ul class="summary-list">
+      <li>რა არის კომპონენტი</li>
+      <li>როგორ მუშაობს Template და Component Class</li>
+      <li>Data Binding-ის ტიპები</li>
+    </ul>
+    <div class="summary-actions">
+      <button type="button" class="summary-button" (click)="openQuestions()">
+        შემაჯამებელი კითხვები
+      </button>
+    </div>
+  </section>
+
+  @if (showQuestions) {
+  <section id="questions_2" class="questions-section">
+    <app-questions-2></app-questions-2>
+  </section>
+  }
+</article>
