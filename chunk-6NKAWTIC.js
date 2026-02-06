@@ -1,1 +1,0 @@
-import{N as e,X as i,f as t,h as r}from"./chunk-PIJRY6FD.js";var m=class o{static \u0275fac=function(n){return new(n||o)};static \u0275mod=r({type:o});static \u0275inj=t({imports:[e,i]})};export{m as a};
