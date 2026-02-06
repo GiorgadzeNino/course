@@ -12,6 +12,8 @@ import { SidenavService } from '../../../core/services/sidenav.service';
 export class AngularLayoutComponent implements OnInit, OnDestroy {
   sidenavOpen = false;
   currentFragment: string | null = null;
+  expandedModule: string | null = null;
+  activeModule: string | null = null;
   private sub?: Subscription;
   private routerSub?: Subscription;
   private hashChangeHandler?: () => void;
@@ -31,6 +33,8 @@ export class AngularLayoutComponent implements OnInit, OnDestroy {
         filter(event => event instanceof NavigationEnd)
       )
       .subscribe(() => {
+        this.updateActiveModuleFromUrl();
+
         // Get fragment from URL hash (works with hash-based routing)
         const urlTree = this.router.parseUrl(this.router.url);
         this.currentFragment = urlTree.fragment || null;
@@ -45,6 +49,9 @@ export class AngularLayoutComponent implements OnInit, OnDestroy {
           }
         }
       });
+
+    // Initial values
+    this.updateActiveModuleFromUrl();
 
     // Get initial fragment
     const urlTree = this.router.parseUrl(this.router.url);
@@ -79,6 +86,29 @@ export class AngularLayoutComponent implements OnInit, OnDestroy {
     if (this.hashChangeHandler) {
       window.removeEventListener('hashchange', this.hashChangeHandler);
     }
+  }
+
+  private updateActiveModuleFromUrl() {
+    const match = this.router.url.match(/\/angular\/(\d+)/);
+    this.activeModule = match?.[1] ?? null;
+
+    // Auto-expand the active module in the accordion
+    if (this.activeModule) {
+      this.expandedModule = this.activeModule;
+    }
+  }
+
+  toggleModule(module: string) {
+    const isExpanding = this.expandedModule !== module;
+    this.expandedModule = isExpanding ? module : null;
+
+    if (isExpanding) {
+      this.router.navigate(['/angular', module]);
+    }
+  }
+
+  isModuleExpanded(module: string): boolean {
+    return this.expandedModule === module;
   }
 
   closeSidenav() {

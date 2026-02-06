@@ -262,6 +262,10 @@
   display: flex;
   min-height: 100vh;
   position: relative;
+
+  * {
+    user-select: none;
+  }
 }
 
 .sidenav-overlay {
@@ -320,21 +324,55 @@
   gap: 0.25rem;
 }
 
-.sidenav-nav a {
+.sidenav-nav a,
+.sidenav-nav .nav-parent {
   padding: 0.5rem 1.25rem;
   color: #cbd5e1;
   text-decoration: none;
   transition: background 0.15s, color 0.15s;
 }
 
-.sidenav-nav a:hover {
+.sidenav-nav a:hover,
+.sidenav-nav .nav-parent:hover {
   background: rgba(255, 255, 255, 0.08);
   color: #f8fafc;
 }
 
-.sidenav-nav a.active {
+.sidenav-nav a.active,
+.sidenav-nav .nav-parent.active {
   background: #a60000;
   color: #fff;
+}
+
+.sidenav-nav .nav-parent {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.sidenav-nav .nav-parent-text {
+  flex: 1;
+}
+
+.sidenav-nav .nav-chevron {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.15s ease;
+  opacity: 0.9;
+}
+
+.sidenav-nav .nav-parent.expanded .nav-chevron {
+  transform: rotate(45deg);
 }
 
 .sidenav-sub {
