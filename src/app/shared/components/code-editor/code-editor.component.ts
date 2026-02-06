@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -7,7 +7,8 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './code-editor.component.html',
-  styleUrl: './code-editor.component.scss'
+  styleUrl: './code-editor.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CodeEditorComponent {
   @Input() code: string = '';
@@ -16,5 +17,12 @@ export class CodeEditorComponent {
   @Input() previewTitle: string = '🌐 ბრაუზერის ხედი (Preview)';
   @Input() showPreview: boolean = true;
   @Input() showEditor: boolean = true;
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  onCodeChange(value: string) {
+    this.code = value;
+    this.cdr.markForCheck();
+  }
 }
 

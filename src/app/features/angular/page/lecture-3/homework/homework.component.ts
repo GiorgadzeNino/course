@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 export interface Homework {
   id: number;
@@ -11,9 +11,11 @@ export interface Homework {
 @Component({
   selector: 'app-homework-3',
   templateUrl: './homework.component.html',
-  styleUrls: ['./homework.component.scss']
+  styleUrls: ['./homework.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Homework3Component {
+  constructor(private cdr: ChangeDetectorRef) {}
   homeworks: Homework[] = [
     {
       id: 1,

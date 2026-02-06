@@ -7,7 +7,8 @@
       <div class="editor-content">
         <textarea 
           class="code-editor" 
-          [(ngModel)]="code"
+          [value]="code"
+          (input)="onCodeChange($any($event.target).value)"
           placeholder="ჩაწერეთ კოდი..."></textarea>
       </div>
     </div>

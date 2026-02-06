@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-lecture-3',
   templateUrl: './lecture-3.component.html',
-  styleUrl: './lecture-3.component.scss'
+  styleUrl: './lecture-3.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Lecture3Component {
   directivesTab: 'old' | 'new' = 'old';
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
   setDirectivesTab(tab: 'old' | 'new') {
     this.directivesTab = tab;
+    this.cdr.markForCheck();
   }
 
   // Code editor state for Structural Directives
@@ -83,6 +87,7 @@ export class HighlightDirective {
 
   openQuestions() {
     this.showQuestions = true;
+    this.cdr.markForCheck();
     setTimeout(() => {
       const element = document.getElementById('questions_3');
       if (element) {
@@ -93,6 +98,7 @@ export class HighlightDirective {
 
   openHomework() {
     this.showHomework = true;
+    this.cdr.markForCheck();
     setTimeout(() => {
       const element = document.getElementById('homework_3');
       if (element) {

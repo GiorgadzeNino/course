@@ -219,29 +219,31 @@
                 </label>
             </div>
         </div>
-        <app-code-editor [code]="directiveCode">
-            @if (isLoggedIn) {
-            <p>Welcome, User!</p>
-            }
-
-            <ul>
-                @for (item of items; track item.id) {
-                <li>{{ item.name }}</li>
+        @defer (on viewport) {
+            <app-code-editor [code]="directiveCode">
+                @if (isLoggedIn) {
+                <p>Welcome, User!</p>
                 }
-            </ul>
 
-            @switch (role) {
-            @case ('admin') {
-            <p>Admin Panel</p>
-            }
-            @case ('user') {
-            <p>User Dashboard</p>
-            }
-            @default {
-            <p>Guest</p>
-            }
-            }
-        </app-code-editor>
+                <ul>
+                    @for (item of items; track item.id) {
+                    <li>{{ item.name }}</li>
+                    }
+                </ul>
+
+                @switch (role) {
+                @case ('admin') {
+                <p>Admin Panel</p>
+                }
+                @case ('user') {
+                <p>User Dashboard</p>
+                }
+                @default {
+                <p>Guest</p>
+                }
+                }
+            </app-code-editor>
+        }
 
 
     </section>
@@ -291,16 +293,18 @@
                 </label>
             </div>
         </div>
-        <app-code-editor [code]="attributeDirectiveCode" editorTitle="📝 კოდი (HTML Template)"
-            previewTitle="🌐 ბრაუზერის ხედი (Preview)">
-            <div [ngClass]="{ active: isActive, disabled: isDisabled }">
-                Button
-            </div>
+        @defer (on viewport) {
+            <app-code-editor [code]="attributeDirectiveCode" editorTitle="📝 კოდი (HTML Template)"
+                previewTitle="🌐 ბრაუზერის ხედი (Preview)">
+                <div [ngClass]="{ active: isActive, disabled: isDisabled }">
+                    Button
+                </div>
 
-            <p [ngStyle]="{ color: textColor, fontSize: fontSize + 'px' }">
-                Dynamic Styles
-            </p>
-        </app-code-editor>
+                <p [ngStyle]="{ color: textColor, fontSize: fontSize + 'px' }">
+                    Dynamic Styles
+                </p>
+            </app-code-editor>
+        }
 
 
     </section>
@@ -342,20 +346,22 @@
             </div>
         </div>
 
-        <div class="code-editor-split">
-            <app-code-editor [code]="customDirectiveCode" editorTitle="📝 Directive Code (TypeScript)"
-                [showPreview]="false">
-            </app-code-editor>
+        @defer (on viewport) {
+            <div class="code-editor-split">
+                <app-code-editor [code]="customDirectiveCode" editorTitle="📝 Directive Code (TypeScript)"
+                    [showPreview]="false">
+                </app-code-editor>
 
-            <app-code-editor [code]="customDirectiveUsageCode" editorTitle="📝 HTML Template" [showPreview]="false">
-            </app-code-editor>
+                <app-code-editor [code]="customDirectiveUsageCode" editorTitle="📝 HTML Template" [showPreview]="false">
+                </app-code-editor>
 
-            <app-code-editor editorTitle="🌐 Browser Preview" [showEditor]="false" previewTitle="🌐 Browser Preview">
-                <p appHighlight [highlightColor]="highlightColor">
-                    Highlighted text
-                </p>
-            </app-code-editor>
-        </div>
+                <app-code-editor editorTitle="🌐 Browser Preview" [showEditor]="false" previewTitle="🌐 Browser Preview">
+                    <p appHighlight [highlightColor]="highlightColor">
+                        Highlighted text
+                    </p>
+                </app-code-editor>
+            </div>
+        }
     </section>
 
 
@@ -407,7 +413,11 @@
     </section>
     <section id="questions_3">
         @if (showQuestions) {
-        <app-questions-3></app-questions-3>
+        @defer (on immediate) {
+            <app-questions-3></app-questions-3>
+        } @placeholder {
+            <div class="questions-loading">იტვირთება...</div>
+        }
         } @else {
         <div class="questions-toggle">
             <button type="button" class="questions-button" (click)="openQuestions()">
@@ -419,7 +429,11 @@
 
 
     <section id="homework_3">
-        <app-homework-3></app-homework-3>
+        @defer (on viewport) {
+            <app-homework-3></app-homework-3>
+        } @placeholder {
+            <div class="homework-loading">იტვირთება...</div>
+        }
     </section>
 
 </article>

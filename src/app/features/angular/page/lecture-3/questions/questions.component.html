@@ -13,17 +13,17 @@
     <h3 class="question-text">{{ currentQuestion.question }}</h3>
 
     <div class="options">
-      @for (option of currentQuestion.options; track $index) {
-      <button type="button" class="option-button" [class.selected]="currentAnswer?.selectedAnswer === $index"
-        [class.correct]="isAnswered && $index === currentQuestion.correctAnswer"
-        [class.incorrect]="isAnswered && currentAnswer?.selectedAnswer === $index && !isCorrect"
-        [class.disabled]="isAnswered" (click)="selectAnswer($index)">
-        <span class="option-label">{{ getOptionLetter($index) }}.</span>
+      @for (option of currentQuestion.options; track $index; let i = $index) {
+      <button type="button" class="option-button"         [class.selected]="currentAnswer?.selectedAnswer === i"
+        [class.correct]="isAnswered && i === currentQuestion.correctAnswer"
+        [class.incorrect]="isAnswered && currentAnswer?.selectedAnswer === i && !isCorrect"
+        [class.disabled]="isAnswered" (click)="selectAnswer(i)">
+        <span class="option-label">{{ getOptionLetter(i) }}.</span>
         <span class="option-text">{{ option }}</span>
-        @if (isAnswered && $index === currentQuestion.correctAnswer) {
+        @if (isAnswered && i === currentQuestion.correctAnswer) {
         <span class="check-icon">✓</span>
         }
-        @if (isAnswered && currentAnswer?.selectedAnswer === $index && !isCorrect) {
+        @if (isAnswered && currentAnswer?.selectedAnswer === i && !isCorrect) {
         <span class="cross-icon">✗</span>
         }
       </button>

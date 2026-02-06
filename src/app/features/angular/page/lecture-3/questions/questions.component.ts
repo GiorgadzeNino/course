@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Answer, Question, QuestionsService } from '../../../../../core/services/questions.service';
 
 @Component({
     selector: 'app-questions-3',
     templateUrl: './questions.component.html',
-    styleUrls: ['./questions.component.scss']
+    styleUrls: ['./questions.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Questions3Component implements OnInit {
     questions: Question[] = [
@@ -80,13 +81,17 @@ export class Questions3Component implements OnInit {
     showResults = false;
     storageKey = 'lecture3_answers';
 
-    constructor(private questionsService: QuestionsService) { }
+    constructor(
+        private questionsService: QuestionsService,
+        private cdr: ChangeDetectorRef
+    ) { }
 
     ngOnInit() {
         const initialized = this.questionsService.initializeQuiz(this.questions, this.storageKey);
         this.currentQuestionIndex = initialized.currentQuestionIndex;
         this.answers = initialized.answers;
         this.showResults = initialized.showResults;
+        this.cdr.markForCheck();
     }
 
     get currentQuestion(): Question {
@@ -126,10 +131,12 @@ export class Questions3Component implements OnInit {
 
         this.questionsService.selectAnswer(this.currentQuestion, optionIndex, this.answers, this.storageKey);
         this.answers = this.questionsService.loadAnswers(this.storageKey);
+        this.cdr.markForCheck();
 
         if (this.isLastQuestion && this.canShowResults) {
             setTimeout(() => {
                 this.showResults = true;
+                this.cdr.markForCheck();
             }, 300);
         }
     }
@@ -137,22 +144,26 @@ export class Questions3Component implements OnInit {
     nextQuestion() {
         if (this.currentQuestionIndex < this.questions.length - 1) {
             this.currentQuestionIndex++;
+            this.cdr.markForCheck();
         }
     }
 
     previousQuestion() {
         if (this.currentQuestionIndex > 0) {
             this.currentQuestionIndex--;
+            this.cdr.markForCheck();
         }
     }
 
     goToQuestion(index: number) {
         this.currentQuestionIndex = index;
+        this.cdr.markForCheck();
     }
 
     finishQuiz() {
         if (!this.canShowResults) return;
         this.showResults = true;
+        this.cdr.markForCheck();
     }
 
     resetQuiz() {
@@ -160,6 +171,7 @@ export class Questions3Component implements OnInit {
         this.currentQuestionIndex = 0;
         this.answers = [];
         this.showResults = false;
+        this.cdr.markForCheck();
     }
 
     getTotalScore(): number {
