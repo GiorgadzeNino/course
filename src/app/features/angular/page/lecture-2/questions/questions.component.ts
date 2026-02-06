@@ -154,11 +154,25 @@ export class Questions2Component implements OnInit {
         return this.questionsService.calculateProgress(this.answers, this.questions.length);
     }
 
+    get isLastQuestion(): boolean {
+        return this.currentQuestionIndex === this.questions.length - 1;
+    }
+
+    get canShowResults(): boolean {
+        return this.answers.length === this.questions.length;
+    }
+
     selectAnswer(optionIndex: number) {
         if (this.isAnswered) return;
 
         this.questionsService.selectAnswer(this.currentQuestion, optionIndex, this.answers, this.storageKey);
         this.answers = this.questionsService.loadAnswers(this.storageKey);
+
+        if (this.isLastQuestion && this.canShowResults) {
+            setTimeout(() => {
+                this.showResults = true;
+            }, 300);
+        }
 
         // Auto-advance after showing result
         // setTimeout(() => {
@@ -208,6 +222,11 @@ export class Questions2Component implements OnInit {
 
     getCorrectOptionText(question: Question): string {
         return this.questionsService.getCorrectOptionText(question);
+    }
+
+    finishQuiz() {
+        if (!this.canShowResults) return;
+        this.showResults = true;
     }
 
     resetQuiz() {

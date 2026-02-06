@@ -54,13 +54,22 @@
           (click)="previousQuestion()">
           ← წინა
         </button>
-        <button
-          type="button"
-          class="nav-button primary"
-          [disabled]="currentQuestionIndex === questions.length - 1"
-          (click)="nextQuestion()">
-          შემდეგი →
-        </button>
+        @if (!isLastQuestion) {
+          <button
+            type="button"
+            class="nav-button primary"
+            (click)="nextQuestion()">
+            შემდეგი →
+          </button>
+        } @else {
+          <button
+            type="button"
+            class="nav-button primary"
+            [disabled]="!canShowResults"
+            (click)="finishQuiz()">
+            შედეგები →
+          </button>
+        }
       </div>
     </div>
 

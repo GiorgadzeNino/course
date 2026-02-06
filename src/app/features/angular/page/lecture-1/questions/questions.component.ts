@@ -110,13 +110,28 @@ export class QuestionsComponent implements OnInit {
     return this.questionsService.calculateProgress(this.answers, this.questions.length);
   }
 
+  get isLastQuestion(): boolean {
+    return this.currentQuestionIndex === this.questions.length - 1;
+  }
+
+  get canShowResults(): boolean {
+    return this.answers.length === this.questions.length;
+  }
+
   selectAnswer(optionIndex: number) {
     if (this.isAnswered) return;
 
     this.questionsService.selectAnswer(this.currentQuestion, optionIndex, this.answers, this.storageKey);
     this.answers = this.questionsService.loadAnswers(this.storageKey);
 
-    // Auto-advance after showing result
+    // If this was the last unanswered question and we're on the last step, show results.
+    if (this.isLastQuestion && this.canShowResults) {
+      setTimeout(() => {
+        this.showResults = true;
+      }, 300);
+    }
+
+    // Auto-advance after showing result (optional)
     // setTimeout(() => {
     //   if (this.currentQuestionIndex < this.questions.length - 1) {
     //     this.nextQuestion();
@@ -164,6 +179,11 @@ export class QuestionsComponent implements OnInit {
 
   getCorrectOptionText(question: Question): string {
     return this.questionsService.getCorrectOptionText(question);
+  }
+
+  finishQuiz() {
+    if (!this.canShowResults) return;
+    this.showResults = true;
   }
 
   resetQuiz() {
