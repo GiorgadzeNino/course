@@ -370,10 +370,79 @@
         }
     </section>
 
+    <section id="why-new-syntax">
+        <h2>8. რატომ შეცვალა Angular-მა *ngIf / *ngFor?</h2>
+        <p>Angular-ის ახალ ვერსიებში შემოღებულია ახალი სინტაქსი <code>&#64;if</code>, <code>&#64;for</code> და <code>&#64;switch</code> ძველი <code>*ngIf</code>, <code>*ngFor</code> და <code>*ngSwitch</code>-ის ნაცვლად. ქვემოთ მოცემულია მიზეზები, რატომ გაკეთდა ეს ცვლილება:</p>
 
+        <table class="command-table">
+            <thead>
+                <tr>
+                    <th>მიზეზი</th>
+                    <th>ახსნა</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>შესრულება</strong></td>
+                    <td>ნაკლები DOM ოპერაციები</td>
+                </tr>
+                <tr>
+                    <td><strong>წაკითხვადობა</strong></td>
+                    <td>უფრო ჰგავს JS/TS-ს</td>
+                </tr>
+                <tr>
+                    <td><strong>კომპილაცია</strong></td>
+                    <td>უკეთესი tree-shaking</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Mobile/Tablet Cards -->
+        <div class="binding-cards">
+            <div class="binding-card">
+                <div class="binding-card-header">
+                    <strong>შესრულება</strong>
+                </div>
+                <div class="binding-card-body">
+                    <p><strong>მიზეზი:</strong> ნაკლები DOM ოპერაციები</p>
+                    <p>ახალი სინტაქსი უფრო ეფექტურად მუშაობს DOM-თან, რაც იწვევს უკეთეს პერფორმანსს.</p>
+                </div>
+            </div>
+
+            <div class="binding-card">
+                <div class="binding-card-header">
+                    <strong>წაკითხვადობა</strong>
+                </div>
+                <div class="binding-card-body">
+                    <p><strong>მიზეზი:</strong> უფრო ჰგავს JS/TS-ს</p>
+                    <p>ახალი სინტაქსი უფრო ბუნებრივად იკითხება და ჰგავს JavaScript/TypeScript კოდს.</p>
+                </div>
+            </div>
+
+            <div class="binding-card">
+                <div class="binding-card-header">
+                    <strong>პროგნოზირებადობა</strong>
+                </div>
+                <div class="binding-card-body">
+                    <p><strong>მიზეზი:</strong> აღარ არის * მაგია</p>
+                    <p>ძველი <code>*</code> სინტაქსი იყო "მაგიური" - Angular-მა იცოდა რომ ეს იყო დირექტივა, მაგრამ ახალი სინტაქსი უფრო გამოკვეთილი და გასაგებია.</p>
+                </div>
+            </div>
+
+            <div class="binding-card">
+                <div class="binding-card-header">
+                    <strong>კომპილაცია</strong>
+                </div>
+                <div class="binding-card-body">
+                    <p><strong>მიზეზი:</strong> უკეთესი tree-shaking</p>
+                    <p>ახალი სინტაქსი საშუალებას აძლევს კომპილატორს უკეთესად გაიგოს რა კოდი გამოიყენება და რა არა, რაც იწვევს უფრო პატარა bundle-ებს.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section id="directives-best-practices" class="best-practices-section">
-        <h2>9. Best Practices (სენიორის რჩევები)</h2>
+        <h2>9. საუკეთესო პრაქტიკა</h2>
         <p class="best-practices-intro">ქვემოთ მოცემულია რეკომენდაციები, რომლებიც დაგეხმარებათ ეფექტურად გამოიყენოთ
             Directives Angular-ში:</p>
 
