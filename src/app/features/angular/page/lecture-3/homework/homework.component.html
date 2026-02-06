@@ -1,0 +1,35 @@
+<div class="homework-container">
+    <div class="homework-header">
+        <h2>დავალებები Angular Directives-ზე</h2>
+        <p class="homework-subtitle">პრაქტიკული დავალებები დამოუკიდებლად სავარჯიშოდ, რომლებიც დაგეხმარებათ დირექტივების
+            გაგებაში</p>
+    </div>
+
+    <div class="homework-list">
+        @for (homework of homeworks; track homework.id) {
+        <div class="homework-card">
+            <div class="homework-card-header">
+                <div class="homework-title-section">
+                    <h3 class="homework-title">{{ homework.title }}</h3>
+                    <span class="homework-level" [class]="getLevelClass(homework.level)">
+                        {{ getLevelLabel(homework.level) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="homework-content">
+                <p class="homework-description">{{ homework.description }}</p>
+
+                <div class="homework-tasks">
+                    <h4 class="tasks-title">დავალების ნაბიჯები:</h4>
+                    <ol class="tasks-list">
+                        @for (task of homework.tasks; track $index) {
+                        <li class="task-item">{{ task }}</li>
+                        }
+                    </ol>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>

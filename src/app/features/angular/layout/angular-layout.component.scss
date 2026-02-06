@@ -264,7 +264,7 @@
   position: relative;
 
   * {
-    user-select: none;
+    // user-select: none;
   }
 }
 
@@ -406,6 +406,20 @@
   padding-left: calc(0.5rem - 3px);
   border-radius: 4px;
   margin-right: 0.5rem;
+}
+
+.sidenav-sub a.quiz-link.passed,
+.sidenav-sub a.quiz-link.passed.active {
+  background: rgba(22, 163, 74, 0.25); /* green tint */
+  color: #bbf7d0;
+  border-left-color: #22c55e;
+}
+
+.sidenav-sub a.quiz-link.failed,
+.sidenav-sub a.quiz-link.failed.active {
+  background: rgba(220, 38, 38, 0.25); /* red tint */
+  color: #fecaca;
+  border-left-color: #ef4444;
 }
 
 .content {

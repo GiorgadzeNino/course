@@ -56,17 +56,18 @@
       </button>
       }
     </div>
-  </div>
 
-  <div class="question-indicators">
-    @for (question of questions; track question.id; let i = $index) {
-    <button type="button" class="indicator" [class.answered]="getQuestionStatus(question.id) !== 'unanswered'"
-      [class.correct]="getQuestionStatus(question.id) === 'correct'"
-      [class.incorrect]="getQuestionStatus(question.id) === 'incorrect'" [class.active]="i === currentQuestionIndex"
-      (click)="goToQuestion(i)">
-      {{ i + 1 }}
-    </button>
-    }
+    <div class="question-indicators">
+      @for (question of questions; track question.id; let i = $index) {
+      <button type="button" class="indicator" [class.active]="i === currentQuestionIndex"
+        [class.answered]="getSelectedAnswer(question.id) !== undefined"
+        [class.correct]="getSelectedAnswer(question.id) !== undefined && getSelectedAnswer(question.id) === question.correctAnswer"
+        [class.incorrect]="getSelectedAnswer(question.id) !== undefined && getSelectedAnswer(question.id) !== question.correctAnswer"
+        (click)="goToQuestion(i)">
+        {{ i + 1 }}
+      </button>
+      }
+    </div>
   </div>
   } @else {
   <div class="results-card" [class.passed]="isPassed" [class.failed]="!isPassed">
@@ -75,11 +76,12 @@
       <span class="score-number">{{ getTotalScore() }}</span>
       <span class="score-total">/ {{ questions.length }}</span>
     </div>
-    <p class="score-percentage">{{ (getTotalScore() / questions.length * 100).toFixed(0) }}%</p>
+    <div class="score-percentage">{{ getScorePercentage() }}%</div>
 
     <div class="results-list">
       @for (question of questions; track question.id) {
-      <div class="result-item" [class.correct]="getQuestionStatus(question.id) === 'correct'"
+      <div class="result-item"
+        [class.correct]="getQuestionStatus(question.id) === 'correct'"
         [class.incorrect]="getQuestionStatus(question.id) === 'incorrect'">
         <div class="result-icon">
           @if (getQuestionStatus(question.id) === 'correct') {
@@ -89,25 +91,18 @@
           }
         </div>
         <div class="result-content">
-          <p class="result-question">{{ question.question }}</p>
-          <p class="result-answer">
-            თქვენი პასუხი: {{ getOptionLetter(getSelectedAnswer(question.id)) }}.
-            {{ getSelectedOptionText(question) }}
-          </p>
+          <div class="result-question">{{ question.question }}</div>
+          <div class="result-answer">თქვენი პასუხი: {{ getSelectedOptionText(question.id) }}</div>
           @if (getQuestionStatus(question.id) === 'incorrect') {
-          <p class="result-correct">
-            სწორი პასუხი: {{ getOptionLetter(question.correctAnswer) }}.
-            {{ getCorrectOptionText(question) }}
-          </p>
+          <div class="result-correct">სწორი პასუხი: {{ getCorrectOptionText(question.id) }}</div>
           }
         </div>
       </div>
       }
     </div>
 
-    <button type="button" class="reset-button" (click)="resetQuiz()">
-      თავიდან დაწყება
-    </button>
+    <button type="button" class="reset-button" (click)="resetQuiz()">დაიწყე თავიდან</button>
   </div>
   }
 </div>
+

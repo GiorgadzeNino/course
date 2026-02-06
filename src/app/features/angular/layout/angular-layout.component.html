@@ -5,80 +5,129 @@
 
   <aside class="sidenav" [class.open]="sidenavOpen">
     <nav class="sidenav-nav">
-      <button type="button" class="nav-parent" [class.active]="activeModule === '1'" [class.expanded]="isModuleExpanded('1')"
-        (click)="toggleModule('1')">
+      <button type="button" class="nav-parent" [class.active]="activeModule === '1'"
+        [class.expanded]="isModuleExpanded('1')" (click)="toggleModule('1')">
         <span class="nav-parent-text">მოდული 1: Angular-ის საფუძვლები</span>
         <span class="nav-chevron" aria-hidden="true"></span>
       </button>
       @if (isModuleExpanded('1')) {
-        <ul class="sidenav-sub">
-          <li><a routerLink="/angular/1" fragment="overview" [class.active]="isFragmentActive('overview')"
-              (click)="closeSidenav()">Angular მიმოხილვა</a></li>
-          <li><a routerLink="/angular/1" fragment="installation" [class.active]="isFragmentActive('installation')"
-              (click)="closeSidenav()">Angular-ის ინსტალაცია</a></li>
-          <li><a routerLink="/angular/1" fragment="cli-capabilities" [class.active]="isFragmentActive('cli-capabilities')"
-              (click)="closeSidenav()">CLI-ის ძირითადი
-              შესაძლებლობები</a></li>
-          <li><a routerLink="/angular/1" fragment="new-app" [class.active]="isFragmentActive('new-app')"
-              (click)="closeSidenav()">ახალი აპლიკაციის შექმნა</a></li>
-          <li><a routerLink="/angular/1" fragment="cli-ng-new" [class.active]="isFragmentActive('cli-ng-new')"
-              (click)="closeSidenav()">რას აკეთებს CLI (ng new)</a></li>
-          <li><a routerLink="/angular/1" fragment="project-files" [class.active]="isFragmentActive('project-files')"
-              (click)="closeSidenav()">პროექტის ძირითადი ფაილები</a>
-          </li>
-          <li><a routerLink="/angular/1" fragment="run" [class.active]="isFragmentActive('run')"
-              (click)="closeSidenav()">დაინსტალირება და გაშვება</a></li>
-          <li><a routerLink="/angular/1" fragment="summary_1" [class.active]="isFragmentActive('summary_1')"
-              (click)="closeSidenav()">შეჯამება</a></li>
-          <li>
-            <a href="" [class.active]="isFragmentActive('questions_1')"
-              (click)="navigateToQuestions('1', $event)">შემაჯამებელი კითხვები</a>
-          </li>
-        </ul>
+      <ul class="sidenav-sub">
+        <li><a routerLink="/angular/1" fragment="overview" [class.active]="isFragmentActive('overview')"
+            (click)="closeSidenav()">Angular მიმოხილვა</a></li>
+        <li><a routerLink="/angular/1" fragment="installation" [class.active]="isFragmentActive('installation')"
+            (click)="closeSidenav()">Angular-ის ინსტალაცია</a></li>
+        <li><a routerLink="/angular/1" fragment="cli-capabilities" [class.active]="isFragmentActive('cli-capabilities')"
+            (click)="closeSidenav()">CLI-ის ძირითადი
+            შესაძლებლობები</a></li>
+        <li><a routerLink="/angular/1" fragment="new-app" [class.active]="isFragmentActive('new-app')"
+            (click)="closeSidenav()">ახალი აპლიკაციის შექმნა</a></li>
+        <li><a routerLink="/angular/1" fragment="cli-ng-new" [class.active]="isFragmentActive('cli-ng-new')"
+            (click)="closeSidenav()">რას აკეთებს CLI (ng new)</a></li>
+        <li><a routerLink="/angular/1" fragment="project-files" [class.active]="isFragmentActive('project-files')"
+            (click)="closeSidenav()">პროექტის ძირითადი ფაილები</a>
+        </li>
+        <li><a routerLink="/angular/1" fragment="run" [class.active]="isFragmentActive('run')"
+            (click)="closeSidenav()">დაინსტალირება და გაშვება</a></li>
+        <li><a routerLink="/angular/1" fragment="summary_1" [class.active]="isFragmentActive('summary_1')"
+            (click)="closeSidenav()">შეჯამება</a></li>
+        <li>
+          <a href="" class="quiz-link" [class.active]="isFragmentActive('questions_1')"
+            [class.passed]="quizStatus['1'] === 'passed'" [class.failed]="quizStatus['1'] === 'failed'"
+            (click)="navigateToQuestions('1', $event)">
+            შემაჯამებელი კითხვები
+          </a>
+        </li>
+      </ul>
       }
 
-      <button type="button" class="nav-parent" [class.active]="activeModule === '2'" [class.expanded]="isModuleExpanded('2')"
-        (click)="toggleModule('2')">
+      <button type="button" class="nav-parent" [class.active]="activeModule === '2'"
+        [class.expanded]="isModuleExpanded('2')" (click)="toggleModule('2')">
         <span class="nav-parent-text">მოდული 2: კომპონენტები, Template და Data Binding</span>
         <span class="nav-chevron" aria-hidden="true"></span>
       </button>
       @if (isModuleExpanded('2')) {
-        <ul class="sidenav-sub">
-          <li><a routerLink="/angular/2" fragment="what-is-component" [class.active]="isFragmentActive('what-is-component')"
-              (click)="closeSidenav()"> რა არის კომპონენტი?</a></li>
-          <li><a routerLink="/angular/2" fragment="component-template"
-              [class.active]="isFragmentActive('component-template')" (click)="closeSidenav()"> Template და Component
-              Class</a></li>
-          <li><a routerLink="/angular/2" fragment="data-binding" [class.active]="isFragmentActive('data-binding')"
-              (click)="closeSidenav()"> Data Binding-ის ტიპები</a>
-          </li>
-          <li><a routerLink="/angular/2" fragment="cli_2" [class.active]="isFragmentActive('cli_2')"
-              (click)="closeSidenav()"> კომპონენტის შექმნა</a></li>
-          <li><a routerLink="/angular/2" fragment="example" [class.active]="isFragmentActive('example')"
-              (click)="closeSidenav()"> პრაქტიკული მაგალითი</a></li>
-          <li><a routerLink="/angular/2" fragment="summary_2" [class.active]="isFragmentActive('summary_2')"
-              (click)="closeSidenav()"> შეჯამება</a></li>
-          <li>
-            <a href="" [class.active]="isFragmentActive('questions_2')"
-              (click)="navigateToQuestions('2', $event)"> შემაჯამებელი კითხვები</a>
-          </li>
-        </ul>
+      <ul class="sidenav-sub">
+        <li><a routerLink="/angular/2" fragment="what-is-component"
+            [class.active]="isFragmentActive('what-is-component')" (click)="closeSidenav()"> რა არის კომპონენტი?</a>
+        </li>
+        <li><a routerLink="/angular/2" fragment="component-template"
+            [class.active]="isFragmentActive('component-template')" (click)="closeSidenav()"> Template და Component
+            Class</a></li>
+        <li><a routerLink="/angular/2" fragment="data-binding" [class.active]="isFragmentActive('data-binding')"
+            (click)="closeSidenav()"> Data Binding-ის ტიპები</a>
+        </li>
+        <li><a routerLink="/angular/2" fragment="cli_2" [class.active]="isFragmentActive('cli_2')"
+            (click)="closeSidenav()"> კომპონენტის შექმნა</a></li>
+        <li><a routerLink="/angular/2" fragment="example" [class.active]="isFragmentActive('example')"
+            (click)="closeSidenav()"> პრაქტიკული მაგალითი</a></li>
+        <li><a routerLink="/angular/2" fragment="summary_2" [class.active]="isFragmentActive('summary_2')"
+            (click)="closeSidenav()"> შეჯამება</a></li>
+        <li>
+          <a href="" class="quiz-link" [class.active]="isFragmentActive('questions_2')"
+            [class.passed]="quizStatus['2'] === 'passed'" [class.failed]="quizStatus['2'] === 'failed'"
+            (click)="navigateToQuestions('2', $event)">
+            შემაჯამებელი კითხვები
+          </a>
+        </li>
+      </ul>
       }
 
-      <button type="button" class="nav-parent" [class.active]="activeModule === '3'" [class.expanded]="isModuleExpanded('3')"
-        (click)="toggleModule('3')">
-        <span class="nav-parent-text">მოდული 3: Forms</span>
+      <button type="button" class="nav-parent" [class.active]="activeModule === '3'"
+        [class.expanded]="isModuleExpanded('3')" (click)="toggleModule('3')">
+        <span class="nav-parent-text">მოდული 3: Angular Directives</span>
         <span class="nav-chevron" aria-hidden="true"></span>
       </button>
+      @if (isModuleExpanded('3')) {
+      <ul class="sidenav-sub">
+        <li><a routerLink="/angular/3" fragment="what-is-directive"
+            [class.active]="isFragmentActive('what-is-directive')" (click)="closeSidenav()">რა არის Directive
+            Angular-ში</a>
+        </li>
+        <li><a routerLink="/angular/3" fragment="directive-types" [class.active]="isFragmentActive('directive-types')"
+            (click)="closeSidenav()">Directives-ის ტიპები</a></li>
+        <li><a routerLink="/angular/3" fragment="structural-directives"
+            [class.active]="isFragmentActive('structural-directives')" (click)="closeSidenav()">Structural
+            Directives</a>
+        </li>
+        <li><a routerLink="/angular/3" fragment="attribute-directives"
+            [class.active]="isFragmentActive('attribute-directives')" (click)="closeSidenav()">Attribute Directives</a>
+        </li>
+        <li><a routerLink="/angular/3" fragment="custom-directive" [class.active]="isFragmentActive('custom-directive')"
+            (click)="closeSidenav()">Custom Attribute Directive</a>
+        </li>
+        <li><a routerLink="/angular/3" fragment="directives-best-practices"
+            [class.active]="isFragmentActive('directives-best-practices')" (click)="closeSidenav()">შეჯამება</a></li>
+        <li>
+          <a
+            href=""
+            class="quiz-link"
+            [class.active]="isFragmentActive('questions_3')"
+            [class.passed]="quizStatus['3'] === 'passed'"
+            [class.failed]="quizStatus['3'] === 'failed'"
+            (click)="navigateToQuestions('3', $event)">
+            შემაჯამებელი კითხვები
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/angular/3"
+            fragment="homework_3"
+            [class.active]="isFragmentActive('homework_3')"
+            (click)="closeSidenav()">
+            დავალებები
+          </a>
+        </li>
+      </ul>
+      }
 
-      <button type="button" class="nav-parent" [class.active]="activeModule === '4'" [class.expanded]="isModuleExpanded('4')"
-        (click)="toggleModule('4')">
+      <button type="button" class="nav-parent" [class.active]="activeModule === '4'"
+        [class.expanded]="isModuleExpanded('4')" (click)="toggleModule('4')">
         <span class="nav-parent-text">მოდული 4: RxJS & State Management</span>
         <span class="nav-chevron" aria-hidden="true"></span>
       </button>
 
-      <button type="button" class="nav-parent" [class.active]="activeModule === '5'" [class.expanded]="isModuleExpanded('5')"
-        (click)="toggleModule('5')">
+      <button type="button" class="nav-parent" [class.active]="activeModule === '5'"
+        [class.expanded]="isModuleExpanded('5')" (click)="toggleModule('5')">
         <span class="nav-parent-text">მოდული 5: Best Practices & Project</span>
         <span class="nav-chevron" aria-hidden="true"></span>
       </button>

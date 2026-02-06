@@ -208,6 +208,10 @@ export class Questions2Component implements OnInit {
         return this.questionsService.getTotalScore(this.answers);
     }
 
+    get isPassed(): boolean {
+        return this.getTotalScore() === this.questions.length;
+    }
+
     getOptionLetter(index: number): string {
         return this.questionsService.getOptionLetter(index);
     }

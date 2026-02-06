@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { SidenavService } from '../../../core/services/sidenav.service';
+import { QuestionsService, Answer } from '../../../core/services/questions.service';
 
 @Component({
   selector: 'app-angular-layout',
@@ -14,6 +15,10 @@ export class AngularLayoutComponent implements OnInit, OnDestroy {
   currentFragment: string | null = null;
   expandedModule: string | null = null;
   activeModule: string | null = null;
+  quizStatus: { [module: string]: 'passed' | 'failed' | 'none' } = {
+    '1': 'none',
+    '2': 'none'
+  };
   private sub?: Subscription;
   private routerSub?: Subscription;
   private hashChangeHandler?: () => void;
@@ -21,7 +26,8 @@ export class AngularLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private sidenav: SidenavService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private questionsService: QuestionsService
   ) {}
 
   ngOnInit() {
@@ -34,6 +40,7 @@ export class AngularLayoutComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {
         this.updateActiveModuleFromUrl();
+        this.updateQuizStatuses();
 
         // Get fragment from URL hash (works with hash-based routing)
         const urlTree = this.router.parseUrl(this.router.url);
@@ -52,6 +59,7 @@ export class AngularLayoutComponent implements OnInit, OnDestroy {
 
     // Initial values
     this.updateActiveModuleFromUrl();
+    this.updateQuizStatuses();
 
     // Get initial fragment
     const urlTree = this.router.parseUrl(this.router.url);
@@ -98,6 +106,28 @@ export class AngularLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
+  private updateQuizStatuses() {
+    this.quizStatus['1'] = this.getModuleQuizStatus('lecture1_answers', 6);
+    this.quizStatus['2'] = this.getModuleQuizStatus('lecture2_answers', 10);
+    this.quizStatus['3'] = this.getModuleQuizStatus('lecture3_answers', 7);
+  }
+
+  private getModuleQuizStatus(storageKey: string, totalQuestions: number): 'passed' | 'failed' | 'none' {
+    const answers: Answer[] = this.questionsService.loadAnswers(storageKey);
+    if (!answers || answers.length === 0) {
+      return 'none';
+    }
+
+    const correctCount = answers.filter(a => a.isCorrect).length;
+
+    if (answers.length === totalQuestions && correctCount === totalQuestions) {
+      return 'passed';
+    }
+
+    // At least one answer and not all correct → treat as failed
+    return 'failed';
+  }
+
   toggleModule(module: string) {
     const isExpanding = this.expandedModule !== module;
     this.expandedModule = isExpanding ? module : null;
@@ -115,18 +145,21 @@ export class AngularLayoutComponent implements OnInit, OnDestroy {
     this.sidenav.close();
   }
 
-  navigateToQuestions(module: '1' | '2', event: MouseEvent) {
+  navigateToQuestions(module: '1' | '2' | '3', event: MouseEvent) {
     event.preventDefault();
 
     const fragment = `questions_${module}`;
+    const questionsId = `questions_${module}`;
     const summaryId = `summary_${module}`;
 
     // Update URL fragment so the correct sidenav item is active
     this.router.navigate(['/angular', module], { fragment });
 
-    // Scroll to the summary section (where the questions button is)
+    // Scroll to the questions section or summary section (where the questions button is)
     setTimeout(() => {
-      const element = document.getElementById(summaryId);
+      const questionsElement = document.getElementById(questionsId);
+      const summaryElement = document.getElementById(summaryId);
+      const element = questionsElement || summaryElement;
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }

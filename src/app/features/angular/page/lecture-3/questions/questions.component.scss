@@ -241,11 +241,11 @@
   border-radius: 1rem;
 
   &.passed {
-    background: #dcfce7; // light green
+    background: #dcfce7;
   }
 
   &.failed {
-    background: #fee2e2; // light red
+    background: #fee2e2;
   }
 
   h3 {
@@ -364,5 +364,4 @@
     }
   }
 }
-
 

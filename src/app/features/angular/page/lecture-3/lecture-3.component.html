@@ -1,0 +1,425 @@
+<article class="lecture">
+    <h1>Module 3: Angular Directives</h1>
+
+    <section id="what-is-directive">
+        <h2>1. რა არის Directive Angular-ში</h2>
+        <p><strong>Directive</strong> არის მექანიზმი, რომელიც ცვლის HTML ელემენტის ქცევას ან გარეგნობას.</p>
+        <p>კომპონენტიც სინამდვილეში არის დირექტივა, მაგრამ:</p>
+        <ul>
+            <li>კომპონენტს აქვს <strong>შაბლონი (template)</strong></li>
+            <li>დირექტივას — <strong>არა</strong></li>
+        </ul>
+        <p><strong>მარტივად:</strong> <code>დირექტივა = მოქმედების დამატება HTML-ის ელემენტებზე</code></p>
+    </section>
+
+    <section id="directive-types">
+        <h2>2. Directives-ის ტიპები</h2>
+        <p>Angular-ში გვაქვს 3 ძირითადი ტიპი:</p>
+        <ul>
+            <li><strong>Component Directives </strong> – UI კომპონენტები (Template + Class + Styles)</li>
+            <li><strong>Structural Directives </strong>
+                – ელემენტების შექმნა/წაშლა DOM-ში (*ngIf, *ngFor)</li>
+            <li><strong>Attribute Directives</strong> – ელემენტის ატრიბუტების, სტილის ან ქცევის შეცვლა ([ngClass],
+                [ngStyle])
+            </li>
+        </ul>
+    </section>
+
+    <section id="structural-directives">
+        <h2>3. Structural Directives (სტრუქტურული დირექტივები)</h2>
+        <p><strong>Structural directive</strong>:</p>
+        <ul>
+            <li>ცვლის DOM-ის სტრუქტურას</li>
+            <li>ამატებს ან შლის ელემენტებს</li>
+        </ul>
+        <p class="note">
+            <strong>შენიშვნა:</strong> ქვემოთ მოცემული გვაქვს მაგალითები ორი განსხვავებული ვერსიით როგორ იწერებოდა ძველ
+            ვერსიებში და როგორ ახალში. თუმცა უნდა აღვნიშნოთ რომ თუ ახალ ვერსიაშიც გვეეწერება ძველი სინტაქსით, კოდი
+            იმუშავებს ჩვეულებრივად და არ ექნება პრობლემა
+        </p>
+
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button class="tab-button" [class.active]="directivesTab === 'old'" (click)="setDirectivesTab('old')">
+                    📦 Angular (NgModule) - ძველი ვერსია
+                </button>
+                <button class="tab-button" [class.active]="directivesTab === 'new'" (click)="setDirectivesTab('new')">
+                    🚀 Angular (Standalone) - ახალი ვერსია
+                </button>
+            </div>
+
+            <!-- Old Angular (NgModule) Tab -->
+            <div class="tab-content" [class.active]="directivesTab === 'old'">
+                <p><strong>🔑 ყოველთვის იწყება *</strong>-ით</p>
+
+                <h3>3.1 <code>*ngIf</code></h3>
+                <pre ngNonBindable><code>&lt;p *ngIf=&quot;isLoggedIn&quot;&gt;Welcome!&lt;/p&gt;</code></pre>
+                <ul>
+                    <li>ე.ი. გვაქვს ცვლადი isLoggedIn და თუ <code>isLoggedIn === true</code> → ელემენტი ჩანს</li>
+                    <li>თუ მას მნიშვნელობა <strong>არ აქვს</strong> ან მისი მნიშვნელობაა<code>false</code> → ელემენტი
+                        საერთოდ არ არსებობს DOM-ში</li>
+                </ul>
+
+                <h3>3.2 <code>*ngFor</code></h3>
+                <pre ngNonBindable><code>&lt;li *ngFor=&quot;let item of items&quot;&gt;
+    &#123;&#123; item &#125;&#125;
+&lt;/li&gt;
+    </code></pre>
+                <p>გამოიყენება სიების დასარენდერებლად. თითოეული ელემენტი თავისი მნიშვნელობით ერთიანად გამოდის DOM-ში
+                    როგორც
+                    <code>&lt;li&gt;</code> ელემენტი.
+                </p>
+                <p> როდესაც *ngFor-ს არ უწერია trackBy ფუნქცია, როდესაც ლისტი განახლდება, ანგულარი დომიდან წაშლის ყველა
+                    ელემენტს და ახლიდან დახატავს, როდესაც ბევრი მონაცემი გვაქვს, დამეთანხმებით, პერფორმასისთვის ცუდია
+                    ერთი მონაცემის ცვლილების გამო ყველას თავიდან გადაწერა</p>
+                <p>trackBy ფუნქციით კი თითოეულ ელემენტს ვანიჭებთ რაღაც უნიკალურ მნიშნელობას, რომელიც უშუალოდ განახლებულ
+                    ან დამატებულ ელემენტს შეცვლის დომში და არ გადახატავს ახლიდან მთლიან ლისტს </p>
+                <h3>3.3 <code>*ngSwitch</code></h3>
+                <pre ngNonBindable><code>&lt;div [ngSwitch]=&quot;role&quot;&gt;
+    &lt;p *ngSwitchCase=&quot;'admin'&quot;&gt;Admin&lt;/p&gt;
+    &lt;p *ngSwitchCase=&quot;'user'&quot;&gt;User&lt;/p&gt;
+    &lt;p *ngSwitchDefault&gt;Guest&lt;/p&gt;
+    &lt;/div&gt;
+    </code></pre>
+            </div>
+
+            <!-- New Angular (Standalone + ახალი Template Control Flow) Tab -->
+            <div class="tab-content" [class.active]="directivesTab === 'new'">
+                <p>
+                    <strong>ℹ️ ახალი სინტაქსი:</strong> Angular-ის ბოლო ვერსიებში შეგვიძლია template-ში
+                    გამოვიყენოთ <code>&#64;if</code>, <code>&#64;for</code> და <code>&#64;switch</code>
+                    სტრუქტურული დირექტივებისთვის.
+                </p>
+
+                <h3>🔑 3.1 <code>&#64;if</code></h3>
+                <pre ngNonBindable><code>&#64;if (isLoggedIn) &#123;
+  &lt;p&gt;Welcome!&lt;/p&gt;
+&#125; &#64;else &#123;
+  &lt;p&gt;Please log in&lt;/p&gt;
+&#125;
+</code></pre>
+                <ul>
+                    <li><code>isLoggedIn</code> არის ცვლადი.</li>
+                    <li>თუ <code>isLoggedIn === true</code> → DOM-ში ჩანს <code>&lt;p&gt;Welcome!&lt;/p&gt;</code>.</li>
+                    <li>თუ მნიშვნელობა არის <code>false</code> ან <code>undefined</code> →
+                        მუშაობს <code>&#64;else</code> ბლოკი და გაეშვება
+                        <code>&lt;p&gt;Please log in&lt;/p&gt;</code>.
+                    </li>
+                </ul>
+
+                <h3>🔑 3.2 <code>&#64;for</code></h3>
+                <pre ngNonBindable><code>&lt;ul&gt;
+  &#64;for (item of items; track item) &#123;
+    &lt;li&gt;&#123;&#123; item &#125;&#125;&lt;/li&gt;
+  &#125;
+&lt;/ul&gt;
+</code></pre>
+                <ul>
+                    <li><code>items</code> არის სია/მონაცემთა მასივი (მაგალითად:
+                        <code>['Angular', 'React', 'Vue']</code>).
+                    </li>
+                    <li>თითოეული ელემენტი თავისი მნიშვნელობით ერთიანად გამოდის DOM-ში როგორც
+                        <code>&lt;li&gt;</code> ელემენტი.
+                    </li>
+                    <li><code>track item</code> ეხმარება Angular-ს ეფექტურად განაახლოს სია.</li>
+                </ul>
+
+                <h3>🔑 3.3 <code>&#64;switch</code></h3>
+                <pre ngNonBindable><code>&#64;switch (role) &#123;
+  &#64;case ('admin') &#123; &lt;p&gt;Admin&lt;/p&gt; &#125;
+  &#64;case ('user')  &#123; &lt;p&gt;User&lt;/p&gt; &#125;
+  &#64;default        &#123; &lt;p&gt;Guest&lt;/p&gt; &#125;
+&#125;
+</code></pre>
+                <ul>
+                    <li><code>role</code> არის ცვლადი (მაგ. <code>'admin'</code>, <code>'user'</code> ან
+                        <code>'guest'</code>).
+                    </li>
+                    <li>DOM-ში მხოლოდ ის <code>&lt;p&gt;</code> ელემენტი ჩნდება, რომელიც ემთხვევა მიმდინარე
+                        მნიშვნელობას.</li>
+                    <li>თუ არც ერთი <code>&#64;case</code> არ დაემთხვა → მუშაობს <code>&#64;default</code> ბლოკი.</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>trackBy vs track - შედარება</h3>
+        <table class="command-table">
+            <thead>
+                <tr>
+                    <th>ფუნქცია</th>
+                    <th>გამოიყენება</th>
+                    <th>მიზანი</th>
+                    <th>სავალდებულო?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>trackBy</code></td>
+                    <td><code>*ngFor</code></td>
+                    <td>ფუნქცია, რომელიც აბრუნებს უნიკალურ იდენტიფიკატორს თითოეული ელემენტისთვის, DOM-ის ეფექტური
+                        განახლებისთვის.</td>
+                    <td>არასავალდებულო (მაგრამ ძალიან რეკომენდირებულია პროდუქტიულობისთვის)</td>
+                </tr>
+                <tr>
+                    <td><code>track</code></td>
+                    <td><code>&#64;for</code></td>
+                    <td>გამოსახულება, რომელიც აბრუნებს უნიკალურ იდენტიფიკატორს თითოეული ელემენტისთვის, სწრაფი
+                        diff-ისთვის.</td>
+                    <td>სავალდებულო ახალი &#64;for-ის შემთხვევაში სწრაფი DOM განახლებების უზრუნველყოფისთვის</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Mobile/Tablet Cards -->
+        <div class="binding-cards">
+            <div class="binding-card">
+                <div class="binding-card-header">
+                    <code>trackBy</code> - <code>*ngFor</code>
+                </div>
+                <div class="binding-card-body">
+                    <p><strong>გამოიყენება:</strong> <code>*ngFor</code></p>
+                    <p><strong>მიზანი:</strong> ფუნქცია, რომელიც აბრუნებს უნიკალურ იდენტიფიკატორს თითოეული
+                        ელემენტისთვის, DOM-ის ეფექტური განახლებისთვის.</p>
+                    <p><strong>სავალდებულო?</strong> არასავალდებულო (მაგრამ ძალიან რეკომენდირებულია პროდუქტიულობისთვის)
+                    </p>
+                </div>
+            </div>
+
+            <div class="binding-card">
+                <div class="binding-card-header">
+                    <code>track</code> - <code>&#64;for</code>
+                </div>
+                <div class="binding-card-body">
+                    <p><strong>გამოიყენება:</strong> <code>&#64;for</code></p>
+                    <p><strong>მიზანი:</strong> გამოსახულება, რომელიც აბრუნებს უნიკალურ იდენტიფიკატორს თითოეული
+                        ელემენტისთვის, სწრაფი diff-ისთვის.</p>
+                    <p><strong>სავალდებულო?</strong> სავალდებულო ახალი &#64;for-ის შემთხვევაში სწრაფი DOM განახლებების
+                        უზრუნველყოფისთვის</p>
+                </div>
+            </div>
+        </div>
+
+        <h3>💻 ინტერაქციული რედაქტორი - პრაქტიკული მაგალითი</h3>
+        <p>ქვემოთ შეგიძლიათ ნახოთ Structural Directives-ის მუშაობა:</p>
+        <div class="editor-controls">
+            <h4>კონტროლები:</h4>
+            <small>სცადეთ თავად შეუცვალოთ მნიშვნელობები ცვლადებს აღნიშნულ ფანჯარაში და დააკვირდით შედეგს</small>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" [(ngModel)]="isLoggedIn">
+                    <code>isLoggedIn</code> = {{ isLoggedIn }}
+                </label>
+                <label>
+                    <select [(ngModel)]="role">
+                        <option value="admin">admin</option>
+                        <option value="user">user</option>
+                        <option value="guest">guest</option>
+                    </select>
+                    <code>role</code> = {{ role }}
+                </label>
+            </div>
+        </div>
+        <app-code-editor [code]="directiveCode">
+            @if (isLoggedIn) {
+            <p>Welcome, User!</p>
+            }
+
+            <ul>
+                @for (item of items; track item.id) {
+                <li>{{ item.name }}</li>
+                }
+            </ul>
+
+            @switch (role) {
+            @case ('admin') {
+            <p>Admin Panel</p>
+            }
+            @case ('user') {
+            <p>User Dashboard</p>
+            }
+            @default {
+            <p>Guest</p>
+            }
+            }
+        </app-code-editor>
+
+
+    </section>
+
+    <section id="attribute-directives">
+        <h2>4. Attribute Directives (ატრიბუტული დირექტივები)</h2>
+        <p><strong>Attribute directive</strong>:</p>
+        <ul>
+            <li>მიზანი: ელემენტის თვისებების, სტილის ან ქცევის მართვა, DOM-დან არ შლის ელემენტს</li>
+            <li>ცვლის მის სტილს ან ქცევას</li>
+        </ul>
+
+        <h3>4.1 <code>ngClass</code></h3>
+        <pre
+            ngNonBindable><code>&lt;div [ngClass]=&quot;&#123; active: isActive &#125;&quot;&gt;&lt;/div&gt;</code></pre>
+        <p>დინამიური CSS კლასები.</p>
+
+        <h3>4.2 <code>ngStyle</code></h3>
+        <pre ngNonBindable><code>&lt;p [ngStyle]=&quot;&#123; color: isError ? 'red' : 'green' &#125;&quot;&gt;
+    Status
+    &lt;/p&gt;
+    </code></pre>
+        <p>დინამიური inline სტილები.</p>
+
+        <h3>💻 ინტერაქციული რედაქტორი - Attribute Directives</h3>
+        <p>ქვემოთ შეგიძლიათ ნახოთ Attribute Directives-ის მუშაობა:</p>
+        <div class="editor-controls">
+            <h4>კონტროლები:</h4>
+            <small>სცადეთ თავად შეუცვალოთ მნიშვნელობები ცვლადებს აღნიშნულ ფანჯარაში და დააკვირდით შედეგს</small>
+
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" [(ngModel)]="isActive">
+                    <code>isActive</code> = {{ isActive }}
+                </label>
+                <label>
+                    <input type="checkbox" [(ngModel)]="isDisabled">
+                    <code>isDisabled</code> = {{ isDisabled }}
+                </label>
+                <label>
+                    <input type="color" [(ngModel)]="textColor">
+                    <code>textColor</code> = {{ textColor }}
+                </label>
+                <label>
+                    <input type="range" min="12" max="24" [(ngModel)]="fontSize">
+                    <code>fontSize</code> = {{ fontSize }}px
+                </label>
+            </div>
+        </div>
+        <app-code-editor [code]="attributeDirectiveCode" editorTitle="📝 კოდი (HTML Template)"
+            previewTitle="🌐 ბრაუზერის ხედი (Preview)">
+            <div [ngClass]="{ active: isActive, disabled: isDisabled }">
+                Button
+            </div>
+
+            <p [ngStyle]="{ color: textColor, fontSize: fontSize + 'px' }">
+                Dynamic Styles
+            </p>
+        </app-code-editor>
+
+
+    </section>
+
+    <section id="custom-directive">
+        <h2>5. Custom Attribute Directive (საკუთარი დირექტივა)</h2>
+        <p>Angular გვაძლევს საშუალებას შევქმნათ ჩვენი დირექტივა.</p>
+
+        <h3>5.1 დირექტივის შექმნა</h3>
+        <pre ngNonBindable><code>ng generate directive highlight</code></pre>
+
+        <h3>5.2 მაგალითი: <code>HighlightDirective</code></h3>
+        <pre ngNonBindable><code>import &#123; Directive, ElementRef &#125; from '&#64;angular/core';
+
+    &#64;Directive(&#123;
+    selector: '[appHighlight]'
+    &#125;)
+    export class HighlightDirective &#123;
+    constructor(private el: ElementRef) &#123;
+        this.el.nativeElement.style.backgroundColor = highlightColor;
+    &#125;
+    &#125;
+    </code></pre>
+
+        <p><strong>გამოყენება:</strong></p>
+        <pre ngNonBindable><code>&lt;p appHighlight&gt;Highlighted text&lt;/p&gt;</code></pre>
+
+        <h3>💻 ინტერაქციული რედაქტორი - Custom Directive</h3>
+        <p>ქვემოთ შეგიძლიათ ნახოთ Custom Directive-ის მუშაობა:</p>
+
+        <div class="editor-controls">
+            <h4>კონტროლები:</h4>
+            <small>სცადეთ თავად შეუცვალოთ მნიშვნელობები ცვლადებს აღნიშნულ ფანჯარაში და დააკვირდით შედეგს</small>
+            <div class="control-group">
+                <label>
+                    <input type="color" [(ngModel)]="highlightColor">
+                    <code>highlightColor</code> = {{ highlightColor }}
+                </label>
+            </div>
+        </div>
+
+        <div class="code-editor-split">
+            <app-code-editor [code]="customDirectiveCode" editorTitle="📝 Directive Code (TypeScript)"
+                [showPreview]="false">
+            </app-code-editor>
+
+            <app-code-editor [code]="customDirectiveUsageCode" editorTitle="📝 HTML Template" [showPreview]="false">
+            </app-code-editor>
+
+            <app-code-editor editorTitle="🌐 Browser Preview" [showEditor]="false" previewTitle="🌐 Browser Preview">
+                <p appHighlight [highlightColor]="highlightColor">
+                    Highlighted text
+                </p>
+            </app-code-editor>
+        </div>
+    </section>
+
+
+
+    <section id="directives-best-practices" class="best-practices-section">
+        <h2>9. Best Practices (სენიორის რჩევები)</h2>
+        <p class="best-practices-intro">ქვემოთ მოცემულია რეკომენდაციები, რომლებიც დაგეხმარებათ ეფექტურად გამოიყენოთ
+            Directives Angular-ში:</p>
+
+        <div class="best-practices-grid">
+            <div class="practice-card">
+                <div class="practice-icon">🏗️</div>
+                <h3>Structural Directive</h3>
+                <p>გამოიყენე DOM კონტროლისთვის</p>
+                <div class="practice-example">
+                    <code>*ngIf</code>, <code>*ngFor</code>, <code>&#64;if</code>, <code>&#64;for</code>
+                </div>
+            </div>
+
+            <div class="practice-card">
+                <div class="practice-icon">🎨</div>
+                <h3>Attribute Directive</h3>
+                <p>გამოიყენე ვიზუალის/ქცევისთვის</p>
+                <div class="practice-example">
+                    <code>[ngClass]</code>, <code>[ngStyle]</code>
+                </div>
+            </div>
+
+            <div class="practice-card">
+                <div class="practice-icon">⚡</div>
+                <h3>Template სიმარტივე</h3>
+                <p>ნუ დაამძიმებ template-ს რთული ლოგიკით</p>
+                <div class="practice-example">
+                    გადაიტანე ლოგიკა component-ში
+                </div>
+            </div>
+
+            <div class="practice-card">
+                <div class="practice-icon">♻️</div>
+                <h3>Custom Directive</h3>
+                <p>გამოიყენე განმეორებადი ქცევისთვის</p>
+                <div class="practice-example">
+                    შექმენი საკუთარი directive
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+    <section id="questions_3">
+        @if (showQuestions) {
+        <app-questions-3></app-questions-3>
+        } @else {
+        <div class="questions-toggle">
+            <button type="button" class="questions-button" (click)="openQuestions()">
+                შემაჯამებელი კითხვები
+            </button>
+        </div>
+        }
+    </section>
+
+
+    <section id="homework_3">
+        <app-homework-3></app-homework-3>
+    </section>
+
+</article>

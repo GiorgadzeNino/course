@@ -36,11 +36,11 @@ export class QuestionsComponent implements OnInit {
       question: 'რა როლი აქვს TypeScript-ს Angular-ში?',
       options: [
         'დიზაინის შექმნა',
-        'კოდის ტიპიზაცია და ხარისხის გაუმჯობესება',
+        'კოდის ტიპიზაცია',
         'HTML-ის ჩანაცვლება',
         'მონაცემთა ბაზასთან კავშირი',
       ],
-      correctAnswer: 2
+      correctAnswer: 1
     },
     {
       id: 4,
@@ -163,6 +163,10 @@ export class QuestionsComponent implements OnInit {
 
   getTotalScore(): number {
     return this.questionsService.getTotalScore(this.answers);
+  }
+
+  get isPassed(): boolean {
+    return this.getTotalScore() === this.questions.length;
   }
 
   getOptionLetter(index: number): string {

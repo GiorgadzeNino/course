@@ -1,0 +1,36 @@
+<div class="code-editor-container" [class.editor-only]="!showPreview" [class.preview-only]="!showEditor">
+  @if (showEditor) {
+    <div class="editor-panel">
+      <div class="editor-header">
+        <span>{{ editorTitle }}</span>
+      </div>
+      <div class="editor-content">
+        <textarea 
+          class="code-editor" 
+          [(ngModel)]="code"
+          placeholder="ჩაწერეთ კოდი..."></textarea>
+      </div>
+    </div>
+  }
+  
+  @if (showPreview) {
+    <div class="preview-panel">
+      <div class="preview-header">
+        <span>{{ previewTitle }}</span>
+      </div>
+      <div class="preview-content">
+        <div class="preview-browser">
+          <div class="browser-controls">
+            <span class="browser-dot"></span>
+            <span class="browser-dot"></span>
+            <span class="browser-dot"></span>
+          </div>
+          <div class="browser-content">
+            <ng-content></ng-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+

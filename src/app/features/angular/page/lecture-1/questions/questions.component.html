@@ -88,7 +88,7 @@
       }
     </div>
   } @else {
-    <div class="results-card">
+    <div class="results-card" [class.passed]="isPassed" [class.failed]="!isPassed">
       <h3>შედეგები</h3>
       <div class="score">
         <span class="score-number">{{ getTotalScore() }}</span>

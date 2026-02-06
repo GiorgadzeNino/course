@@ -237,6 +237,16 @@
 
 .results-card {
   text-align: center;
+  padding: 1.5rem;
+  border-radius: 1rem;
+
+  &.passed {
+    background: #dcfce7; // light green
+  }
+
+  &.failed {
+    background: #fee2e2; // light red
+  }
 
   h3 {
     font-size: 1.75rem;
