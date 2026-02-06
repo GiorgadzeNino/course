@@ -1,0 +1,64 @@
+<div class="register-container">
+    <div class="register-card">
+        <h1 class="register-title">რეგისტრაცია</h1>
+
+        @if (showSuccess) {
+        <div class="alert alert-success">
+            <strong>წარმატება!</strong> თქვენი რეგისტრაცია წარმატებით დასრულდა.
+        </div>
+        }
+
+        @if (showError) {
+        <div class="alert alert-error">
+            <strong>შეცდომა!</strong> {{ errorMessage }}
+        </div>
+        }
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+            <div class="form-group">
+                <label for="name" class="form-label">სახელი</label>
+                <input type="text" id="name" formControlName="name" class="form-input"
+                    [class.error]="name?.invalid && name?.touched" placeholder="თქვენი სახელი" />
+                <div class="error-message" *ngIf="name?.invalid && name?.touched">
+                    <span>სახელი აუცილებელია</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastname" class="form-label">გვარი</label>
+                <input type="text" id="lastname" formControlName="lastname" class="form-input"
+                    [class.error]="lastname?.invalid && lastname?.touched" placeholder="თქვენი გვარი" />
+                <div class="error-message" *ngIf="lastname?.invalid && lastname?.touched">
+                    <span>გვარი აუცილებელია</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">ელფოსტა</label>
+                <input type="email" id="email" formControlName="email" class="form-input"
+                    [class.error]="email?.invalid && email?.touched" placeholder="თქვენი ელფოსტა" />
+                <div class="error-message" *ngIf="email?.invalid && email?.touched">
+                    <span *ngIf="email?.errors?.['required']">ელფოსტა აუცილებელია</span>
+                    <span *ngIf="email?.errors?.['email']">გთხოვთ შეიყვანოთ სწორი ელფოსტა</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone" class="form-label">ტელეფონი</label>
+                <input type="tel" id="phone" formControlName="phone" class="form-input"
+                    [class.error]="phone?.invalid && phone?.touched" placeholder="თქვენი ტელეფონი" />
+                <div class="error-message" *ngIf="phone?.invalid && phone?.touched">
+                    <span>ტელეფონი აუცილებელია</span>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-button" [disabled]="registerForm.invalid || isSubmitting">
+                @if (isSubmitting) {
+                <span>იგზავნება...</span>
+                } @else {
+                <span>რეგისტრაცია</span>
+                }
+            </button>
+        </form>
+    </div>
+</div>
