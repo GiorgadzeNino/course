@@ -1,57 +1,158 @@
-<section class="relative">
-  <!-- HERO -->
-  <div class="relative h-[calc(100vh-56px)] min-h-[560px] w-full overflow-hidden" aria-label="Hero">
-    <!-- Background image with blur/dim -->
-    <img
-      src="assets/hero.svg"
-      alt="Background"
-      class="absolute inset-0 w-full h-full object-cover filter blur-[2px] brightness-[0.6]"
-    />
-    <!-- Subtle dark overlay -->
-    <div class="absolute inset-0 bg-[rgba(0,0,0,0.2)]"></div>
-
-    <!-- Content -->
-    <div class="relative z-10 max-w-5xl mx-auto h-full px-4 flex flex-col items-center justify-center text-white text-center">
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <div class="hero-background">
+    <div class="gradient-overlay"></div>
+    <div class="animated-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+  </div>
+  
+  <div class="hero-content">
+    <!-- <div class="avatar-wrapper">
+      <div class="avatar-glow"></div>
       <img
         src="assets/avatar.svg"
         alt="Nino"
-        class="w-20 h-20 rounded-full ring-4 ring-white/30 mb-5 object-cover"
+        class="avatar-image"
       />
-      <p class="text-[13px] md:text-sm font-medium mb-2 opacity-90">Online tutoring with Nino</p>
-      <h1 class="text-[28px] md:text-[44px] lg:text-[52px] font-semibold leading-tight mb-6 drop-shadow-[0_4px_14px_rgba(0,0,0,0.55)]">
-     ისწავლე პროგრამირება &amp; შექმენი თანამედროვე, პრაქტიკული პროექტები ნულიდან
-      </h1>
+    </div> -->
+    
+    <p class="hero-badge">
+      <span class="badge-icon">✨</span>
+      Online Tutoring with Nino
+    </p>
+    
+    <h1 class="hero-title">
+      ისწავლე პროგრამირება &amp; შექმენი თანამედროვე, პრაქტიკული პროექტები ნულიდან
+    </h1>
+    
+    <p class="hero-description">
+      გახდი პროფესიონალი დეველოპერი ჩვენი სტრუქტურირებული კურსებისა და პერსონალური მენტორინგის დახმარებით
+    </p>
+    
+    <div class="hero-actions">
       <a
-        class="inline-flex items-center rounded-full bg-[#f3b4c3] hover:bg-[#f3a8b8] text-gray-900 px-5 py-2 text-sm font-semibold transition shadow-sm"
+        class="btn btn-primary"
         [routerLink]="['/courses']"
       >
-        კურსები
+        <span>კურსების ნახვა</span>
+        <svg class="btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+        </svg>
       </a>
-
-      <!-- Feature strip on hero bottom -->
-      <div class="absolute left-1/2 -translate-x-1/2 bottom-6 w-full max-w-6xl px-4">
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 text-center text-white drop-shadow-[0_1px_12px_rgba(0,0,0,0.65)]">
-          <!-- <div>
-            <div class="text-sm md:text-base font-semibold">1 &amp; 1</div>
-            <div class="text-xs md:text-sm opacity-90">Online Tutoring</div>
-          </div> -->
-          <div>
-            <div class="text-sm md:text-base font-semibold">ისწავლე</div>
-            <div class="text-xs md:text-sm opacity-90">სწრაფად და ეფექტურად</div>
-          </div>
-          <div>
-            <div class="text-sm md:text-base font-semibold">დახვეწე</div>
-            <div class="text-xs md:text-sm opacity-90">კოდინგის უნარები</div>
-          </div>
-          <div>
-            <div class="text-sm md:text-base font-semibold">გაიუმჯობესე</div>
-            <div class="text-xs md:text-sm opacity-90">პროფესიული თავდაჯერებულობა</div>
-          </div>
+      <a
+        class="btn btn-outline"
+        [routerLink]="['/auth/register']"
+      >
+        რეგისტრაცია
+      </a>
+    </div>
+    
+    <!-- <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-icon">🧠</div>
+        <div class="stat-content">
+          <div class="stat-number"></div>
+          <div class="stat-label">ცოდნა</div>
         </div>
       </div>
-    </div>
+      <div class="stat-card">
+        <div class="stat-icon">📝</div>
+        <div class="stat-content">
+          <div class="stat-number"></div>
+          <div class="stat-label">პროექტები</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💯</div>
+        <div class="stat-content">
+          <div class="stat-number"></div>
+          <div class="stat-label">წარმატება</div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+  </div>
+</section>
 
-    <!-- Pink angled band -->
-    <img src="assets/band.svg" alt="" class="absolute left-0 right-0 -bottom-8 w-full pointer-events-none select-none" />
+<!-- FEATURES SECTION -->
+<section class="features-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">რატომ ჩვენ?</h2>
+      <p class="section-subtitle">ჩვენ გთავაზობთ საუკეთესო სწავლების გამოცდილებას</p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <div class="feature-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+        </div>
+        <h3 class="feature-title">ისწავლე</h3>
+        <p class="feature-description">სწრაფად და ეფექტურად პრაქტიკული მიდგომებით</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <div class="feature-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+          </div>
+        </div>
+        <h3 class="feature-title">დახვეწე</h3>
+        <p class="feature-description">კოდინგის უნარები რეალურ პროექტებზე მუშაობით</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <div class="feature-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+            </svg>
+          </div>
+        </div>
+        <h3 class="feature-title">გაიუმჯობესე</h3>
+        <p class="feature-description">პროფესიული თავდაჯერებულობა და უნარები</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES PREVIEW -->
+<section class="courses-preview-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">პოპულარული კურსები</h2>
+      <p class="section-subtitle">აირჩიე შენთვის შესაფერისი კურსი</p>
+    </div>
+    
+    <div class="course-preview-card">
+      <div class="course-preview-image">
+        <img src="assets/angular.png" alt="Angular Course" />
+      </div>
+      <div class="course-preview-content">
+        <h3 class="course-preview-title">Angular - სრული კურსი</h3>
+        <p class="course-preview-description">
+          ისწავლე თანამედროვე ვებ-დეველოპმენტი Angular-ის გამოყენებით. 
+          შექმენი რეალური პროექტები და გახდი პროფესიონალი Frontend დეველოპერი.
+        </p>
+        <a class="course-preview-link" [routerLink]="['/courses']">
+          ყველა კურსის ნახვა
+          <svg class="link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
   </div>
 </section>
