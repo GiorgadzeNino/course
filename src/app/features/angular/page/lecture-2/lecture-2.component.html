@@ -579,6 +579,159 @@ export class CourseComponent &#123;
     </div>
   </section>
 
+  <section id="communication">
+    <h2>კომპონენტებს შორის კომუნიკაცია</h2>
+
+    <div class="communication-intro">
+      <p>
+        როგორც აღვნიშნეთ, Angular-ში UI მთლიანად აგებულია კომპონენტებისგან.
+        თითოეული კომპონენტი წარმოადგენს UI-ის ერთ დამოუკიდებელ ნაწილს.
+        <strong>მაგალითად:</strong> Header, Footer, Product Item, User Card და სხვა.
+      </p>
+    </div>
+
+    <h3>კომპონენტების იერარქია</h3>
+    <p>
+      წარმოვიდგინოთ, რომ გვაქვს <code>app</code> კომპონენტი, რომელშიც გამოძახებული გვაქვს სხვა კომპონენტები,
+      მათ შორის <code>header</code> და <code>footer</code>.
+    </p>
+    <p>
+      <strong>app</strong> კომპონენტს ვუწოდოთ <strong>მშობელი კომპონენტი</strong>,
+      ხოლო <strong>header</strong> და <strong>footer</strong> კომპონენტებს <strong>შვილი კომპონენტები</strong>.
+      კომპონენტების იერარქია უნდა წარმოვიდგინოთ ხის სახით და მარტივი გასაგებია მშობელი-შვილი სტრუქტურა.
+    </p>
+
+    <app-code-editor [code]="componentHierarchyCode" editorTitle="📝 კომპონენტების იერარქიის მაგალითი"
+      [showPreview]="false">
+    </app-code-editor>
+
+    <h3>რატომ გვჭირდება კომუნიკაცია?</h3>
+    <p>
+      მაგალითად, <code>app</code> კომპონენტში გვაქვს <code>name = 'John Doe'</code> და გვინდა,
+      რომ ეს <code>name</code> გამოვიტანოთ <code>header</code> კომპონენტში.
+    </p>
+    <p>
+      კომპონენტში აღწერილი ცვლადის მნიშვნელობა მხოლოდ იგივე კომპონენტის HTML-მა იცის.
+      ე.ი. თუ <code>app</code> კომპონენტში გვიწერია <code>name</code>,
+      ნიშნავს რომ <code>header</code>-ის HTML-ში პირდაპირ წვდომადი არ იქნება.
+      <strong>სწორედ ამისთვის არსებობს კომპონენტების შორის კომუნიკაცია.</strong>
+    </p>
+
+    <h3>ინფორმაციის გადაცემის მიმართულება</h3>
+    <div class="data-flow-info">
+      <p>
+        Angular აპლიკაცია არის კომპონენტების ხე. ინფორმაციის გაცვლისას:
+      </p>
+      <ul>
+        <li>
+          <strong>მონაცემები</strong> გადადის <strong>ზემოდან ქვემოთ</strong>
+          (მშობელი კომპონენტიდან → შვილ კომპონენტზე)
+        </li>
+        <li>
+          <strong>ივენთები</strong> ბრუნდება <strong>ქვემოდან ზემოთ</strong>
+          (შვილი კომპონენტიდან → მშობელ კომპონენტზე)
+        </li>
+      </ul>
+    </div>
+
+    <h3>კომპონენტების შორის კომუნიკაციის ტიპები</h3>
+
+    <div class="communication-types">
+      <div class="comm-type-card">
+        <h4>1. &#64;Input() - მონაცემების გადაცემა</h4>
+        <p>როდესაც მშობლიდან მონაცემს გადავცემთ შვილ კომპონენტს.</p>
+
+        <div class="syntax-section">
+          <h5>&#64;Input() სინტაქსი:</h5>
+          <ul class="syntax-list">
+            <li><code>&#64;Input() propertyName: type = defaultValue;</code> - ძირითადი სინტაქსი</li>
+            <li><code>&#64;Input() product!: Product;</code> - Non-null assertion (!) - დარწმუნებული ხართ რომ
+              მნიშვნელობა იქნება</li>
+            <li><code>&#64;Input() optionalData?: string;</code> - Optional (?) - მნიშვნელობა შეიძლება იყოს undefined
+            </li>
+            <li><code>&#64;Input('externalName') internalName: string;</code> - Custom property name - გარედან სხვა
+              სახელით გადაცემა</li>
+          </ul>
+        </div>
+
+        <app-code-editor [code]="inputExampleCode" editorTitle="📝 @Input() მაგალითი" [showPreview]="false">
+        </app-code-editor>
+
+        <h3 class="interactive-editor-title">💻 ინტერაქციული რედაქტორი - პრაქტიკული მაგალითი</h3>
+        <p>ქვემოთ შეგიძლიათ ნახოთ &#64;Input()-ის მუშაობა:</p>
+        <div class="editor-controls">
+          <h4>კონტროლები:</h4>
+          <small>სცადეთ თავად შეუცვალოთ მნიშვნელობა Parent Component-ში და დააკვირდით როგორ იცვლება Child
+            Component-ში</small>
+          <div class="control-group">
+            <label>
+              <span>Parent Component - <code>name</code>:</span>
+              <input type="text" [(ngModel)]="inputDemoName" placeholder="შეიყვანეთ სახელი">
+              <code>name</code> = "{{ inputDemoName }}"
+            </label>
+          </div>
+        </div>
+        <app-code-editor [code]="inputInteractiveCode" editorTitle="📝 @Input() ინტერაქციული მაგალითი">
+          <div class="input-demo-container">
+            <div class="input-demo-parent">
+              <h5>Parent Component (app.component)</h5>
+              <p><code>name</code> = "{{ inputDemoName }}"</p>
+              <p class="demo-note">↓ გადაცემულია Child Component-ში</p>
+            </div>
+            <div class="input-demo-child">
+              <app-demo-input-child [userName]="inputDemoName"></app-demo-input-child>
+            </div>
+          </div>
+        </app-code-editor>
+      </div>
+
+      <div class="comm-type-card">
+        <h4>2. &#64;Output() - ივენთების გადაცემა</h4>
+        <p>როდესაც შვილი კომპონენტიდან მოქმედებას (ივენთს) გადავცემთ მშობელ კომპონენტს.</p>
+
+        <div class="syntax-section">
+          <h5>&#64;Output() სინტაქსი:</h5>
+          <ul class="syntax-list">
+            <li><code>&#64;Output() eventName = new EventEmitter&lt;Type&gt;();</code> - ძირითადი სინტაქსი</li>
+            <li><code>&#64;Output('customEvent') internalEvent = new EventEmitter&lt;string&gt;();</code> - Custom event
+              name</li>
+            <li><code>&#64;Output() dataEmitted = new EventEmitter&lt;Product&gt;();</code> - Complex data type</li>
+            <li><code>eventName.emit(data);</code> - ივენთის გაგზავნა</li>
+            <li><code>(eventName)="handler($event)"</code> - Parent-ში მიღება</li>
+          </ul>
+        </div>
+
+        <app-code-editor [code]="outputExampleCode" editorTitle="📝 @Output() მაგალითი" [showPreview]="false">
+        </app-code-editor>
+      </div>
+
+      <div class="comm-type-card">
+        <h4>3. სერვისები</h4>
+        <p>ამ ნაწილს მოგვიანებით გავარჩევთ დეტალურად.</p>
+      </div>
+    </div>
+
+    <h3>სრული მაგალითი: Parent-Child კომუნიკაცია</h3>
+    <p>ქვემოთ მოცემულია სრული მაგალითი, სადაც ნაჩვენებია როგორ მუშაობს Input და Output ერთად:</p>
+
+    <app-code-editor [code]="fullExampleCode" editorTitle="📝 სრული მაგალითი">
+      <div class="interactive-demo">
+        <div class="demo-parent">
+          <h4>Parent Component (app.component)</h4>
+          <p><strong>User:</strong> {{ demoUserName }}</p>
+          <p><strong>Message from child:</strong>
+            <span [class.has-message]="demoMessage">{{ demoMessage || '(არ არის მიღებული)' }}</span>
+          </p>
+
+          <div class="demo-child-wrapper">
+            <app-demo-child [userName]="demoUserName" (messageSent)="onDemoMessageReceived($event)">
+            </app-demo-child>
+          </div>
+        </div>
+      </div>
+    </app-code-editor>
+
+  </section>
   <section id="summary_2" class="summary-section">
     <h2>შეჯამება</h2>
     <p class="summary-intro">ამ ლექციაში ვისწავლეთ:</p>

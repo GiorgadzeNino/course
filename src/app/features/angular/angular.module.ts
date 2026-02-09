@@ -17,6 +17,8 @@ import { Homework3Component } from './page/lecture-3/homework/homework.component
 import { QuestionsService } from '../../core/services/questions.service';
 import { SharedModule } from '../../shared/shared.module';
 import { HighlightDirective } from './page/lecture-3/directives/highlight.directive';
+import { DemoChildComponent } from './page/lecture-2/demo-child/demo-child.component';
+import { DemoInputChildComponent } from './page/lecture-2/demo-input-child/demo-input-child.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { HighlightDirective } from './page/lecture-3/directives/highlight.direct
     QuestionsComponent,
     Questions2Component,
     Questions3Component,
-    Homework3Component
+    Homework3Component,
+    
   ],
   imports: [
     CommonModule,
@@ -37,7 +40,9 @@ import { HighlightDirective } from './page/lecture-3/directives/highlight.direct
     AngularRoutingModule,
     FormsModule,
     SharedModule,
-    HighlightDirective
+    HighlightDirective,
+    DemoChildComponent,
+    DemoInputChildComponent
   ],
   providers: [QuestionsService]
 })

@@ -60,6 +60,8 @@
             (click)="closeSidenav()"> კომპონენტის შექმნა</a></li>
         <li><a routerLink="/angular/2" fragment="example" [class.active]="isFragmentActive('example')"
             (click)="closeSidenav()"> პრაქტიკული მაგალითი</a></li>
+        <li><a routerLink="/angular/2" fragment="communication" [class.active]="isFragmentActive('communication')"
+            (click)="closeSidenav()"> კომპონენტებს შორის კომუნიკაცია</a></li>
         <li><a routerLink="/angular/2" fragment="summary_2" [class.active]="isFragmentActive('summary_2')"
             (click)="closeSidenav()"> შეჯამება</a></li>
         <li>
@@ -98,21 +100,14 @@
         <li><a routerLink="/angular/3" fragment="directives-best-practices"
             [class.active]="isFragmentActive('directives-best-practices')" (click)="closeSidenav()">შეჯამება</a></li>
         <li>
-          <a
-            href=""
-            class="quiz-link"
-            [class.active]="isFragmentActive('questions_3')"
-            [class.passed]="quizStatus['3'] === 'passed'"
-            [class.failed]="quizStatus['3'] === 'failed'"
+          <a href="" class="quiz-link" [class.active]="isFragmentActive('questions_3')"
+            [class.passed]="quizStatus['3'] === 'passed'" [class.failed]="quizStatus['3'] === 'failed'"
             (click)="navigateToQuestions('3', $event)">
             შემაჯამებელი კითხვები
           </a>
         </li>
         <li>
-          <a
-            routerLink="/angular/3"
-            fragment="homework_3"
-            [class.active]="isFragmentActive('homework_3')"
+          <a routerLink="/angular/3" fragment="homework_3" [class.active]="isFragmentActive('homework_3')"
             (click)="closeSidenav()">
             დავალებები
           </a>

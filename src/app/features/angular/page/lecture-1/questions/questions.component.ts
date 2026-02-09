@@ -26,8 +26,7 @@ export class QuestionsComponent implements OnInit {
       options: [
         'ng --version',
         'ng -v',
-        'ng v',
-        'ng version'
+        'ng v'
       ],
       correctAnswer: 2
     },

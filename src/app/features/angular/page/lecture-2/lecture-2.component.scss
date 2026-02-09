@@ -1,6 +1,324 @@
 /* Lecture 2 specific styles (optional).
    Base typography and layout for .lecture come from angular-layout.component.scss */
 
+/* Communication Section Styles */
+#communication {
+  margin-top: 3rem;
+
+  h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #1e293b;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #334155;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  p {
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    color: #475569;
+  }
+
+  code {
+    background: #f1f5f9;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #0f172a;
+    font-family: ui-monospace, monospace;
+  }
+}
+
+.communication-intro {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.03) 0%, rgba(30, 41, 59, 0.02) 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #0f172a;
+  margin-bottom: 2rem;
+
+  p {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+}
+
+.data-flow-info {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  border: 1px solid #e2e8f0;
+
+  ul {
+    margin: 1rem 0 0 0;
+    padding-left: 1.5rem;
+
+    li {
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+      color: #475569;
+    }
+  }
+}
+
+.communication-types {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.comm-type-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  h4 {
+    margin-top: 0;
+    color: #0f172a;
+    font-size: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  p {
+    margin-bottom: 1rem;
+    color: #64748b;
+  }
+}
+
+.interactive-demo {
+  padding: 1.5rem;
+  background: white;
+}
+
+.demo-parent {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.05) 0%, rgba(30, 41, 59, 0.02) 100%);
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+
+  h4 {
+    margin: 0 0 1rem 0;
+    color: #0f172a;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0.5rem 0;
+    color: #475569;
+    font-size: 0.95rem;
+
+    strong {
+      color: #0f172a;
+    }
+  }
+
+  .has-message {
+    color: #059669;
+    font-weight: 600;
+  }
+}
+
+.demo-child-wrapper {
+  margin-top: 1rem;
+}
+
+.interactive-editor-title {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #0f172a;
+  font-size: 1.25rem;
+}
+
+.editor-controls {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin: 1.5rem 0;
+
+  h4 {
+    margin: 0 0 0.5rem 0;
+    color: #0f172a;
+    font-size: 1rem;
+  }
+
+  small {
+    display: block;
+    color: #64748b;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      color: #334155;
+      font-size: 0.95rem;
+
+      span {
+        font-weight: 500;
+        color: #0f172a;
+      }
+
+      input[type="text"] {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+
+        &:focus {
+          outline: none;
+          border-color: #0f172a;
+          box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+        }
+      }
+
+      code {
+        background: #f1f5f9;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9em;
+        color: #0f172a;
+        font-family: ui-monospace, monospace;
+      }
+    }
+  }
+}
+
+.editor-loading {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.input-demo-container {
+  padding: 1.5rem;
+  background: white;
+}
+
+.input-demo-parent {
+  padding: 1.25rem;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.05) 0%, rgba(30, 41, 59, 0.02) 100%);
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+
+  h5 {
+    margin: 0 0 0.75rem 0;
+    color: #0f172a;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0.5rem 0;
+    color: #475569;
+    font-size: 0.9rem;
+
+    code {
+      background: #f1f5f9;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #0f172a;
+      font-family: ui-monospace, monospace;
+    }
+  }
+
+  .demo-note {
+    color: #64748b;
+    font-style: italic;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 0.75rem;
+  }
+}
+
+.input-demo-child {
+  margin-top: 1rem;
+}
+
+.syntax-section {
+  background: #f8fafc;
+  padding: 1.25rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin: 1.5rem 0;
+
+  h5 {
+    margin: 0 0 1rem 0;
+    color: #0f172a;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .syntax-list {
+    margin: 0;
+    padding-left: 1.5rem;
+    list-style: none;
+
+    li {
+      margin: 0.75rem 0;
+      padding: 0.75rem;
+      background: white;
+      border-left: 3px solid #0f172a;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #334155;
+
+      code {
+        background: #f1f5f9;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9em;
+        color: #0f172a;
+        font-family: ui-monospace, monospace;
+        display: inline-block;
+        margin-right: 0.5rem;
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
 .tabs-container {
   margin: 2rem 0;
   border: 1px solid #e2e8f0;
