@@ -1,5 +1,5 @@
 .register-container {
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 65px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -7,7 +7,6 @@
     background-image: url('../../../../../assets/dark.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    border-radius: 1.5rem;
 }
 
 .register-card {

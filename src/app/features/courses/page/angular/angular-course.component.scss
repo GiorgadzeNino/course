@@ -67,12 +67,13 @@
 
 .meta-item {
     padding: 0.8rem 1rem;
-    border-radius: 999px;
-    background-color: rgba(15, 23, 42, 0.65);
-    border: 1px solid rgba(248, 250, 252, 0.1);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.1) 100%);
+    backdrop-filter: blur(15px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(255, 255, 255, 0.1);
     display: flex;
     flex-direction: column;
-    min-width: 150px;
 }
 
 .meta-label {
@@ -87,14 +88,19 @@
 
 .hero-badge {
     max-width: 260px;
-    background-color: rgba(15, 23, 42, 0.8);
     border-radius: 1.25rem;
     padding: 1.5rem 1.25rem;
-    border: 1px solid rgba(248, 250, 252, 0.08);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.1) 100%);
+    backdrop-filter: blur(15px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
 .logo-circle {
-    width: 72px;
+    // width: 72px;
     height: 72px;
     border-radius: 999px;
     display: flex;
@@ -179,12 +185,64 @@
 }
 
 .section-card {
-    background: #0f172a;
+    position: relative;
+    overflow: hidden;
     color: #e5e7eb;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+    background-image: url(https://img.freepik.com/free-vector/abstrac-background-gradient-colorful_677411-4206.jpg?t=st=1770637997~exp=1770641597~hmac=6ed33341568d588bf78882db0b9f3511b6733a4d4090f143f3b2b1be12c1875d&w=1060);
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: none;
 }
 
 .section-card h3 {
     color: #f9fafb;
+}
+
+.section-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    /* subtle reflection layer */
+    background:
+        radial-gradient(900px 240px at 20% 10%, rgba(255, 255, 255, 0.16), transparent 60%),
+        radial-gradient(700px 220px at 80% 0%, rgba(255, 255, 255, 0.08), transparent 55%),
+        linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.06) 50%, transparent 100%);
+    opacity: 0.65;
+}
+
+.section-card::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: -80%;
+    width: 80%;
+    height: 180%;
+    pointer-events: none;
+
+    /* moving shine */
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+    transform: rotate(18deg);
+    opacity: 0.35;
+    animation: sectionCardShine 5.5s ease-in-out infinite;
+}
+
+@keyframes sectionCardShine {
+    0% {
+        transform: translateX(-10%) rotate(18deg);
+        opacity: 0.15;
+    }
+
+    35% {
+        opacity: 0.40;
+    }
+
+    100% {
+        transform: translateX(220%) rotate(18deg);
+        opacity: 0.15;
+    }
 }
 
 .bullet-list li {
@@ -246,37 +304,105 @@
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
-    background: #0f172a;
-    color: #ffffff;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(249, 250, 251, 0.9) 50%,
+            rgba(255, 255, 255, 0.95) 100%);
+    color: #0f172a;
     text-decoration: none;
     font-size: 1.25rem;
     font-weight: 600;
-    transition: all 0.2s ease;
+    transition: box-shadow 0.2s ease, scale 0.2s ease;
     z-index: 1;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -50%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                transparent 100%);
+        transform: skewX(-20deg);
+        animation: moduleArrowShine 3s infinite;
+    }
 
     &:hover {
-        transform: translateX(4px) scale(1.1);
-        box-shadow: 0 4px 8px rgba(193, 30, 56, 0.3);
+        scale: 1.1;
+        box-shadow:
+            0 6px 16px rgba(0, 0, 0, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.05);
     }
 
     &:active {
-        transform: translateX(2px) scale(1.05);
+        scale: 1.05;
+    }
+}
+
+@keyframes moduleArrowShine {
+    0% {
+        left: -50%;
+    }
+
+    100% {
+        left: 150%;
     }
 }
 
 .module-index {
-    // font-size: 0.8rem;
-    // font-weight: 600;
-    // padding: 0.3rem 0.75rem;
-    // border-radius: 999px;
-    // background-color: rgba(37, 99, 235, 0.08);
-    // color: #2563eb;
     font-size: 0.8rem;
     font-weight: 600;
     padding: 0.3rem 0.75rem;
     border-radius: 999px;
-    background-color: #0f172a;
-    color: #fff;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(249, 250, 251, 0.9) 50%,
+            rgba(255, 255, 255, 0.95) 100%);
+    color: #0f172a;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -50%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                transparent 100%);
+        transform: skewX(-20deg);
+        animation: moduleIndexShine 3s infinite;
+    }
+}
+
+@keyframes moduleIndexShine {
+    0% {
+        left: -50%;
+    }
+
+    100% {
+        left: 150%;
+    }
 }
 
 .module-title {
