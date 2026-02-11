@@ -106,17 +106,6 @@ export class Questions2Component implements OnInit {
                 'HTML ელემენტის სტილის ცვლილებას'
             ],
             correctAnswer: 1
-        },
-        {
-            id: 10,
-            question: 'რომელი მეთოდი შექმნის კომპონენტის ცალკეულ სტილს SCSS ფაილში?',
-            options: [
-                'ng generate style component-name',
-                'ng generate component component-name',
-                'ng create scss component-name',
-                'ng add scss component-name'
-            ],
-            correctAnswer: 1
         }
     ];
 

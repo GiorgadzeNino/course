@@ -108,7 +108,7 @@ export class AngularLayoutComponent implements OnInit, OnDestroy {
 
   private updateQuizStatuses() {
     this.quizStatus['1'] = this.getModuleQuizStatus('lecture1_answers', 6);
-    this.quizStatus['2'] = this.getModuleQuizStatus('lecture2_answers', 10);
+    this.quizStatus['2'] = this.getModuleQuizStatus('lecture2_answers', 9);
     this.quizStatus['3'] = this.getModuleQuizStatus('lecture3_answers', 7);
   }
 
