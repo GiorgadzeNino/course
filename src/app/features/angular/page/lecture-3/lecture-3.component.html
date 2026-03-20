@@ -1,5 +1,5 @@
 <article class="lecture">
-    <h1>Module 3: Angular Directives</h1>
+    <h1>Module 3: Angular Directives & Pipes</h1>
 
     <section id="what-is-directive">
         <h2>1. რა არის Directive Angular-ში</h2>
@@ -371,7 +371,7 @@
     </section>
 
     <section id="why-new-syntax">
-        <h2>8. რატომ შეცვალა Angular-მა *ngIf / *ngFor?</h2>
+        <h2>11. რატომ შეცვალა Angular-მა *ngIf / *ngFor?</h2>
         <p>Angular-ის ახალ ვერსიებში შემოღებულია ახალი სინტაქსი <code>&#64;if</code>, <code>&#64;for</code> და <code>&#64;switch</code> ძველი <code>*ngIf</code>, <code>*ngFor</code> და <code>*ngSwitch</code>-ის ნაცვლად. ქვემოთ მოცემულია მიზეზები, რატომ გაკეთდა ეს ცვლილება:</p>
 
         <table class="command-table">
@@ -441,8 +441,123 @@
         </div>
     </section>
 
+    <section id="pipe-what-is">
+        <h2>6. რა არის Pipe Angular-ში</h2>
+        <p><strong>Pipe</strong> არის მექანიზმი, რომელიც გამოიყენება მონაცემების ტრანსფორმაციისთვის template-ში.</p>
+        <p>ანუ pipe საშუალებას გვაძლევს:</p>
+        <ul>
+            <li>მონაცემი UI-ში წარმოვაჩინოთ სხვა ფორმატში</li>
+            <li>ორიგინალი მონაცემი არ შეიცვალოს</li>
+            <li>ტრანსფორმაცია მოხდეს <strong>template level-ზე</strong></li>
+        </ul>
+
+        <p><strong>მაგალითი:</strong></p>
+        <pre ngNonBindable><code>&lt;p&gt;&#123;&#123; user.name | uppercase &#125;&#125;&lt;/p&gt;</code></pre>
+        <p>თუ <code>user.name = "demetre"</code>, გამოსავალი იქნება:</p>
+        <pre ngNonBindable><code>DEMETRE</code></pre>
+
+        <h3>Live Preview</h3>
+        @defer (on viewport) {
+            <app-code-editor editorTitle="🌐 Live Preview" [showEditor]="false" previewTitle="🌐 Live Preview">
+                <p><strong>Input:</strong> {{ userName }}</p>
+                <p><strong>Output:</strong> {{ userName | uppercase }}</p>
+            </app-code-editor>
+        } @placeholder {
+            <div class="editor-loading">იტვირთება...</div>
+        }
+    </section>
+
+    <section id="pipe-parameters">
+        <h2>7. Pipe Parameters</h2>
+        <p>Angular-ში pipe გამოიყენება <code>|</code> სიმბოლოთი.</p>
+        <p><strong>Syntax:</strong> <code ngNonBindable>&#123;&#123; value | pipeName &#125;&#125;</code></p>
+        <p>Pipe-ს პარამეტრები აქვს მაშინ, როცა ვწერთ:</p>
+        <p><code>value | pipe:param1:param2:param3</code></p>
+
+        <h3>DatePipe</h3>
+        <pre ngNonBindable><code>&#123;&#123; today | date:'short' &#125;&#125;</code></pre>
+        <pre ngNonBindable><code>&#123;&#123; today | date:'dd/MM/yyyy' &#125;&#125;</code></pre>
+
+        <h3>CurrencyPipe</h3>
+        <pre ngNonBindable><code>&#123;&#123; price | currency:'GEL':'symbol':'1.2-2' &#125;&#125;</code></pre>
+
+        <h3>Live Preview</h3>
+        @defer (on viewport) {
+            <app-code-editor editorTitle="🌐 Live Preview" [showEditor]="false" previewTitle="🌐 Live Preview">
+                <p><strong>Date:</strong> {{ today | date:'dd/MM/yyyy' }}</p>
+                <p><strong>Price:</strong> {{ price | currency:'GEL':'symbol':'1.2-2' }}</p>
+            </app-code-editor>
+        } @placeholder {
+            <div class="editor-loading">იტვირთება...</div>
+        }
+    </section>
+
+    <section id="built-in-pipes">
+        <h2>8. Angular Built-in Pipes</h2>
+        <p>Angular-ს უკვე აქვს ბევრი built-in pipe. ყველაზე ხშირად გამოყენებული pipe-ებია:</p>
+
+        <table class="command-table">
+            <thead>
+                <tr>
+                    <th>Pipe</th>
+                    <th>აღწერა</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>uppercase</code></td><td>ტექსტი დიდ ასოებად</td></tr>
+                <tr><td><code>lowercase</code></td><td>ტექსტი პატარა ასოებად</td></tr>
+                <tr><td><code>titlecase</code></td><td>სიტყვების პირველი ასო დიდი</td></tr>
+                <tr><td><code>date</code></td><td>თარიღის ფორმატირება</td></tr>
+                <tr><td><code>currency</code></td><td>ვალუტის ფორმატირება</td></tr>
+                <tr><td><code>percent</code></td><td>პროცენტებად გადაყვანა</td></tr>
+                <tr><td><code>json</code></td><td>JSON debug</td></tr>
+                <tr><td><code>slice</code></td><td>substring / subset</td></tr>
+                <tr><td><code>number</code></td><td>რიცხვების ფორმატირება</td></tr>
+                <tr><td><code>async</code></td><td>Observable / Promise-ის ავტომატური ჩვენება</td></tr>
+            </tbody>
+        </table>
+
+        <h3>მაგალითები</h3>
+        <pre ngNonBindable><code>&#123;&#123; name | uppercase &#125;&#125;</code></pre>
+        <pre ngNonBindable><code>&#123;&#123; name | lowercase &#125;&#125;</code></pre>
+        <pre ngNonBindable><code>&#123;&#123; title | titlecase &#125;&#125;</code></pre>
+        <pre ngNonBindable><code>&#123;&#123; today | date:'dd/MM/yyyy' &#125;&#125;</code></pre>
+        <pre ngNonBindable><code>&#123;&#123; price | currency:'GEL':'symbol':'1.2-2' &#125;&#125;</code></pre>
+        <pre ngNonBindable><code>&#123;&#123; progress | percent &#125;&#125;</code></pre>
+        <pre ngNonBindable><code>&#123;&#123; text | slice:0:5 &#125;&#125;</code></pre>
+        <pre ngNonBindable><code>&lt;pre&gt;&#123;&#123; user | json &#125;&#125;&lt;/pre&gt;</code></pre>
+        <pre ngNonBindable><code>&#123;&#123; price | number:'1.2-2' &#125;&#125;</code></pre>
+
+        <h3>Async Pipe (ძალიან მნიშვნელოვანი)</h3>
+        <p><code>async</code> pipe გამოიყენება <code>Observable</code>-ებთან და <code>Promise</code>-ებთან.</p>
+        <p>Angular ავტომატურად აკეთებს <strong>subscribe</strong> / <strong>unsubscribe</strong>, ამიტომ component-ში ხელით unsubscribe საჭირო არ არის.</p>
+        <pre ngNonBindable><code>&lt;div *ngFor=&quot;let user of users$ | async&quot;&gt;
+  &#123;&#123; user.name &#125;&#125;
+&lt;/div&gt;</code></pre>
+
+        <h3>Live Preview</h3>
+        @defer (on viewport) {
+            <app-code-editor editorTitle="🌐 Live Preview" [showEditor]="false" previewTitle="🌐 Live Preview">
+                <p><strong>percent:</strong> {{ progress | percent }}</p>
+                <p><strong>slice:</strong> {{ text | slice:0:5 }}</p>
+                <p><strong>async:</strong></p>
+                <ul>
+                    <li *ngFor="let user of users$ | async">
+                        {{ user.name }}
+                    </li>
+                </ul>
+            </app-code-editor>
+        } @placeholder {
+            <div class="editor-loading">იტვირთება...</div>
+        }
+
+        <h3>Custom Pipes & Pure vs Impure (მოკლე იდეა)</h3>
+        <p>ხშირად რეალურ პროექტში გვჭირდება საკუთარი pipe (მაგ. truncate, mask phone). Pipe-ები default არის <strong>pure</strong> და მუშაობს მხოლოდ მაშინ, როცა input reference შეიცვალა.</p>
+        <p>თუ <strong>impure</strong> pipe-ს დავნიშნავთ, ის იმუშავებს ყველა change detection-ზე და შეიძლება performance დაგვიზიანოს.</p>
+    </section>
+
     <section id="directives-best-practices" class="best-practices-section">
-        <h2>9. საუკეთესო პრაქტიკა</h2>
+        <h2>12. საუკეთესო პრაქტიკა</h2>
         <p class="best-practices-intro">ქვემოთ მოცემულია რეკომენდაციები, რომლებიც დაგეხმარებათ ეფექტურად გამოიყენოთ
             Directives Angular-ში:</p>
 

@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-lecture-3',
@@ -81,6 +82,20 @@ export class HighlightDirective {
 
   // Preview data for Custom Directive
   highlightColor = '#cea135';
+
+  // Pipe demo data
+  userName = 'demetre';
+  title = 'hello angular developers';
+  today: Date = new Date(2026, 2, 20, 12, 0, 0); // 2026-03-20 (local time)
+  price = 100;
+  progress = 0.35;
+  text = 'Angular Framework';
+
+  users$: Observable<Array<{ name: string }>> = of([
+    { name: 'Angular' },
+    { name: 'React' },
+    { name: 'Vue' }
+  ]);
 
   showQuestions = false;
   showHomework = false;
