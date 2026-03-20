@@ -695,7 +695,9 @@ export class CourseComponent &#123;
             <li><code>&#64;Output() eventName = new EventEmitter&lt;Type&gt;();</code> - ძირითადი სინტაქსი</li>
             <li><code>&#64;Output('customEvent') internalEvent = new EventEmitter&lt;string&gt;();</code> - Custom event
               name</li>
-            <li><code>&#64;Output() dataEmitted = new EventEmitter&lt;Product&gt;();</code> - Complex data type</li>
+            <li><code>&#64;Output() dataEmitted = new EventEmitter&lt;Product&gt;();</code> - როდესაც მონაცემი არის
+              კომპლექსური, მაგალითად ამ შემთხვევაში Product, რომელიც უნდა წარმოვიდგინოთ ობიექტად თავისი მონაცემებით.
+              მაგ:სახელი, ფერი და ა.შ.</li>
             <li><code>eventName.emit(data);</code> - ივენთის გაგზავნა</li>
             <li><code>(eventName)="handler($event)"</code> - Parent-ში მიღება</li>
           </ul>
