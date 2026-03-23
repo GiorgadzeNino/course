@@ -63,11 +63,8 @@ export class MyServiceService &#123;
     </ul>
 
     <h3>4.1 HTTP მონაცემების მიღება API-დან</h3>
-    <p>Service მაგალითი:</p>
-    <app-code-editor [code]="httpUserServiceCode" editorTitle="📝 user.service.ts" [showPreview]="false"></app-code-editor>
-
-    <p>Component-ში გამოყენება:</p>
-    <app-code-editor [code]="httpUsersComponentCode" editorTitle="📝 users.component.ts"
+    <p>Service და Component ერთ რედაქტორში (ფაილის არჩევით):</p>
+    <app-code-editor [files]="httpExampleFiles" editorTitle="📝 HTTP Example Files"
       previewTitle="🌐 შედეგი (Result)">
       <ul>
         <li *ngFor="let user of demoUsers">{{ user.name }}</li>
@@ -76,7 +73,7 @@ export class MyServiceService &#123;
 
     <h3>დამატებითი მაგალითი (greet service)</h3>
     <app-code-editor [code]="componentExampleCode" editorTitle="📝 Component Example (TypeScript)"
-      [showPreview]="false"></app-code-editor>
+      viewMode="editor"></app-code-editor>
     <ul>
       <li><code>private userService: UserService</code> -> dependency injection.</li>
       <li>HTTP მონაცემი მოდის <code>this.userService.getUsers()</code>-ით.</li>

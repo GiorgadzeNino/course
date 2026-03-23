@@ -49,6 +49,11 @@ export class UsersComponent implements OnInit {
 }
 `;
 
+  httpExampleFiles = [
+    { name: 'user.service.ts', content: this.httpUserServiceCode },
+    { name: 'users.component.ts', content: this.httpUsersComponentCode }
+  ];
+
   componentExampleCode = `import { Component } from '@angular/core';
 import { MyServiceService } from './my-service.service';
 

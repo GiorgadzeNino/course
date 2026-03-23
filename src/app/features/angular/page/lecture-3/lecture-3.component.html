@@ -353,13 +353,13 @@
         @defer (on viewport) {
             <div class="code-editor-split">
                 <app-code-editor [code]="customDirectiveCode" editorTitle="📝 Directive Code (TypeScript)"
-                    [showPreview]="false">
+                    viewMode="editor">
                 </app-code-editor>
 
-                <app-code-editor [code]="customDirectiveUsageCode" editorTitle="📝 HTML Template" [showPreview]="false">
+                <app-code-editor [code]="customDirectiveUsageCode" editorTitle="📝 HTML Template" viewMode="editor">
                 </app-code-editor>
 
-                <app-code-editor editorTitle="🌐 Browser Preview" [showEditor]="false" previewTitle="🌐 Browser Preview">
+                <app-code-editor editorTitle="🌐 Browser Preview" viewMode="preview" previewTitle="🌐 Browser Preview">
                     <p appHighlight [highlightColor]="highlightColor">
                         Highlighted text
                     </p>
@@ -458,7 +458,7 @@
 
         <h3>Live Preview</h3>
         @defer (on viewport) {
-            <app-code-editor editorTitle="🌐 Live Preview" [showEditor]="false" previewTitle="🌐 Live Preview">
+            <app-code-editor editorTitle="🌐 Live Preview" viewMode="preview" previewTitle="🌐 Live Preview">
                 <p><strong>Input:</strong> {{ userName }}</p>
                 <p><strong>Output:</strong> {{ userName | uppercase }}</p>
             </app-code-editor>
@@ -483,7 +483,7 @@
 
         <h3>Live Preview</h3>
         @defer (on viewport) {
-            <app-code-editor editorTitle="🌐 Live Preview" [showEditor]="false" previewTitle="🌐 Live Preview">
+            <app-code-editor editorTitle="🌐 Live Preview" viewMode="preview" previewTitle="🌐 Live Preview">
                 <p><strong>Date:</strong> {{ today | date:'dd/MM/yyyy' }}</p>
                 <p><strong>Price:</strong> {{ price | currency:'GEL':'symbol':'1.2-2' }}</p>
             </app-code-editor>
@@ -537,7 +537,7 @@
 
         <h3>Live Preview</h3>
         @defer (on viewport) {
-            <app-code-editor editorTitle="🌐 Live Preview" [showEditor]="false" previewTitle="🌐 Live Preview">
+            <app-code-editor editorTitle="🌐 Live Preview" viewMode="preview" previewTitle="🌐 Live Preview">
                 <p><strong>percent:</strong> {{ progress | percent }}</p>
                 <p><strong>slice:</strong> {{ text | slice:0:5 }}</p>
                 <p><strong>async:</strong></p>

@@ -1,17 +1,26 @@
-<div class="code-editor-container" [class.editor-only]="!showPreview" [class.preview-only]="!showEditor">
-  @if (showEditor) {
+<div class="code-editor-container" [class.editor-only]="!showPreviewPanel" [class.preview-only]="!showEditorPanel">
+  @if (showEditorPanel) {
   <div class="editor-panel">
     <div class="editor-header">
-      <span>{{ editorTitle }}</span>
+      <span>{{ hasFiles ? activeFileName : editorTitle }}</span>
     </div>
+    @if (hasFiles) {
+    <div class="file-tabs">
+      @for (file of files; track file.name; let i = $index) {
+      <button type="button" class="file-tab" [class.active]="i === normalizedActiveFileIndex" (click)="onSelectFile(i)">
+        {{ file.name }}
+      </button>
+      }
+    </div>
+    }
     <div class="editor-content">
-      <textarea class="code-editor" [value]="code" (input)="onCodeChange($any($event.target).value)"
-        placeholder="ჩაწერეთ კოდი..." readonly></textarea>
+      <textarea class="code-editor" [value]="editorValue" (input)="onCodeChange($any($event.target).value)"
+        [readOnly]="!editable" placeholder="ჩაწერეთ კოდი..."></textarea>
     </div>
   </div>
   }
 
-  @if (showPreview) {
+  @if (showPreviewPanel) {
   <div class="preview-panel">
     <div class="preview-header">
       <span>{{ previewTitle }}</span>

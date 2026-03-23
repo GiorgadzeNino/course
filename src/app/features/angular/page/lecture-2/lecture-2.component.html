@@ -602,7 +602,7 @@ export class CourseComponent &#123;
     </p>
 
     <app-code-editor [code]="componentHierarchyCode" editorTitle="📝 კომპონენტების იერარქიის მაგალითი"
-      [showPreview]="false">
+      viewMode="editor">
     </app-code-editor>
 
     <h3>რატომ გვჭირდება კომუნიკაცია?</h3>
@@ -654,7 +654,7 @@ export class CourseComponent &#123;
           </ul>
         </div>
 
-        <app-code-editor [code]="inputExampleCode" editorTitle="📝 @Input() მაგალითი" [showPreview]="false">
+        <app-code-editor [code]="inputExampleCode" editorTitle="📝 @Input() მაგალითი" viewMode="editor">
         </app-code-editor>
 
         <h3 class="interactive-editor-title">💻 ინტერაქციული რედაქტორი - პრაქტიკული მაგალითი</h3>
@@ -703,7 +703,7 @@ export class CourseComponent &#123;
           </ul>
         </div>
 
-        <app-code-editor [code]="outputExampleCode" editorTitle="📝 @Output() მაგალითი" [showPreview]="false">
+        <app-code-editor [code]="outputExampleCode" editorTitle="📝 @Output() მაგალითი" viewMode="editor">
         </app-code-editor>
       </div>
 

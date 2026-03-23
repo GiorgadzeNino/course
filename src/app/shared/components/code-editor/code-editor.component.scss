@@ -51,6 +51,39 @@
   background: #ffffff;
 }
 
+.file-tabs {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  overflow-x: auto;
+}
+
+.file-tab {
+  border: 1px solid #cbd5e1;
+  border-radius: 0.375rem;
+  background: #ffffff;
+  color: #334155;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.45rem 0.65rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: #e2e8f0;
+  }
+
+  &.active {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-color: #1e293b;
+  }
+}
+
 .code-editor {
   flex: 1;
   width: 100%;
