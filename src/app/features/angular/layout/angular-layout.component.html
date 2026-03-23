@@ -126,9 +126,21 @@
 
       <button type="button" class="nav-parent" [class.active]="activeModule === '4'"
         [class.expanded]="isModuleExpanded('4')" (click)="toggleModule('4')">
-        <span class="nav-parent-text">მოდული 4: RxJS & State Management</span>
+        <span class="nav-parent-text">მოდული 4: Angular Services</span>
         <span class="nav-chevron" aria-hidden="true"></span>
       </button>
+      @if (isModuleExpanded('4')) {
+      <ul class="sidenav-sub">
+        <li><a routerLink="/angular/4" fragment="what-is-service" [class.active]="isFragmentActive('what-is-service')"
+            (click)="closeSidenav()">რა არის Service Angular-ში</a></li>
+        <li><a routerLink="/angular/4" fragment="service-create" [class.active]="isFragmentActive('service-create')"
+            (click)="closeSidenav()">Service-ის შექმნა</a></li>
+        <li><a routerLink="/angular/4" fragment="service-real-examples"
+            [class.active]="isFragmentActive('service-real-examples')" (click)="closeSidenav()">Service-ის მაგალითები რეალურ პროექტში</a></li>
+        <li><a routerLink="/angular/4" fragment="service-sharing-data"
+            [class.active]="isFragmentActive('service-sharing-data')" (click)="closeSidenav()">Sharing Data Between Components</a></li>
+      </ul>
+      }
 
       <button type="button" class="nav-parent" [class.active]="activeModule === '5'"
         [class.expanded]="isModuleExpanded('5')" (click)="toggleModule('5')">

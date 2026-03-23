@@ -1,0 +1,109 @@
+<article class="lecture">
+  <h1>Module 4: Angular Services</h1>
+
+  <section id="what-is-service">
+    <h2>1. რა არის Service Angular-ში</h2>
+    <p><strong>Service</strong>არის სპეციალური TypeScript კლასი, რომელიც გამოიყენება ლოგიკის, მონაცემების ან
+      განმეორებადი ფუნქციონალის
+      კომპონენტებში გამოყენებისთვის.</p>
+    <p>შედარებისთვის</p>
+    <ul>
+      <li><strong>Component</strong> – პასუხისმგებელია UI-სთვის, template-ისა და view-ის მართვისთვის.</li>
+      <li><strong>Service</strong> – პასუხისმგებელია ლოგიკის, მონაცემთა მართვის, API-ქოლების ან საერთო ფუნქციების
+        შესანახად.</li>
+    </ul>
+  </section>
+
+  <section id="service-create">
+    <h2>2. Service-ის შექმნა</h2>
+    <p>CLI ბრძანება:</p>
+    <pre ngNonBindable><code>ng generate service my-service</code></pre>
+    <p>ან მოკლე ფორმა:</p>
+    <pre ngNonBindable><code>ng g s my-service</code></pre>
+    <p>ეს შექმნის ორ ფაილს:</p>
+    <ul>
+      <li><code>my-service.service.ts</code> – სერვისის კლასი</li>
+      <li><code>my-service.service.spec.ts</code> – სერვისის ტესტირების ფაილი(unit test)</li>
+    </ul>
+    <p>მაგალითი:</p>
+    <pre ngNonBindable><code>import &#123; Injectable &#125; from '&#64;angular/core';
+
+&#64;Injectable(&#123;
+  providedIn: 'root'
+&#125;)
+export class MyServiceService &#123;
+
+  constructor() &#123; &#125;
+
+  greet(name: string): string &#123;
+    return `გამარჯობა, $&#123;name&#125;!`;
+  &#125;
+&#125;</code></pre>
+    <p class="note">
+      <strong>შენიშვნა:</strong>&#64;Injectable(&#123; providedIn: 'root' &#125;) – ნიშნავს, რომ service singleton-ია
+      მთელ
+      აპლიკაციაში, ანუ ყველგან ერთსა და იმავე instance-ს ვიყენებთ.
+
+      მარტივად რომ ვთქვათ 👇
+
+      Service იქმნება მხოლოდ ერთხელ.
+      შემდეგ ამ ერთი და იმავე სერვისს იზიარებს ყველა კოპმონენტი.
+      ანუ აპლიკაციაში არ იქმნება მისი ბევრი ასლი.
+    </p>
+  </section>
+
+  <section id="service-real-examples">
+    <h2>3. Service-ის მაგალითები რეალურ პროექტში</h2>
+    <ul>
+      <li><strong>API Service</strong> - backend request-ები (<code>HttpClient</code>)</li>
+      <li><strong>Auth Service</strong> - login/logout, token handling</li>
+      <li><strong>Storage Service</strong> - localStorage/sessionStorage abstraction</li>
+      <li><strong>Notification Service</strong> - toast/snackbar შეტყობინებები</li>
+      <li><strong>Feature Service</strong> - domain-logic (მაგ. CartService, OrdersService)</li>
+    </ul>
+
+    <h3>4.1 HTTP მონაცემების მიღება API-დან</h3>
+    <p>Service მაგალითი:</p>
+    <app-code-editor [code]="httpUserServiceCode" editorTitle="📝 user.service.ts" [showPreview]="false"></app-code-editor>
+
+    <p>Component-ში გამოყენება:</p>
+    <app-code-editor [code]="httpUsersComponentCode" editorTitle="📝 users.component.ts"
+      previewTitle="🌐 შედეგი (Result)">
+      <ul>
+        <li *ngFor="let user of demoUsers">{{ user.name }}</li>
+      </ul>
+    </app-code-editor>
+
+    <h3>დამატებითი მაგალითი (greet service)</h3>
+    <app-code-editor [code]="componentExampleCode" editorTitle="📝 Component Example (TypeScript)"
+      [showPreview]="false"></app-code-editor>
+    <ul>
+      <li><code>private userService: UserService</code> -> dependency injection.</li>
+      <li>HTTP მონაცემი მოდის <code>this.userService.getUsers()</code>-ით.</li>
+      <li>Preview-ში ნაჩვენებია API-დან დაბრუნებული user list-ის მაკეტი.</li>
+    </ul>
+  </section>
+
+  <section id="service-sharing-data">
+    <h2>4. Sharing Data Between Components</h2>
+    <p>Service საუკეთესო არჩევანია, როცა რამდენიმე კომპონენტს ერთი და იგივე მონაცემი უნდა გაუზიაროთ.</p>
+    <p>ხშირად ამისთვის ვიყენებთ <code>BehaviorSubject</code>-ს:</p>
+
+    <pre ngNonBindable><code>import &#123; Injectable &#125; from '&#64;angular/core';
+import &#123; BehaviorSubject &#125; from 'rxjs';
+
+&#64;Injectable(&#123; providedIn: 'root' &#125;)
+export class SharedDataService &#123;
+  private messageSubject = new BehaviorSubject&lt;string&gt;('Hello');
+  message$ = this.messageSubject.asObservable();
+
+  setMessage(value: string) &#123;
+    this.messageSubject.next(value);
+  &#125;
+&#125;</code></pre>
+
+    <p>Component A აგზავნის მონაცემს <code>setMessage()</code>-ით, Component B კი უსმენს <code>message$</code>-ს.</p>
+    <p class="note"><strong>Tip:</strong> template-ში listener-ისთვის გამოიყენე <code>async</code> pipe, რომ manual
+      unsubscribe არ დაგჭირდეს.</p>
+  </section>
+</article>
