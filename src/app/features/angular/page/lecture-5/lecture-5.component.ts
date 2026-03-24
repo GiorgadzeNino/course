@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <article class="lecture">
       <h1>Module 5: Best Practices & Project</h1>
       <p>This module will cover Folder Structure, Performance Optimization, and the Final Project.</p>
-      <p>Content coming soon...</p>
+      <p>Content მალე...</p>
     </article>
   `,
   styles: []

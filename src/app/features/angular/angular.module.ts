@@ -13,7 +13,9 @@ import { Lecture5Component } from './page/lecture-5/lecture-5.component';
 import { QuestionsComponent } from './page/lecture-1/questions/questions.component';
 import { Questions2Component } from './page/lecture-2/questions/questions.component';
 import { Questions3Component } from './page/lecture-3/questions/questions.component';
+import { Questions4Component } from './page/lecture-4/questions/questions.component';
 import { Homework3Component } from './page/lecture-3/homework/homework.component';
+import { Homework4Component } from './page/lecture-4/homework/homework.component';
 import { QuestionsService } from '../../core/services/questions.service';
 import { SharedModule } from '../../shared/shared.module';
 import { HighlightDirective } from './page/lecture-3/directives/highlight.directive';
@@ -31,7 +33,9 @@ import { DemoInputChildComponent } from './page/lecture-2/demo-input-child/demo-
     QuestionsComponent,
     Questions2Component,
     Questions3Component,
+    Questions4Component,
     Homework3Component,
+    Homework4Component,
     
   ],
   imports: [

@@ -14,7 +14,7 @@
                 <h2 class="text-lg font-semibold mb-2 text-secondary">{{ course.name }}</h2>
                 <p class="text-sm text-gray-600 mb-4">{{ course.description }}</p>
                 @if (!course.description) {
-                <h2 class="text-lg font-semibold mb-2 text-primary">Coming Soon</h2>
+                <h2 class="text-lg font-semibold mb-2 text-primary">მალე...</h2>
                 }
                 @if (course.description && course.route) {
                 <a [routerLink]="course.route"

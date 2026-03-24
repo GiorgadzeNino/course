@@ -75,7 +75,7 @@ export class MyServiceService &#123;
     <app-code-editor [code]="componentExampleCode" editorTitle="📝 Component Example (TypeScript)"
       viewMode="editor"></app-code-editor>
     <ul>
-      <li><code>private userService: UserService</code> -> dependency injection.</li>
+      <li><code>private userService: UserService</code> <span class="d-flex align-items-center">-></span> dependency injection.</li>
       <li>HTTP მონაცემი მოდის <code>this.userService.getUsers()</code>-ით.</li>
       <li>Preview-ში ნაჩვენებია API-დან დაბრუნებული user list-ის მაკეტი.</li>
     </ul>
@@ -83,24 +83,49 @@ export class MyServiceService &#123;
 
   <section id="service-sharing-data">
     <h2>4. Sharing Data Between Components</h2>
-    <p>Service საუკეთესო არჩევანია, როცა რამდენიმე კომპონენტს ერთი და იგივე მონაცემი უნდა გაუზიაროთ.</p>
-    <p>ხშირად ამისთვის ვიყენებთ <code>BehaviorSubject</code>-ს:</p>
+    <h3>Service-ში მონაცემის შენახვა</h3>
+    <app-code-editor [files]="sharingDataFiles" editorTitle="📝 Sharing Data Files"
+      previewTitle="🌐 View (Result)">
+      <button type="button" (click)="sendSharedPreviewName()">Send Name</button>
+      <h3>User: {{ sharedPreviewUserName || '---' }}</h3>
+    </app-code-editor>
 
-    <pre ngNonBindable><code>import &#123; Injectable &#125; from '&#64;angular/core';
-import &#123; BehaviorSubject &#125; from 'rxjs';
+    <p>აქ გვაქვს:</p>
+    <ul>
+      <li><code>userName</code> <span class="d-flex align-items-center">-></span> საერთო მონაცემი</li>
+      <li><code>setUserName()</code> <span class="d-flex align-items-center">-></span> მონაცემის შეცვლა</li>
+      <li><code>getUserName()</code> <span class="d-flex align-items-center">-></span> მონაცემის მიღება</li>
+    </ul>
 
-&#64;Injectable(&#123; providedIn: 'root' &#125;)
-export class SharedDataService &#123;
-  private messageSubject = new BehaviorSubject&lt;string&gt;('Hello');
-  message$ = this.messageSubject.asObservable();
+    <h3>3. Component A — მონაცემის გაგზავნა</h3>
+    <p>აქ component აგზავნის მონაცემს service-ში.</p>
 
-  setMessage(value: string) &#123;
-    this.messageSubject.next(value);
-  &#125;
-&#125;</code></pre>
+    <h3>4. Component B — მონაცემის მიღება</h3>
+    <p>აქ მეორე component იღებს მონაცემს.</p>
+  </section>
 
-    <p>Component A აგზავნის მონაცემს <code>setMessage()</code>-ით, Component B კი უსმენს <code>message$</code>-ს.</p>
-    <p class="note"><strong>Tip:</strong> template-ში listener-ისთვის გამოიყენე <code>async</code> pipe, რომ manual
-      unsubscribe არ დაგჭირდეს.</p>
+  <section id="services-best-practices">
+    <h2>5. Best Practices</h2>
+    <ul>
+      <li><strong>Services არ უნდა ემყარებოდეს DOM-ს.</strong></li>
+      <li><strong>Singleton pattern</strong> – გამოიყენე <code>providedIn: 'root'</code>, თუ სერვისის ლოგიკა გამოიყენება მთელ აპლიკაციაში.</li>
+      <li><strong>Modular services</strong> – მოდულების მიხედვით შეადგინე service-ები, რომ bundle size არ გაიზარდოს.</li>
+    </ul>
+  </section>
+
+  <section id="questions_4">
+    @defer (on viewport) {
+      <app-questions-4></app-questions-4>
+    } @placeholder {
+      <div class="questions-loading">იტვირთება...</div>
+    }
+  </section>
+
+  <section id="homework_4">
+    @defer (on viewport) {
+      <app-homework-4></app-homework-4>
+    } @placeholder {
+      <div class="homework-loading">იტვირთება...</div>
+    }
   </section>
 </article>

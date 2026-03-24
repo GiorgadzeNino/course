@@ -6,6 +6,81 @@ import { Component } from '@angular/core';
   styleUrl: './lecture-4.component.scss'
 })
 export class Lecture4Component {
+  sharedUserServiceCode = `import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+
+  userName: string = 'John Doe';
+
+  setUserName(name: string) {
+    this.userName = name;
+  }
+
+  getUserName() {
+    return this.userName;
+  }
+
+}
+`;
+
+  senderComponentCode = `import { Component } from '@angular/core';
+import { UserService } from '../shared/user.service';
+
+@Component({
+  selector: 'app-sender',
+  template: \`
+    <button (click)="sendName()">Send Name</button>
+  \`
+})
+export class SenderComponent {
+
+  constructor(private userService: UserService) {}
+
+  sendName() {
+    this.userService.setUserName('John Doe');
+  }
+
+}
+`;
+
+  receiverComponentCode = `import { Component, OnInit } from '@angular/core';
+import { UserService } from '../shared/user.service';
+
+@Component({
+  selector: 'app-receiver',
+  template: \`
+    <h2>User: {{ userName }}</h2>
+  \`
+})
+export class ReceiverComponent implements OnInit {
+
+  userName: string = '';
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit() {
+    this.userName = this.userService.getUserName();
+  }
+
+}
+`;
+
+  sharingDataFiles = [
+    { name: 'user.service.ts', content: this.sharedUserServiceCode },
+    { name: 'sender.component.ts', content: this.senderComponentCode },
+    { name: 'receiver.component.ts', content: this.receiverComponentCode }
+  ];
+
+  sharedPreviewUserName = '';
+
+  sendSharedPreviewName() {
+    // Simulates Component A calling setUserName('John Doe')
+    this.sharedPreviewUserName = 'John Doe';
+  }
+
   httpUserServiceCode = `import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
