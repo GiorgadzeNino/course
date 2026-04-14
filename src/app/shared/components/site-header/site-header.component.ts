@@ -48,12 +48,12 @@ import { SidenavService } from '../../../core/services/sidenav.service';
           >
 კონტაქტი       
    </a> -->
-          <a
+          <!-- <a
             routerLink="/auth/register"
             class="inline-flex items-center rounded-md bg-secondary px-3 py-2 text-sm font-medium text-white hover:bg-secondary/90 transition"
           >
             რეგისტრაცია
-          </a>
+          </a> -->
         </div>
       </div>
     </header>
