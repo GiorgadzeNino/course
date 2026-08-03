@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-lecture-5',
   template: `
     <article class="lecture">
-      <h1>Module 5: Best Practices & Project</h1>
+      <!-- <h1>Module 5</h1>
       <p>This module will cover Folder Structure, Performance Optimization, and the Final Project.</p>
-      <p>Content მალე...</p>
+      <p>Content მალე...</p> -->
     </article>
   `,
   styles: []
