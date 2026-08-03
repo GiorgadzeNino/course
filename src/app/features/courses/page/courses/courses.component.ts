@@ -16,8 +16,9 @@ export class CoursesComponent {
     },
     {
       name: 'RxJS',
-      // description: 'Fundamentals of reactive programming and efficient data flow management.'
-      imageUrl: './assets/rxjs.png'
+      description: 'RxJS (Advanced)',
+      imageUrl: './assets/rxjs.png',
+      route: ['/courses', 'rxjs'],
     },
     {
       name: 'TypeScript',

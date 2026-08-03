@@ -1,0 +1,31 @@
+<div class="rxjs-layout">
+  @if (sidenavOpen) {
+  <div class="sidenav-overlay" (click)="closeSidenav()"></div>
+  }
+
+  <aside class="sidenav" [class.open]="sidenavOpen">
+    <a class="back-link" [routerLink]="['/courses', 'rxjs']">← კურსის გვერდი</a>
+
+    <nav class="sidenav-nav">
+      @for (lv of levels; track lv.key) {
+      <div class="level">
+        <div class="level-head">{{ lv.emoji }} {{ lv.label }}</div>
+        @for (ls of lv.lessons; track ls.id) {
+        <a class="nav-item" [class.active]="activeNum === ls.num"
+          [routerLink]="['/courses', 'rxjs', 'lectures', ls.num]" (click)="closeSidenav()">
+          <span class="num">{{ pad(ls.num) }}</span>
+          <span class="title">{{ ls.title }}</span>
+          @if (!ls.free) {
+          <span class="lock">🔒</span>
+          }
+        </a>
+        }
+      </div>
+      }
+    </nav>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

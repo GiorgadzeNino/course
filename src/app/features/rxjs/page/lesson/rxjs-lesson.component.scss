@@ -1,0 +1,132 @@
+.lesson {
+  max-width: 60rem;
+}
+
+.lesson-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.chip {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: #eee7db;
+  color: #474238;
+}
+
+.chip-free {
+  background: #fff2eb;
+  color: #643312;
+}
+
+h1 {
+  font-size: 2rem;
+  line-height: 1.15;
+  margin: 0 0 1.1rem;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+
+  li {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid #aebf92;
+    color: #56633f;
+  }
+}
+
+.soon {
+  color: #645c50;
+}
+
+.para {
+  font-size: 1.03rem;
+  line-height: 1.72;
+  max-width: 60ch;
+  margin-bottom: 1rem;
+}
+
+.marble {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  background: #ebddc5;
+  border-radius: 18px;
+  padding: 22px 24px;
+  overflow: auto;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  margin: 1.5rem 0 0;
+  color: #3d472b;
+}
+
+.locked {
+  background: #ebddc5;
+  border-radius: 28px;
+  padding: 44px;
+  text-align: center;
+
+  h3 {
+    font-size: 1.6rem;
+    margin: 0 0 0.6rem;
+  }
+
+  p {
+    color: #645c50;
+    max-width: 34em;
+    margin: 0 auto 1.4rem;
+  }
+}
+
+.locked-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #ffe1d0;
+  color: #8c491a;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 18px;
+  font-size: 26px;
+}
+
+.locked-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #c67139;
+  color: #f5ead8;
+
+  &:hover { background: #b2622d; }
+}
+
+.btn-secondary {
+  border-color: rgba(32, 30, 29, 0.16);
+  color: #201e1d;
+
+  &:hover { background: rgba(32, 30, 29, 0.07); }
+}

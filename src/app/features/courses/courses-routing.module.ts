@@ -12,6 +12,11 @@ const routes: Routes = [
     path: 'angular',
     component: AngularCourseComponent,
   },
+  {
+    path: 'rxjs',
+    loadChildren: () =>
+      import('../rxjs/rxjs.module').then(m => m.RxjsModule),
+  },
 ];
 
 @NgModule({

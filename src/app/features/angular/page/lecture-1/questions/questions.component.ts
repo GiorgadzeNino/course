@@ -32,17 +32,6 @@ export class QuestionsComponent implements OnInit {
     },
     {
       id: 3,
-      question: 'რა როლი აქვს TypeScript-ს Angular-ში?',
-      options: [
-        'დიზაინის შექმნა',
-        'კოდის ტიპიზაცია',
-        'HTML-ის ჩანაცვლება',
-        'მონაცემთა ბაზასთან კავშირი',
-      ],
-      correctAnswer: 1
-    },
-    {
-      id: 4,
       question: 'რა ბრძანებით ვუშვებთ Angular აპლიკაციას development რეჟიმში?',
       options: [
         'ng serve',
@@ -52,7 +41,7 @@ export class QuestionsComponent implements OnInit {
       correctAnswer: 0
     },
     {
-      id: 5,
+      id: 4,
       question: 'რა პორტზე იწყება Angular აპლიკაცია ნაგულისხმევად?',
       options: [
         '3000',
@@ -63,7 +52,7 @@ export class QuestionsComponent implements OnInit {
       correctAnswer: 1
     },
     {
-      id: 6,
+      id: 5,
       question: '______ serve',
       options: [
         'npm',

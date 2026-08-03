@@ -1,0 +1,73 @@
+rules_version = '2';
+
+// Paste this into Firebase Console → Firestore Database → Rules → Publish.
+//
+// This file is the real access control. The Angular code only decides what to
+// render; anything a rule allows is readable by anyone who opens DevTools.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function hasFullAccess() {
+      return isSignedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.hasFullAccess == true;
+    }
+
+    // --- users ---
+    // A user reads and creates their own profile, and may edit their name only.
+    // hasFullAccess is deliberately NOT writable by the user — only an admin
+    // can flip it, which is what makes the paywall real.
+    match /users/{uid} {
+      allow read: if isSignedIn() && (request.auth.uid == uid || isAdmin());
+      allow create: if isSignedIn()
+        && request.auth.uid == uid
+        && request.resource.data.hasFullAccess == false;
+      allow update: if isAdmin()
+        || (isSignedIn()
+            && request.auth.uid == uid
+            && request.resource.data.hasFullAccess == resource.data.hasFullAccess);
+      allow delete: if isAdmin();
+    }
+
+    // --- enrollment requests ---
+    // Document id is the uid, so one user cannot flood the collection.
+    // Status is fixed to "pending" on create; only an admin can change it.
+    match /enrollments/{uid} {
+      allow get: if isSignedIn() && (request.auth.uid == uid || isAdmin());
+      allow list: if isAdmin();
+      allow create: if isSignedIn()
+        && request.auth.uid == uid
+        && request.resource.data.uid == uid
+        && request.resource.data.status == 'pending';
+      allow update, delete: if isAdmin();
+    }
+
+    // --- lesson bodies ---
+    // Lessons 1-3 are free; everything else needs a granted account.
+    // `free` is a boolean field on each lessonContent document.
+    match /lessonContent/{num} {
+      allow read: if resource.data.free == true || hasFullAccess() || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // --- admins ---
+    // Managed by hand in the Firebase Console. Nothing in the app writes here.
+    match /admins/{uid} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+
+    // Everything else is closed.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

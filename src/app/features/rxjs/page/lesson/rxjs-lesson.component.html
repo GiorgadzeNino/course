@@ -1,0 +1,45 @@
+@if (lesson) {
+<article class="lesson">
+  <div class="lesson-meta">
+    <span class="chip">{{ levelLabel }}</span>
+    <span class="chip">ლექცია {{ lesson.num }} / 20</span>
+    <span class="chip">{{ lesson.minutes }} წთ კითხვა</span>
+    @if (lesson.free) {
+    <span class="chip chip-free">უფასო</span>
+    }
+  </div>
+
+  <h1>{{ lesson.title }}</h1>
+
+  <ul class="topics">
+    @for (t of lesson.topics; track t) {
+    <li>{{ t }}</li>
+    }
+  </ul>
+
+  @if (locked) {
+  <div class="locked">
+    <div class="locked-icon">🔒</div>
+    <h3>ეს ლექცია სრული კურსის ნაწილია</h3>
+    <p>
+      ზემოთ ჩამოთვლილი თემები ხელმისაწვდომია სრული წვდომით. პირველი სამი ლექცია უფასოა — დაიწყე იქიდან.
+    </p>
+    <div class="locked-actions">
+      <a class="btn btn-primary" [routerLink]="['/courses', 'rxjs']" fragment="enroll">წვდომის მიღება</a>
+      <a class="btn btn-secondary" [routerLink]="['/courses', 'rxjs', 'lectures', 1]">უფასო ლექციის კითხვა</a>
+    </div>
+  </div>
+  } @else if (content) {
+  @for (para of content.intro; track para) {
+  <p class="para">{{ para }}</p>
+  }
+  @if (content.marble) {
+  <pre class="marble">{{ content.marble }}</pre>
+  }
+  } @else {
+  <p class="soon">ლექციის შიგთავსი მალე დაემატება.</p>
+  }
+</article>
+} @else {
+<p class="soon">ასეთი ლექცია არ მოიძებნა.</p>
+}
