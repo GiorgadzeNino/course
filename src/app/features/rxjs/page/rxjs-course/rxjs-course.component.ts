@@ -1,9 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
-import { RxjsAccessService } from '../../rxjs-access.service';
-import { AuthService } from '../../../../core/services/auth.service';
 import {
   RXJS_LESSONS,
   RXJS_LEVEL_META,
@@ -90,25 +86,6 @@ export class RxjsCourseComponent implements OnInit {
 
   readonly previewLessons = RXJS_LESSONS.filter(l => l.free);
 
-  readonly enrollForm = inject(FormBuilder).nonNullable.group({
-    firstName: ['', [Validators.required, Validators.minLength(2)]],
-    lastName: ['', [Validators.required, Validators.minLength(2)]],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-  });
-
-  readonly loginForm = inject(FormBuilder).nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
-  });
-
-  /** Which form the enrol card shows while signed out. */
-  mode: 'register' | 'login' = 'register';
-
-  enrollSent = false;
-  enrollBusy = false;
-  enrollError = '';
-
   /** Static payment details shown on the enrol card — replace with the real ones. */
   readonly payment = {
     price: '29 ₾',
@@ -117,12 +94,6 @@ export class RxjsCourseComponent implements OnInit {
     recipient: 'ტესტ ტესტ',
     purpose: 'RxJS კურსი + შენი ელფოსტა',
   };
-
-  private readonly access = inject(RxjsAccessService);
-  private readonly authService = inject(AuthService);
-
-  readonly appUser$ = this.authService.appUser$;
-  readonly myEnrollment$ = this.access.myEnrollment$;
 
   constructor(private router: Router) {}
 
@@ -134,112 +105,6 @@ export class RxjsCourseComponent implements OnInit {
         this.completed = state.completed || [];
       }
     } catch (e) { /* storage unavailable — start fresh */ }
-  }
-
-  // ---------- enrollment ----------
-  isInvalid(control: 'firstName' | 'lastName' | 'email' | 'password'): boolean {
-    const c = this.enrollForm.controls[control];
-    return c.invalid && (c.dirty || c.touched);
-  }
-
-  async submitEnroll() {
-    if (this.enrollForm.invalid) {
-      this.enrollForm.markAllAsTouched();
-      return;
-    }
-
-    const { firstName, lastName, email, password } = this.enrollForm.getRawValue();
-    this.enrollBusy = true;
-    this.enrollError = '';
-
-    try {
-      if (!this.authService.currentUser) {
-        await this.authService.register(firstName, lastName, email, password);
-      }
-      await this.access.requestEnrollment(firstName, lastName, email);
-      this.enrollSent = true;
-    } catch (err: unknown) {
-      this.enrollError = this.enrollErrorMessage(err);
-    } finally {
-      this.enrollBusy = false;
-    }
-  }
-
-  /** Enrol request for someone who is already signed in. */
-  async requestForCurrentUser() {
-    const user = await firstValueFrom(this.appUser$);
-    if (!user) {
-      return;
-    }
-    this.enrollBusy = true;
-    this.enrollError = '';
-    try {
-      await this.access.requestEnrollment(user.firstName, user.lastName, user.email);
-    } catch (err: unknown) {
-      this.enrollError = this.enrollErrorMessage(err);
-    } finally {
-      this.enrollBusy = false;
-    }
-  }
-
-  isLoginInvalid(control: 'email' | 'password'): boolean {
-    const c = this.loginForm.controls[control];
-    return c.invalid && (c.dirty || c.touched);
-  }
-
-  async submitLogin() {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      return;
-    }
-
-    const { email, password } = this.loginForm.getRawValue();
-    this.enrollBusy = true;
-    this.enrollError = '';
-
-    try {
-      await this.authService.login(email, password);
-    } catch (err: unknown) {
-      this.enrollError = this.enrollErrorMessage(err);
-    } finally {
-      this.enrollBusy = false;
-    }
-  }
-
-  setMode(mode: 'register' | 'login') {
-    this.mode = mode;
-    this.enrollError = '';
-  }
-
-  async logout() {
-    await this.authService.logout();
-    this.enrollSent = false;
-    this.enrollForm.reset();
-    this.loginForm.reset();
-  }
-
-  private enrollErrorMessage(err: unknown): string {
-    const code = (err as { code?: string })?.code ?? '';
-    switch (code) {
-      case 'auth/email-already-in-use':
-        return 'ამ ელფოსტით ანგარიში უკვე არსებობს — გაიარე ავტორიზაცია.';
-      case 'auth/weak-password':
-        return 'პაროლი ძალიან სუსტია (მინიმუმ 6 სიმბოლო).';
-      case 'auth/invalid-email':
-        return 'ელფოსტა არასწორია.';
-      case 'auth/network-request-failed':
-        return 'ქსელთან კავშირი ვერ დამყარდა. სცადე ხელახლა.';
-      case 'auth/invalid-credential':
-      case 'auth/wrong-password':
-      case 'auth/user-not-found':
-        return 'ელფოსტა ან პაროლი არასწორია.';
-      case 'auth/too-many-requests':
-        return 'ბევრი მცდელობა იყო. სცადე ცოტა ხანში.';
-      case 'permission-denied':
-        return 'ბაზაზე წვდომა აკრძალულია — Firestore-ის წესები ჯერ არ არის გამოქვეყნებული.';
-      default:
-        return 'მოთხოვნა ვერ გაიგზავნა. სცადე ხელახლა.';
-    }
   }
 
   // ---------- navigation ----------

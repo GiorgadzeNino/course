@@ -9,6 +9,9 @@
     }
   </div>
 
+  <!-- The Markdown body carries its own H1 and outline, so the summary header
+       only shows when there is no body to read. -->
+  @if (!content) {
   <h1>{{ lesson.title }}</h1>
 
   <ul class="topics">
@@ -16,6 +19,7 @@
     <li>{{ t }}</li>
     }
   </ul>
+  }
 
   @if (locked) {
   <div class="locked">
@@ -30,12 +34,7 @@
     </div>
   </div>
   } @else if (content) {
-  @for (para of content.intro; track para) {
-  <p class="para">{{ para }}</p>
-  }
-  @if (content.marble) {
-  <pre class="marble">{{ content.marble }}</pre>
-  }
+  <div class="lesson-body" [innerHTML]="content.body | markdown"></div>
   } @else {
   <p class="soon">ლექციის შიგთავსი მალე დაემატება.</p>
   }

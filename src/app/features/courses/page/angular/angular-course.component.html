@@ -188,6 +188,37 @@
         </div> -->
     </section>
 
+    <section class="section enroll-section" id="enroll">
+        <div class="enroll-grid">
+            <div>
+                <h2>მიიღე სრული წვდომა</h2>
+                <p class="enroll-lead">
+                    ყველა მოდული, პრაქტიკული დავალებები გადაწყვეტებით და შემაჯამებელი კითხვები. სამუდამო წვდომა და
+                    მომავალი განახლებები.
+                </p>
+
+                <div class="payment">
+                    <div class="payment-price">{{ payment.price }}</div>
+                    <dl class="payment-details">
+                        <dt>ბანკი</dt>
+                        <dd>{{ payment.bank }}</dd>
+                        <dt>ანგარიში</dt>
+                        <dd>{{ payment.iban }}</dd>
+                        <dt>მიმღები</dt>
+                        <dd>{{ payment.recipient }}</dd>
+                        <dt>დანიშნულება</dt>
+                        <dd>{{ payment.purpose }}</dd>
+                    </dl>
+                    <p class="payment-note">
+                        გადმორიცხვის შემდეგ გამოაგზავნე მოთხოვნა — წვდომას ხელით გავხსნით.
+                    </p>
+                </div>
+            </div>
+
+            <app-enroll-card courseId="angular" [continueRoute]="['/angular', '1']"></app-enroll-card>
+        </div>
+    </section>
+
     <section class="section cta">
         <div class="cta-card">
             <div>

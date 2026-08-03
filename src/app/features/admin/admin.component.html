@@ -1,0 +1,83 @@
+<section class="admin">
+  <h1>ჩარიცხვის მოთხოვნები</h1>
+
+  @if (isAdmin$ | async) {
+    @let counts = (pendingCounts$ | async) ?? {};
+    @let active = activeFilter$ | async;
+
+    <div class="filters">
+      <button type="button" class="chip" [class.is-active]="active === 'all'" (click)="setFilter('all')">
+        ყველა
+        @if (counts['all']) { <span class="badge">{{ counts['all'] }}</span> }
+      </button>
+      @for (course of courses; track course.id) {
+      <button type="button" class="chip" [class.is-active]="active === course.id" (click)="setFilter(course.id)">
+        {{ course.title }}
+        @if (counts[course.id]) { <span class="badge">{{ counts[course.id] }}</span> }
+      </button>
+      }
+    </div>
+
+    @if (error) {
+    <div class="error">{{ error }}</div>
+    }
+
+    @let list = enrollments$ | async;
+
+    @if (list && list.length) {
+    <div class="table-scroll">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>კურსი</th>
+            <th>სახელი გვარი</th>
+            <th>ელფოსტა</th>
+            <th>სტატუსი</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (e of list; track e.id) {
+          <tr>
+            <td><span class="course-tag">{{ courseTitle(e.courseId) }}</span></td>
+            <td>{{ e.firstName }} {{ e.lastName }}</td>
+            <td class="mono">{{ e.email }}</td>
+            <td><span class="status" [class]="'status-' + e.status">{{ e.status }}</span></td>
+            <td class="actions">
+              @if (e.status !== 'approved') {
+              <button type="button" class="btn btn-approve" [disabled]="busyId === e.id"
+                (click)="approve(e)">წვდომის გახსნა</button>
+              }
+              @if (e.status !== 'rejected') {
+              <button type="button" class="btn btn-reject" [disabled]="busyId === e.id"
+                (click)="reject(e)">უარყოფა</button>
+              }
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @else if (list) {
+    <p class="empty">ამ ფილტრით მოთხოვნა არ არის.</p>
+    }
+  } @else {
+  <p class="empty">ეს გვერდი მხოლოდ ადმინისთვისაა.</p>
+
+  @let uid = uid$ | async;
+  @if (uid) {
+  <div class="hint">
+    <p>
+      შესული ხარ, მაგრამ ადმინის უფლება არ გაქვს. Firestore-ის <strong>ძირში</strong> უნდა არსებობდეს კოლექცია
+      <code>admins</code> (პატარა ასოებით) და მასში დოკუმენტი ამ ID-ით:
+    </p>
+    <code class="uid">{{ uid }}</code>
+  </div>
+  } @else {
+  <div class="hint">
+    <p>ჯერ არ ხარ შესული.</p>
+    <a class="link" [routerLink]="['/courses']">კურსების გვერდზე გადასვლა</a>
+  </div>
+  }
+  }
+</section>

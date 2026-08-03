@@ -1,0 +1,171 @@
+/* Tokens fall back to the Organic palette when the host page does not define
+   them, so this card looks right on any course landing. */
+:host {
+  --enroll-bg: var(--color-bg, #f5ead8);
+  --enroll-surface: var(--color-surface, #ebddc5);
+  --enroll-text: var(--color-text, #201e1d);
+  --enroll-accent: var(--color-accent, #c67139);
+  --enroll-accent-hover: var(--color-accent-600, #b2622d);
+  --enroll-accent-100: var(--color-accent-100, #fff2eb);
+  --enroll-accent-700: var(--color-accent-700, #8c491a);
+  --enroll-accent-900: var(--color-accent-900, #402310);
+  --enroll-ok-bg: var(--color-accent-2-100, #f0fae1);
+  --enroll-ok-text: var(--color-accent-2-900, #272e1b);
+  --enroll-ok-solid: var(--color-accent-2-500, #8fa073);
+  --enroll-muted-bg: var(--color-neutral-200, #eee7db);
+  --enroll-muted-text: var(--color-neutral-800, #474238);
+  --enroll-divider: var(--color-divider, rgba(32, 30, 29, 0.16));
+  --enroll-heading: var(--font-heading, system-ui, sans-serif);
+
+  display: block;
+}
+
+.enroll-card {
+  background: var(--enroll-bg);
+  color: var(--enroll-text);
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.field {
+  margin-bottom: 12px;
+
+  > label {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: color-mix(in srgb, var(--enroll-text) 70%, transparent);
+  }
+}
+
+.input {
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--enroll-text);
+  caret-color: var(--enroll-accent);
+  background: var(--enroll-surface);
+  border: 1px solid var(--enroll-divider);
+  border-radius: 999px;
+
+  &:hover { border-color: color-mix(in srgb, var(--enroll-text) 45%, transparent); }
+  &:focus-visible { border-color: var(--enroll-accent); outline: none; }
+  &.is-invalid { border-color: var(--enroll-accent-hover); }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 9px;
+  cursor: pointer;
+  font-family: var(--enroll-heading);
+  font-size: 14px;
+  line-height: 1.2;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--enroll-text);
+  background: transparent;
+
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.btn-primary {
+  background: var(--enroll-accent);
+  color: var(--enroll-bg);
+
+  &:hover:not(:disabled) { background: var(--enroll-accent-hover); }
+}
+
+.btn-secondary {
+  border-color: var(--enroll-divider);
+
+  &:hover:not(:disabled) { background: color-mix(in srgb, var(--enroll-text) 7%, transparent); }
+}
+
+.text-muted { color: color-mix(in srgb, var(--enroll-text) 55%, transparent); }
+
+.field-error {
+  font-size: 11px;
+  margin: 5px 0 0 14px;
+  color: var(--enroll-accent-700);
+}
+
+.form-error {
+  font-size: 12.5px;
+  margin: 4px 0 10px;
+  padding: 9px 14px;
+  border-radius: 14px;
+  background: var(--enroll-accent-100);
+  color: var(--enroll-accent-900);
+}
+
+.enroll-note {
+  font-size: 12px;
+  text-align: center;
+  margin: 10px 0 0;
+}
+
+.account {
+  text-align: center;
+
+  .account-name {
+    font-family: var(--enroll-heading);
+    font-size: 19px;
+  }
+
+  .account-email {
+    font-size: 12.5px;
+    margin-bottom: 14px;
+  }
+}
+
+.status {
+  font-size: 13px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.status-ok { background: var(--enroll-ok-bg); color: var(--enroll-ok-text); }
+.status-pending { background: var(--enroll-accent-100); color: var(--enroll-accent-900); }
+.status-rejected { background: var(--enroll-muted-bg); color: var(--enroll-muted-text); }
+
+.enroll-done {
+  text-align: center;
+  padding: 8px 0;
+
+  .enroll-done-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--enroll-ok-solid);
+    color: var(--enroll-bg);
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 auto 12px;
+  }
+
+  .enroll-done-title {
+    font-family: var(--enroll-heading);
+    font-size: 19px;
+    margin-bottom: 6px;
+  }
+}
+
+.link-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--enroll-accent-700);
+  text-decoration: underline;
+  cursor: pointer;
+}

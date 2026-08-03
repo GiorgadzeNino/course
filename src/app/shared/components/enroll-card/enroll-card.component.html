@@ -1,0 +1,133 @@
+<div class="enroll-card">
+  @let user = appUser$ | async;
+  @let enrollment = enrollment$ | async;
+
+  @if (user) {
+  <!-- signed in -->
+  <div class="account">
+    <div class="account-name">{{ user.firstName }} {{ user.lastName }}</div>
+    <div class="text-muted account-email">{{ user.email }}</div>
+
+    @if (hasAccess(user)) {
+    <div class="status status-ok">✓ სრული წვდომა გახსნილია</div>
+    <button type="button" class="btn btn-primary btn-block" (click)="goContinue()">კურსის გაგრძელება</button>
+    } @else if (enrollment?.status === 'pending') {
+    <div class="status status-pending">მოთხოვნა განხილვის პროცესშია</div>
+    <p class="text-muted enroll-note">გადახდის დადასტურების შემდეგ წვდომა ავტომატურად გაიხსნება.</p>
+    } @else if (enrollment?.status === 'rejected') {
+    <div class="status status-rejected">მოთხოვნა უარყოფილია</div>
+    <p class="text-muted enroll-note">თუ ეს შეცდომაა, დაგვიკავშირდი.</p>
+    } @else {
+    <button type="button" class="btn btn-primary btn-block" [disabled]="busy" (click)="requestForCurrentUser()">
+      {{ busy ? 'იგზავნება…' : 'წვდომის მოთხოვნა' }}
+    </button>
+    }
+
+    @if (error) {
+    <div class="form-error" style="margin-top:12px">{{ error }}</div>
+    }
+
+    <button type="button" class="btn btn-secondary btn-block" (click)="logout()">გასვლა</button>
+  </div>
+  } @else if (mode === 'login') {
+  <!-- sign in -->
+  <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" novalidate>
+    <div class="field">
+      <label [attr.for]="courseId + '-login-email'">ელფოსტა</label>
+      <input [id]="courseId + '-login-email'" class="input" type="email" formControlName="email" autocomplete="email"
+        placeholder="you@example.com" [class.is-invalid]="isLoginInvalid('email')">
+      @if (isLoginInvalid('email')) {
+      <div class="field-error">
+        {{ loginForm.controls.email.hasError('required') ? 'ელფოსტა სავალდებულოა' : 'ელფოსტა არასწორია' }}
+      </div>
+      }
+    </div>
+
+    <div class="field">
+      <label [attr.for]="courseId + '-login-password'">პაროლი</label>
+      <input [id]="courseId + '-login-password'" class="input" type="password" formControlName="password"
+        autocomplete="current-password" [class.is-invalid]="isLoginInvalid('password')">
+      @if (isLoginInvalid('password')) {
+      <div class="field-error">პაროლი სავალდებულოა</div>
+      }
+    </div>
+
+    @if (error) {
+    <div class="form-error">{{ error }}</div>
+    }
+
+    <button type="submit" class="btn btn-primary btn-block" [disabled]="busy">
+      {{ busy ? 'შესვლა…' : 'შესვლა' }}
+    </button>
+  </form>
+
+  <p class="text-muted enroll-note">
+    ანგარიში არ გაქვს?
+    <button type="button" class="link-button" (click)="setMode('register')">დარეგისტრირდი</button>
+  </p>
+  } @else if (sent) {
+  <div class="enroll-done">
+    <div class="enroll-done-icon">✓</div>
+    <div class="enroll-done-title">მოთხოვნა მიღებულია</div>
+    <p class="text-muted enroll-note">
+      ანგარიში შეიქმნა <strong>{{ enrollForm.value.email }}</strong>-ზე. გადახდის დადასტურების შემდეგ წვდომას
+      ხელით გავხსნით და ყველა ლექცია ავტომატურად გაიხსნება.
+    </p>
+  </div>
+  } @else {
+  <form [formGroup]="enrollForm" (ngSubmit)="submitEnroll()" novalidate>
+    <div class="field">
+      <label [attr.for]="courseId + '-first'">სახელი</label>
+      <input [id]="courseId + '-first'" class="input" formControlName="firstName" placeholder="ნინო"
+        [class.is-invalid]="isInvalid('firstName')">
+      @if (isInvalid('firstName')) {
+      <div class="field-error">სახელი სავალდებულოა</div>
+      }
+    </div>
+
+    <div class="field">
+      <label [attr.for]="courseId + '-last'">გვარი</label>
+      <input [id]="courseId + '-last'" class="input" formControlName="lastName" placeholder="გიორგაძე"
+        [class.is-invalid]="isInvalid('lastName')">
+      @if (isInvalid('lastName')) {
+      <div class="field-error">გვარი სავალდებულოა</div>
+      }
+    </div>
+
+    <div class="field">
+      <label [attr.for]="courseId + '-email'">ელფოსტა</label>
+      <input [id]="courseId + '-email'" class="input" type="email" formControlName="email"
+        placeholder="you@example.com" [class.is-invalid]="isInvalid('email')">
+      @if (isInvalid('email')) {
+      <div class="field-error">
+        {{ enrollForm.controls.email.hasError('required') ? 'ელფოსტა სავალდებულოა' : 'ელფოსტა არასწორია' }}
+      </div>
+      }
+    </div>
+
+    <div class="field">
+      <label [attr.for]="courseId + '-password'">პაროლი</label>
+      <input [id]="courseId + '-password'" class="input" type="password" formControlName="password"
+        autocomplete="new-password" placeholder="მინიმუმ 6 სიმბოლო" [class.is-invalid]="isInvalid('password')">
+      @if (isInvalid('password')) {
+      <div class="field-error">
+        {{ enrollForm.controls.password.hasError('required') ? 'პაროლი სავალდებულოა' : 'მინიმუმ 6 სიმბოლო' }}
+      </div>
+      }
+    </div>
+
+    @if (error) {
+    <div class="form-error">{{ error }}</div>
+    }
+
+    <button type="submit" class="btn btn-primary btn-block" [disabled]="busy">
+      {{ busy ? 'იგზავნება…' : 'წვდომის მოთხოვნა' }}
+    </button>
+  </form>
+
+  <p class="text-muted enroll-note">
+    უკვე გაქვს ანგარიში?
+    <button type="button" class="link-button" (click)="setMode('login')">შესვლა</button>
+  </p>
+  }
+</div>

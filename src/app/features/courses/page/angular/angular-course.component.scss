@@ -475,3 +475,65 @@
     transform: translateY(0);
     box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
 }
+/* — enrolment section (shares the enroll-card component with the RxJS course) — */
+.enroll-section {
+  background: #3d472b;
+  color: #f9f4ed;
+  border-radius: 36px;
+  padding: 44px;
+  margin-top: 2rem;
+}
+
+.enroll-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 36px;
+  align-items: center;
+
+  h2 {
+    font-size: 1.9rem;
+    color: #f9f4ed;
+    margin: 0 0 0.7rem;
+  }
+}
+
+.enroll-lead {
+  color: rgba(249, 244, 237, 0.82);
+  max-width: 30em;
+  margin: 0;
+}
+
+.payment {
+  margin-top: 26px;
+  padding: 20px 22px;
+  border-radius: 20px;
+  background: rgba(249, 244, 237, 0.08);
+  border: 1px solid rgba(249, 244, 237, 0.18);
+}
+
+.payment-price {
+  font-size: 1.7rem;
+  margin-bottom: 12px;
+}
+
+.payment-details {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px 16px;
+  margin: 0;
+  font-size: 0.85rem;
+
+  dt { color: rgba(249, 244, 237, 0.62); }
+  dd { margin: 0; }
+}
+
+.payment-note {
+  margin: 14px 0 0;
+  font-size: 0.75rem;
+  color: rgba(249, 244, 237, 0.7);
+}
+
+@media (max-width: 900px) {
+  .enroll-grid { grid-template-columns: 1fr; }
+  .enroll-section { padding: 28px 22px; }
+}

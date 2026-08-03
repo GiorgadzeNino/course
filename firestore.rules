@@ -16,45 +16,61 @@ service cloud.firestore {
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
 
-    function hasFullAccess() {
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    // Granted per course: users/{uid}.courses is a map of courseId -> bool.
+    function hasCourse(courseId) {
       return isSignedIn()
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.hasFullAccess == true;
+        && userDoc().courses[courseId] == true;
     }
 
     // --- users ---
-    // A user reads and creates their own profile, and may edit their name only.
-    // hasFullAccess is deliberately NOT writable by the user — only an admin
-    // can flip it, which is what makes the paywall real.
+    // A user reads and creates their own profile and may edit their name.
+    // `courses` is deliberately NOT writable by the user — only an admin can
+    // change it, which is what makes the paywall real.
     match /users/{uid} {
       allow read: if isSignedIn() && (request.auth.uid == uid || isAdmin());
       allow create: if isSignedIn()
         && request.auth.uid == uid
-        && request.resource.data.hasFullAccess == false;
+        && request.resource.data.courses.size() == 0;
       allow update: if isAdmin()
         || (isSignedIn()
             && request.auth.uid == uid
-            && request.resource.data.hasFullAccess == resource.data.hasFullAccess);
+            && request.resource.data.courses == resource.data.courses);
       allow delete: if isAdmin();
     }
 
     // --- enrollment requests ---
-    // Document id is the uid, so one user cannot flood the collection.
-    // Status is fixed to "pending" on create; only an admin can change it.
-    match /enrollments/{uid} {
-      allow get: if isSignedIn() && (request.auth.uid == uid || isAdmin());
+    // Document id is "{courseId}__{uid}", so a user gets one row per course
+    // and cannot flood the collection. Status is fixed to "pending" on create;
+    // only an admin can change it.
+    match /enrollments/{enrollmentId} {
+      // `resource` is null when the document does not exist yet. Reading a
+      // missing document still goes through rules, so this case must be
+      // allowed explicitly — otherwise the app is denied before the user has
+      // ever requested access.
+      allow get: if isSignedIn()
+        && (resource == null || request.auth.uid == resource.data.uid || isAdmin());
       allow list: if isAdmin();
       allow create: if isSignedIn()
-        && request.auth.uid == uid
-        && request.resource.data.uid == uid
-        && request.resource.data.status == 'pending';
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status == 'pending'
+        && enrollmentId == request.resource.data.courseId + '__' + request.auth.uid;
       allow update, delete: if isAdmin();
     }
 
     // --- lesson bodies ---
-    // Lessons 1-3 are free; everything else needs a granted account.
-    // `free` is a boolean field on each lessonContent document.
-    match /lessonContent/{num} {
-      allow read: if resource.data.free == true || hasFullAccess() || isAdmin();
+    // Free lessons are open; the rest need a grant for that specific course.
+    // `free` is a boolean field on each lesson document.
+    match /courses/{courseId}/lessons/{num} {
+      // Same null-resource case: a lesson that has not been uploaded yet must
+      // read as "missing", not as "forbidden".
+      allow read: if resource == null
+        || resource.data.free == true
+        || hasCourse(courseId)
+        || isAdmin();
       allow write: if isAdmin();
     }
 

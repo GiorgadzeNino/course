@@ -1,5 +1,5 @@
 .admin {
-  max-width: 60rem;
+  max-width: 72rem;
   margin: 0 auto;
   padding: 2.5rem 1.75rem;
 }
@@ -9,25 +9,85 @@ h1 {
   margin: 0 0 1.5rem;
 }
 
+.mono {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(32, 30, 29, 0.16);
+  background: transparent;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+
+  &:hover { background: rgba(32, 30, 29, 0.05); }
+
+  &.is-active {
+    background: #201e1d;
+    border-color: #201e1d;
+    color: #f5ead8;
+  }
+}
+
+.badge {
+  min-width: 1.15rem;
+  height: 1.15rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  background: #c67139;
+  color: #f5ead8;
+  font-size: 0.68rem;
+  display: grid;
+  place-items: center;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 
   th {
     text-align: left;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #82796a;
     padding: 0.6rem;
     border-bottom: 1px solid rgba(32, 30, 29, 0.16);
+    white-space: nowrap;
   }
 
   td {
     padding: 0.7rem 0.6rem;
     border-bottom: 1px solid rgba(32, 30, 29, 0.08);
+    vertical-align: middle;
   }
+}
+
+.course-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: #eee7db;
+  color: #474238;
+  white-space: nowrap;
 }
 
 .status {
@@ -44,6 +104,7 @@ h1 {
   display: flex;
   gap: 0.5rem;
   justify-content: flex-end;
+  white-space: nowrap;
 }
 
 .btn {

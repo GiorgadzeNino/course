@@ -21,6 +21,11 @@ const routes: Routes = [
       import('./features/home/home.module').then(m => m.HomeModule),
   },
   {
+    path: 'admin',
+    loadChildren: () =>
+      import('./features/admin/admin.module').then(m => m.AdminModule),
+  },
+  {
     path: 'auth',
     loadChildren: () =>
       import('./features/auth/auth.module').then(m => m.AuthModule),

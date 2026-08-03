@@ -8,7 +8,7 @@ import {
   signOut,
   updateProfile,
 } from '@angular/fire/auth';
-import { Firestore, doc, docData, setDoc } from '@angular/fire/firestore';
+import { Firestore, doc, docData, getDoc, setDoc } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -17,8 +17,11 @@ export interface AppUser {
   email: string;
   firstName: string;
   lastName: string;
-  /** Granted manually after payment is confirmed. Enforced by Security Rules. */
-  hasFullAccess: boolean;
+  /**
+   * Per-course grants, keyed by CourseId. Set manually after payment is
+   * confirmed; only an admin can write it (enforced by Security Rules).
+   */
+  courses: Record<string, boolean>;
   createdAt: string;
 }
 
@@ -56,14 +59,37 @@ export class AuthService {
       email,
       firstName,
       lastName,
-      hasFullAccess: false,
+      courses: {},
       createdAt: new Date().toISOString(),
     };
     await setDoc(doc(this.firestore, 'users', credential.user.uid), profile);
   }
 
-  login(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password);
+  async login(email: string, password: string) {
+    const credential = await signInWithEmailAndPassword(this.auth, email, password);
+    // An Auth account can outlive its profile document (deleted by hand, or a
+    // registration that failed after the Auth step). Without this, such a user
+    // signs in but appUser$ stays null and the whole UI treats them as absent.
+    await this.ensureProfile(credential.user);
+    return credential;
+  }
+
+  private async ensureProfile(user: User): Promise<void> {
+    const ref = doc(this.firestore, 'users', user.uid);
+    const existing = await getDoc(ref);
+    if (existing.exists()) {
+      return;
+    }
+
+    const [firstName = '', lastName = ''] = (user.displayName ?? '').split(' ');
+    await setDoc(ref, {
+      uid: user.uid,
+      email: user.email ?? '',
+      firstName,
+      lastName,
+      courses: {},
+      createdAt: new Date().toISOString(),
+    });
   }
 
   logout() {

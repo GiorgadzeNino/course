@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { RXJS_LESSONS, RXJS_LEVEL_META, RxjsLesson } from '../../rxjs-lessons';
-import { LessonContent, RxjsAccessService } from '../../rxjs-access.service';
+import { CourseAccessService, LessonContent } from '../../../../core/services/course-access.service';
 
 @Component({
   selector: 'app-rxjs-lesson',
@@ -18,7 +18,7 @@ export class RxjsLessonComponent implements OnInit, OnDestroy {
 
   private sub?: Subscription;
 
-  constructor(private route: ActivatedRoute, private access: RxjsAccessService) {}
+  constructor(private route: ActivatedRoute, private access: CourseAccessService) {}
 
   ngOnInit() {
     this.sub = this.route.paramMap.pipe(
@@ -26,7 +26,17 @@ export class RxjsLessonComponent implements OnInit, OnDestroy {
         const num = Number(params.get('num'));
         this.lesson = RXJS_LESSONS.find(l => l.num === num);
         this.levelLabel = this.lesson ? RXJS_LEVEL_META[this.lesson.level].label : '';
-        return this.access.lessonView$(num);
+
+        if (!this.lesson) {
+          return of({ canRead: false, content: null as LessonContent | null });
+        }
+
+        return this.access.canRead$('rxjs', this.lesson.free).pipe(
+          switchMap(canRead => canRead
+            ? combineLatest([of(true), this.access.lessonContent$('rxjs', num)])
+            : of([false, null] as [boolean, LessonContent | null])),
+          switchMap(([canRead, content]) => of({ canRead: canRead as boolean, content }))
+        );
       })
     ).subscribe({
       next: view => {
