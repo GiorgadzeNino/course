@@ -4,7 +4,19 @@
   }
 
   <aside class="sidenav" [class.open]="sidenavOpen">
-    <a class="back-link" [routerLink]="['/courses', 'rxjs']">← კურსის გვერდი</a>
+    <a class="back-link" [routerLink]="['/courses', 'rxjs', 'lectures']">← ყველა ლექცია</a>
+
+    @let done = completed$ | async;
+
+    <div class="progress">
+      <div class="progress-label">
+        <span>{{ (done ?? []).length }}/{{ totalLessons }} დასრულებული</span>
+        <span class="mono">{{ progressPct(done) }}%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" [style.width.%]="progressPct(done)"></div>
+      </div>
+    </div>
 
     <nav class="sidenav-nav">
       @for (lv of levels; track lv.key) {
@@ -13,7 +25,8 @@
         @for (ls of lv.lessons; track ls.id) {
         <a class="nav-item" [class.active]="activeNum === ls.num"
           [routerLink]="['/courses', 'rxjs', 'lectures', ls.num]" (click)="closeSidenav()">
-          <span class="num">{{ pad(ls.num) }}</span>
+          <span class="check" [class.is-done]="isDone(done, ls.num)">✓</span>
+          <span class="mono num">{{ pad(ls.num) }}</span>
           <span class="title">{{ ls.title }}</span>
           @if (!ls.free) {
           <span class="lock">🔒</span>

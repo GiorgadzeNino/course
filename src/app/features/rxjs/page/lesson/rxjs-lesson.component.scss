@@ -1,5 +1,17 @@
+@use 'organic-tokens' as organic;
+
+:host {
+  @include organic.tokens;
+
+  display: block;
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
 .lesson {
-  max-width: 60rem;
+  max-width: 68rem;
+
+  * { font-family: var(--font-body); }
 }
 
 .lesson-meta {
@@ -13,16 +25,17 @@
   font-size: 0.75rem;
   padding: 0.2rem 0.65rem;
   border-radius: 999px;
-  background: #eee7db;
-  color: #474238;
+  background: var(--color-neutral-200);
+  color: var(--color-neutral-800);
 }
 
 .chip-free {
-  background: #fff2eb;
-  color: #643312;
+  background: var(--color-accent-100);
+  color: var(--color-accent-800);
 }
 
 h1 {
+  font-family: var(--font-heading);
   font-size: 2rem;
   line-height: 1.15;
   margin: 0 0 1.1rem;
@@ -40,30 +53,30 @@ h1 {
     font-size: 0.8rem;
     padding: 0.25rem 0.7rem;
     border-radius: 999px;
-    border: 1px solid #aebf92;
-    color: #56633f;
+    border: 1px solid var(--color-accent-2-400);
+    color: var(--color-accent-2-700);
   }
 }
 
 .soon {
-  color: #645c50;
+  color: var(--color-neutral-700);
 }
 
-
-
+/* — locked state — */
 .locked {
-  background: #ebddc5;
+  background: var(--color-surface);
   border-radius: 28px;
   padding: 44px;
   text-align: center;
 
   h3 {
+    font-family: var(--font-heading);
     font-size: 1.6rem;
     margin: 0 0 0.6rem;
   }
 
   p {
-    color: #645c50;
+    color: var(--color-neutral-700);
     max-width: 34em;
     margin: 0 auto 1.4rem;
   }
@@ -73,8 +86,8 @@ h1 {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: #ffe1d0;
-  color: #8c491a;
+  background: var(--color-accent-200);
+  color: var(--color-accent-700);
   display: grid;
   place-items: center;
   margin: 0 auto 18px;
@@ -95,23 +108,24 @@ h1 {
   padding: 12px 24px;
   border-radius: 999px;
   border: 1px solid transparent;
+  font-family: var(--font-heading);
   font-size: 0.9rem;
   text-decoration: none;
   cursor: pointer;
 }
 
 .btn-primary {
-  background: #c67139;
-  color: #f5ead8;
+  background: var(--color-accent);
+  color: var(--color-bg);
 
-  &:hover { background: #b2622d; }
+  &:hover { background: var(--color-accent-600); }
 }
 
 .btn-secondary {
-  border-color: rgba(32, 30, 29, 0.16);
-  color: #201e1d;
+  border-color: var(--color-divider);
+  color: var(--color-text);
 
-  &:hover { background: rgba(32, 30, 29, 0.07); }
+  &:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
 }
 
 /* Markdown output is injected with [innerHTML], so it carries no component
@@ -122,13 +136,16 @@ h1 {
 
   ::ng-deep {
     h1, h2, h3, h4 {
-      line-height: 1.2;
+      font-family: var(--font-heading);
+      font-weight: var(--font-heading-weight);
+      line-height: 1.18;
+      letter-spacing: -0.015em;
       margin: 2rem 0 0.8rem;
     }
 
-    h1 { font-size: 1.9rem; margin-top: 0; }
-    h2 { font-size: 1.45rem; }
-    h3 { font-size: 1.15rem; }
+    h1 { font-size: 2rem; margin-top: 0; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.18rem; }
     h4 { font-size: 1rem; }
 
     p, li {
@@ -145,37 +162,39 @@ h1 {
 
     li { margin-bottom: 0.35rem; }
 
-    a { color: #8c491a; }
+    a { color: var(--color-accent-700); }
 
     strong { font-weight: 700; }
+
+    em { font-style: italic; }
 
     hr {
       border: 0;
       height: 1px;
-      background: rgba(32, 30, 29, 0.16);
+      background: var(--color-divider);
       margin: 2rem 0;
     }
 
     blockquote {
       margin: 1.2rem 0;
       padding: 0.9rem 1.2rem;
-      border-left: 3px solid #c67139;
-      background: #ebddc5;
+      border-left: 3px solid var(--color-accent);
+      background: var(--color-surface);
       border-radius: 0 14px 14px 0;
 
       p:last-child { margin-bottom: 0; }
     }
 
     code {
-      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-family: var(--font-mono);
       font-size: 0.87em;
-      background: rgba(32, 30, 29, 0.08);
+      background: color-mix(in srgb, var(--color-text) 8%, transparent);
       border-radius: 5px;
       padding: 0.1em 0.35em;
     }
 
     pre {
-      background: #2e2b25;
+      background: var(--color-neutral-900);
       color: #e8dfce;
       border-radius: 16px;
       padding: 1.1rem 1.3rem;
@@ -201,18 +220,150 @@ h1 {
 
       th {
         text-align: left;
-        background: #ebddc5;
+        background: var(--color-surface);
         padding: 0.55rem 0.7rem;
-        border-bottom: 1px solid rgba(32, 30, 29, 0.16);
+        border-bottom: 1px solid var(--color-divider);
       }
 
       td {
         padding: 0.55rem 0.7rem;
-        border-bottom: 1px solid rgba(32, 30, 29, 0.08);
+        border-bottom: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
         vertical-align: top;
       }
     }
-
-    em { font-style: italic; }
   }
+}
+
+/* — footer nav — */
+.lesson-foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 2.2rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--color-divider);
+  flex-wrap: wrap;
+
+  .next-btn { margin-left: auto; }
+
+  .btn.is-done {
+    border-color: var(--color-accent-2-500);
+    background: var(--color-accent-2-100);
+    color: var(--color-accent-2-900);
+  }
+}
+
+/* — code editor, rendered by MarkdownPipe — */
+.lesson-body ::ng-deep {
+  .code-editor {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    margin: 1.75rem 0 0;
+    background: #2e2b25;
+  }
+
+  .code-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #3a352d;
+  }
+
+  .code-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+
+    &.red { background: #c0553f; }
+    &.amber { background: #d69a3f; }
+    &.green { background: #7a8a5e; }
+  }
+
+  .code-file {
+    font-family: var(--font-mono);
+    color: #c8bfae;
+    font-size: 12px;
+    margin-left: 8px;
+  }
+
+  .code-run {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    background: var(--color-accent);
+    color: var(--color-bg);
+    border: 0;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    cursor: pointer;
+
+    &:hover { background: var(--color-accent-600); }
+  }
+
+  .code-lines {
+    padding: 16px 0;
+    font-size: 13.5px;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+
+  .code-line {
+    display: flex;
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  .code-num {
+    font-family: var(--font-mono);
+    width: 20px;
+    text-align: right;
+    color: #6f6656;
+    user-select: none;
+    flex: none;
+  }
+
+  .code-text {
+    font-family: var(--font-mono);
+    white-space: pre;
+  }
+
+  .code-console {
+    background: #26241f;
+    border-radius: 0 0 20px 20px;
+    padding: 14px 22px;
+    margin: 0 0 1.75rem;
+    box-shadow: var(--shadow-md);
+    border-top: 1px solid #4a4438;
+
+    &.is-collapsed { display: none; }
+  }
+
+  /* A console with no editor above it still needs its own rounded top. */
+  .code-console:first-child { border-radius: 20px; }
+
+  .console-label {
+    font-family: var(--font-mono);
+    color: #7f9a5e;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .console-line {
+    font-family: var(--font-mono);
+    color: #d8cfbe;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  /* Editors are followed by their console, so drop the editor's bottom gap
+     only when one is present. */
+  .code-editor:has(+ .code-console) {
+    border-radius: 20px 20px 0 0;
+    margin-bottom: 0;
+  }
+
+  .code-editor:not(:has(+ .code-console)) { margin-bottom: 1.75rem; }
 }

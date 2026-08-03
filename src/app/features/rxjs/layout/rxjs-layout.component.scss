@@ -1,33 +1,71 @@
+@use 'organic-tokens' as organic;
+
+:host {
+  @include organic.tokens;
+
+  display: block;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
 .rxjs-layout {
   display: flex;
   min-height: 100vh;
-  background: #f5ead8;
-  color: #201e1d;
+
+  * { font-family: var(--font-body); }
 }
 
 .sidenav-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: color-mix(in srgb, var(--color-neutral-900) 45%, transparent);
   z-index: 20;
 }
 
 .sidenav {
   width: 300px;
   flex: 0 0 300px;
-  background: #ebddc5;
+  background: var(--color-surface);
   padding: 1.25rem 1rem;
   z-index: 30;
+  border-right: 1px solid var(--color-divider);
 }
 
 .back-link {
   display: inline-block;
   font-size: 0.8rem;
-  color: #8c491a;
+  color: var(--color-accent-700);
   text-decoration: none;
   margin-bottom: 1rem;
 
   &:hover { text-decoration: underline; }
+}
+
+.progress {
+  margin-bottom: 1.1rem;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  margin-bottom: 0.4rem;
+}
+
+.progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-text) 10%, transparent);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--color-accent);
+  transition: width 0.25s ease;
 }
 
 .sidenav-nav {
@@ -40,7 +78,7 @@
   font-size: 0.66rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #82796a;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
   padding: 0.4rem 0.6rem;
 }
 
@@ -54,8 +92,27 @@
   text-decoration: none;
   cursor: pointer;
 
+  .check {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-divider);
+    color: transparent;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+
+    &.is-done {
+      border-color: var(--color-accent-2-500);
+      background: var(--color-accent-2-500);
+      color: var(--color-bg);
+      font-weight: 700;
+    }
+  }
+
   .num {
-    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 0.7rem;
     opacity: 0.6;
     width: 1.3rem;
@@ -74,14 +131,17 @@
     flex: none;
   }
 
-  &:hover { background: rgba(32, 30, 29, 0.06); }
+  &:hover { background: color-mix(in srgb, var(--color-text) 6%, transparent); }
 
-  &.active { background: #ffe1d0; }
+  &.active {
+    background: var(--color-accent-200);
+    font-weight: 600;
+  }
 }
 
 .content {
   flex: 1 1 auto;
-  padding: 2rem;
+  padding: 2.5rem clamp(1.25rem, 4vw, 3rem);
   min-width: 0;
 }
 

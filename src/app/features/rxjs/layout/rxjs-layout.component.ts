@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { SidenavService } from '../../../core/services/sidenav.service';
-import { RXJS_LEVEL_META, RXJS_LEVEL_ORDER, padLessonNum, rxjsLessonsByLevel } from '../rxjs-lessons';
+import { RXJS_LESSONS, RXJS_LEVEL_META, RXJS_LEVEL_ORDER, padLessonNum, rxjsLessonsByLevel } from '../rxjs-lessons';
+import { LessonProgressService } from '../../../core/services/lesson-progress.service';
 
 @Component({
   selector: 'app-rxjs-layout',
@@ -11,6 +12,8 @@ import { RXJS_LEVEL_META, RXJS_LEVEL_ORDER, padLessonNum, rxjsLessonsByLevel } f
   styleUrl: './rxjs-layout.component.scss'
 })
 export class RxjsLayoutComponent implements OnInit, OnDestroy {
+  private readonly progress = inject(LessonProgressService);
+
   sidenavOpen = false;
   activeNum: number | null = null;
 
@@ -22,10 +25,21 @@ export class RxjsLayoutComponent implements OnInit, OnDestroy {
 
   pad = padLessonNum;
 
+  readonly totalLessons = RXJS_LESSONS.length;
+  readonly completed$ = this.progress.completed$('rxjs');
+
   private sub?: Subscription;
   private routerSub?: Subscription;
 
   constructor(private sidenav: SidenavService, private router: Router) {}
+
+  isDone(completed: number[] | null, num: number): boolean {
+    return !!completed?.includes(num);
+  }
+
+  progressPct(completed: number[] | null): number {
+    return Math.round(((completed?.length ?? 0) / this.totalLessons) * 100);
+  }
 
   ngOnInit() {
     this.sub = this.sidenav.open$.subscribe(open => (this.sidenavOpen = open));

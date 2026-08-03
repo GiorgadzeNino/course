@@ -1,0 +1,145 @@
+<div class="rx-index">
+
+  <!-- NAV -->
+  <div class="nav-band">
+    <div class="nav">
+      <div class="nav-brand">rx<span class="dot">·</span>აკადემია</div>
+      <a class="nlink" [routerLink]="['/courses']">კურსები</a>
+      <a class="nlink" [routerLink]="['/courses', 'rxjs']">კურსის შესახებ</a>
+      <a class="nlink" [routerLink]="['/courses', 'rxjs']" fragment="enroll">ფასები</a>
+      <a class="btn btn-primary" [routerLink]="['/courses', 'rxjs', 'lectures', 1]">დაწყება</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="tag tag-accent-2">ტექსტური კურსი · {{ totalLessons }} ლექცია</span>
+      <h1>RxJS ლექციები<br>0-დან <span class="accent">Advanced</span>-მდე</h1>
+      <p class="hero-lead">
+        ყოველი ლექცია: თეორია → კოდის მაგალითები → marble დიაგრამები → გავრცელებული შეცდომები → პრაქტიკული დავალება.
+      </p>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-value">{{ totalLessons }}</div>
+          <div class="text-muted stat-label">ლექცია</div>
+        </div>
+        @for (key of levels; track key) {
+        <div>
+          <div class="stat-value">{{ countFor(key) }}</div>
+          <div class="text-muted stat-label">{{ levelMeta[key].label | lowercase }}</div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <div class="blob-a"></div>
+      <div class="blob-b"></div>
+      <div class="hero-art-inner">
+        <div class="mono hero-kicker">stream$.pipe( … )</div>
+        <div class="track">
+          <div class="line"></div>
+          <div class="marble m1">1</div>
+          <div class="marble m2">2</div>
+          <div class="marble m3">3</div>
+        </div>
+        <div class="mono op-chip">map · filter · switchMap</div>
+        <div class="track">
+          <div class="line"></div>
+          <div class="marble out o1">10</div>
+          <div class="marble out o2">20</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATALOG -->
+  <section class="catalog">
+    <div class="catalog-head">
+      <div>
+        <h2>ყველა ლექცია</h2>
+        <p class="text-muted result-label">{{ resultLabel }}</p>
+      </div>
+      <div class="search">
+        <input class="input" placeholder="ძებნა ლექციებში…" [value]="query" (input)="onSearch($event)">
+      </div>
+    </div>
+
+    <div class="chips">
+      <button type="button" class="chip" [class.is-active]="activeLevel === 'all'" (click)="setLevel('all')">
+        ყველა
+      </button>
+      @for (key of levels; track key) {
+      <button type="button" class="chip" [class.is-active]="activeLevel === key" (click)="setLevel(key)">
+        {{ levelMeta[key].emoji }} {{ levelMeta[key].label }}
+      </button>
+      }
+    </div>
+
+    @let list = cards;
+
+    @if (list.length) {
+    <div class="card-grid">
+      @for (c of list; track c.lesson.id) {
+      <a class="ccard" [routerLink]="['/courses', 'rxjs', 'lectures', c.lesson.num]">
+        <div class="thumb" [ngClass]="c.themeClass">
+          <div class="thumb-blob"></div>
+          <div class="thumb-dots">
+            <span class="d1"></span>
+            <span class="d2"></span>
+            <span class="d3"></span>
+          </div>
+          <div class="mono thumb-tag">{{ c.codeTag }}</div>
+        </div>
+
+        <div class="ccard-body">
+          <div class="ccard-tags">
+            <span class="tag" [ngClass]="c.levelTagClass">{{ c.levelLabel }}</span>
+            @if (c.lesson.free) {
+            <span class="tag tag-accent">უფასო</span>
+            } @else if (c.locked) {
+            <span class="tag tag-neutral">🔒 დაბლოკილი</span>
+            }
+          </div>
+
+          <div class="ccard-title">ლექცია {{ c.lesson.num }}. {{ c.lesson.title }}</div>
+          <p class="ccard-blurb">{{ c.blurb }}</p>
+
+          <div class="ccard-foot">
+            <span class="text-muted mono">{{ c.lesson.topics.length }} თემა</span>
+            <span class="text-muted mono">~{{ c.lesson.minutes }} წთ</span>
+            <span class="ccard-cta">{{ c.locked ? 'დეტალები' : 'კითხვა' }} →</span>
+          </div>
+        </div>
+      </a>
+      }
+    </div>
+    } @else {
+    <div class="empty-state">
+      <div class="empty-title">ვერაფერი მოიძებნა</div>
+      <p class="text-muted">სცადე სხვა საკვანძო სიტყვა ან აირჩიე „ყველა".</p>
+    </div>
+    }
+  </section>
+
+  <!-- CTA -->
+  @if (!hasAccess) {
+  <section class="cta-section">
+    <div class="cta-card">
+      <div>
+        <h2>დაიწყე დღესვე</h2>
+        <p>პირველი სამი ლექცია უფასოა. წაიკითხე და ნახე, როგორ ვასწავლით.</p>
+      </div>
+      <a class="btn btn-primary" [routerLink]="['/courses', 'rxjs']" fragment="enroll">სრული წვდომის მიღება</a>
+    </div>
+  </section>
+  }
+
+  <footer class="rx-footer">
+    <div class="rx-footer-inner">
+      <div class="nav-brand">rx<span class="dot">·</span>აკადემია</div>
+      <span class="text-muted">© 2026 · ტექსტური frontend კურსები</span>
+    </div>
+  </footer>
+</div>
