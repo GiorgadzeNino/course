@@ -269,6 +269,7 @@ h1 {
     gap: 8px;
     padding: 12px 16px;
     background: #3a352d;
+    flex-wrap: wrap;
   }
 
   .code-dot {
@@ -283,23 +284,28 @@ h1 {
 
   .code-file {
     font-family: var(--font-mono);
-    color: #c8bfae;
+    color: #ffffff;
     font-size: 12px;
     margin-left: 8px;
+    min-width: 0;
+    flex: 0 1 auto;
   }
 
   .code-run {
     margin-left: auto;
     font-family: var(--font-mono);
     background: var(--color-accent);
-    color: var(--color-bg);
+    color: #fff;
     border: 0;
     padding: 6px 14px;
     border-radius: 999px;
     font-size: 12px;
     cursor: pointer;
+    flex: none;                 /* never shrink out of view */
+    white-space: nowrap;
 
     &:hover { background: var(--color-accent-600); }
+    &:active { transform: translateY(1px); }
   }
 
   .code-lines {
@@ -313,13 +319,15 @@ h1 {
     display: flex;
     gap: 16px;
     padding: 0 16px;
+    color: #fff;
+
   }
 
   .code-num {
     font-family: var(--font-mono);
     width: 20px;
     text-align: right;
-    color: #6f6656;
+    color: #b8ae99;
     user-select: none;
     flex: none;
   }
@@ -328,6 +336,9 @@ h1 {
     font-family: var(--font-mono);
     white-space: pre;
   }
+
+  /* Raw source used by the Run handler — never visible on the page. */
+  .code-source { display: none !important; }
 
   .code-console {
     background: #26241f;
@@ -353,10 +364,14 @@ h1 {
 
   .console-line {
     font-family: var(--font-mono);
-    color: #d8cfbe;
+    color: #ffffff;
     font-size: 13px;
     line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
+
+  .console-line-error { color: #e39a86; }
 
   /* Editors are followed by their console, so drop the editor's bottom gap
      only when one is present. */

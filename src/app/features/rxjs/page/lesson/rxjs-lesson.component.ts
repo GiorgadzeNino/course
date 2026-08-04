@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as rxjs from 'rxjs';
+import * as rxjsOperators from 'rxjs/operators';
 import { Subscription, combineLatest, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { RXJS_LESSONS, RXJS_LEVEL_META, RxjsLesson } from '../../rxjs-lessons';
@@ -94,15 +96,76 @@ export class RxjsLessonComponent implements OnInit, OnDestroy {
    */
   onBodyClick(event: Event) {
     const target = event.target as HTMLElement;
-    const button = target.closest('.code-run');
+    const button = target.closest('.code-run') as HTMLElement | null;
     if (!button) {
       return;
     }
 
-    const editor = button.closest('.code-editor');
-    const console = editor?.nextElementSibling;
-    if (console?.classList.contains('code-console')) {
-      console.classList.toggle('is-collapsed');
+    const editor = button.closest('.code-editor') as HTMLElement | null;
+    const consoleEl = editor?.nextElementSibling as HTMLElement | null;
+    if (!editor || !consoleEl?.classList.contains('code-console')) {
+      return;
+    }
+
+    // A hidden <pre class="code-source"> inside the editor carries the raw
+    // snippet — DomSanitizer strips data-* attributes but preserves text
+    // nodes. Its absence means this is an author-supplied console block, so
+    // fall back to the original toggle behaviour.
+    const sourceEl = editor.querySelector('.code-source') as HTMLElement | null;
+    if (!sourceEl) {
+      consoleEl.classList.toggle('is-collapsed');
+      return;
+    }
+
+    // Reset the panel to just its label, then rebuild output as the code runs.
+    consoleEl.innerHTML = '<div class="console-label">CONSOLE</div>';
+    consoleEl.classList.remove('is-collapsed');
+    this.executeSnippet(sourceEl.textContent ?? '', consoleEl);
+  }
+
+  private executeSnippet(source: string, output: HTMLElement) {
+    const append = (kind: 'log' | 'error', args: unknown[]) => {
+      const line = document.createElement('div');
+      line.className = kind === 'error' ? 'console-line console-line-error' : 'console-line';
+      line.textContent = args.map(a => this.formatValue(a)).join(' ');
+      output.appendChild(line);
+    };
+
+    // A sandboxed console keeps the page console clean and lets us render each
+    // call as its own line without racing the real console.
+    const sandboxConsole = {
+      log: (...args: unknown[]) => append('log', args),
+      info: (...args: unknown[]) => append('log', args),
+      warn: (...args: unknown[]) => append('log', args),
+      error: (...args: unknown[]) => append('error', args),
+    };
+
+    // Snippets are illustrative — they contain `import { of } from 'rxjs'`
+    // which `new Function` can't parse (no module scope). Strip those lines
+    // and inject the same names as parameters so the lesson code runs
+    // untouched otherwise.
+    const stripped = source.replace(/^\s*import\s+[^;]*;?\s*$/gm, '');
+    const scope = { ...rxjs, ...rxjsOperators } as Record<string, unknown>;
+    const names = Object.keys(scope);
+    const values = names.map(n => scope[n]);
+
+    try {
+      // `new Function` isolates the snippet from module scope. It is still
+      // same-origin JS — lesson bodies are admin-authored, which is the trust
+      // boundary the markdown pipe already relies on.
+      const fn = new Function('console', ...names, `"use strict";\n${stripped}`);
+      fn(sandboxConsole, ...values);
+    } catch (err) {
+      append('error', [err instanceof Error ? `${err.name}: ${err.message}` : String(err)]);
+    }
+  }
+
+  private formatValue(value: unknown): string {
+    if (typeof value === 'string') return value;
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return String(value);
     }
   }
 

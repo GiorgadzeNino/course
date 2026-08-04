@@ -790,6 +790,66 @@
   .enroll { padding: 32px 24px; }
 }
 
+/* — mobile — nav wrapping, tighter paddings, smaller hero art. — */
+@media (max-width: 720px) {
+  .rx-landing .nav {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 18px;
+  }
+  .rx-landing .nav-brand { flex: 1 0 100%; margin-right: 0; }
+
+  .hero {
+    padding: 24px 18px 12px;
+    gap: 28px;
+  }
+  .hero-title { font-size: 34px; }
+  .hero-lead { font-size: 16px; }
+  .hero-cta .btn { flex: 1 1 auto; }
+
+  .hero-art { height: 260px; border-radius: 28px; }
+  .hero-art-inner { padding: 22px; gap: 20px; }
+
+  .section-title { font-size: 26px; }
+
+  .rx-section { padding-left: 18px; padding-right: 18px; }
+
+  .marble-stage { padding: 22px 18px; border-radius: 22px; }
+  .op-list { flex-direction: row; overflow-x: auto; padding-bottom: 4px; }
+  .op-button { flex: 0 0 auto; }
+
+  .level-head { padding: 16px 18px; gap: 10px; }
+  .level-label { font-size: 17px; }
+  .lesson-list { padding: 0 8px 10px; }
+  .lesson-row { padding: 12px 12px; gap: 10px; }
+  .lesson-title { font-size: 14px; }
+
+  .enroll {
+    border-radius: 28px;
+    padding: 28px 20px;
+  }
+  .enroll h2 { font-size: 26px; }
+
+  .payment { padding: 16px 16px; }
+  .payment-price { font-size: 24px; }
+  .payment-details { grid-template-columns: 1fr; gap: 2px; }
+  .payment-details dt { margin-top: 6px; }
+
+  .faq-item { padding: 16px 18px; }
+  .faq-item .faq-q { font-size: 16px; }
+
+  .rx-footer .rx-footer-inner {
+    padding: 20px 18px;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
 @media (max-width: 560px) {
   .outcomes-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 28px; }
+  .hero-stats { gap: 18px; }
+  .hero-stats .stat-value { font-size: 22px; }
+  .hero-cta { flex-direction: column; }
+  .hero-cta .btn { width: 100%; }
 }

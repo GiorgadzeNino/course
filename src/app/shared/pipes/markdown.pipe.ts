@@ -20,17 +20,23 @@ const RX_NAMES = new Set([
 ]);
 
 const COLORS = {
-  comment: '#8a8172',
-  string: '#b7c489',
-  number: '#f0a76b',
-  keyword: '#f0a76b',
-  rx: '#a9c07f',
-  punct: '#a79c8a',
-  ident: '#e8dfce',
+  comment: '#c9c0ac',   /* readable, still clearly a comment */
+  string: '#d4e4a3',    /* brighter greens/oranges over dark #2e2b25 */
+  number: '#ffb583',
+  keyword: '#ffb583',
+  rx: '#c8dc94',
+  punct: '#f2ece0',
+  ident: '#ffffff',     /* identifiers = plain white */
 };
 
 /** Fences rendered as plain blocks rather than an editor. */
-const PLAIN_LANGUAGES = new Set(['text', 'console', 'output', 'bash', 'sh', '']);
+const PLAIN_LANGUAGES = new Set(['text', 'console', 'output', 'bash', 'sh']);
+
+/** Fences we execute in-browser when the reader clicks Run. An empty language
+ *  is treated as JS — lesson bodies are JS-heavy, so a bare ``` fence should
+ *  still get the editor + Run button. */
+const RUNNABLE_LANGUAGES = new Set(['', 'js', 'javascript', 'ts', 'typescript']);
+
 
 function escapeHtml(value: string): string {
   return value
@@ -97,20 +103,58 @@ function highlightLine(line: string): string {
  *     ვეძებ: rxjs
  *     ```
  */
-function renderEditor(code: string, filename: string): string {
+function renderEditor(code: string, filename: string, runnable: boolean): string {
   const lines = code.replace(/\n$/, '').split('\n');
   const numbered = lines
     .map((line, i) => `<div class="code-line"><span class="code-num">${i + 1}</span><span class="code-text">${highlightLine(line)}</span></div>`)
     .join('');
 
-  return `<div class="code-editor">
+  // Angular's DomSanitizer strips `<button>` and `data-*` attributes from
+  // `[innerHTML]` output. Use a `<span role="button">` (span is on the
+  // allowlist) and stash the raw source in a hidden `<pre class="code-source">`
+  // whose text content survives sanitisation. Inline styles on the run span
+  // so it always looks like a pill even if the .code-run class rule doesn't
+  // reach it.
+  const runButtonStyle = [
+    'display:inline-block',
+    'margin-left:auto',
+    'font-family:var(--font-mono)',
+    'background:var(--color-accent,#c67139)',
+    'color:#fff',
+    'padding:6px 14px',
+    'border-radius:999px',
+    'font-size:12px',
+    'cursor:pointer',
+    'flex:none',
+    'white-space:nowrap',
+    'user-select:none',
+  ].join(';');
+
+  // `hidden` attribute + `.code-source` CSS rule — inline `display:none` is
+  // dropped by DomSanitizer, so neither alone is enough.
+  const hiddenSource = runnable
+    ? `<pre class="code-source" hidden aria-hidden="true">${escapeHtml(code)}</pre>`
+    : '';
+
+  const editor = `<div class="code-editor">
   <div class="code-bar">
     <span class="code-dot red"></span><span class="code-dot amber"></span><span class="code-dot green"></span>
     <span class="code-file">${escapeHtml(filename)}</span>
-    <button type="button" class="code-run">▶ გაშვება</button>
+    <span class="code-run" role="button" tabindex="0" style="${runButtonStyle}">▶ გაშვება</span>
   </div>
   <div class="code-lines">${numbered}</div>
+  ${hiddenSource}
 </div>`;
+
+  // Runnable editors need a console to write into. If the author supplied one
+  // via a following ```console block, use theirs; otherwise attach an empty
+  // placeholder the click handler can populate.
+  if (runnable) {
+    return editor + `<div class="code-console is-collapsed" data-generated="true">
+  <div class="console-label">CONSOLE</div>
+</div>`;
+  }
+  return editor;
 }
 
 function renderConsole(output: string): string {
@@ -150,11 +194,14 @@ export class MarkdownPipe implements PipeTransform {
         return renderConsole(text);
       }
 
-      if (PLAIN_LANGUAGES.has(language) || !filename) {
+      const runnable = RUNNABLE_LANGUAGES.has(language);
+      // JS/TS is always the editor — a filename is nice but no longer required.
+      // Everything else stays a plain block unless it carries a filename.
+      if (!runnable && (PLAIN_LANGUAGES.has(language) || !filename)) {
         return `<pre class="code-plain"><code>${escapeHtml(text)}</code></pre>`;
       }
 
-      return renderEditor(text, filename);
+      return renderEditor(text, filename || `example.${language || 'js'}`, runnable);
     };
 
     return marked.parse(value, { async: false, gfm: true, breaks: false, renderer }) as string;
