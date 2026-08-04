@@ -124,11 +124,13 @@ export class RxjsLessonComponent implements OnInit, OnDestroy {
   }
 
   private executeSnippet(source: string, output: HTMLElement) {
+    let emitted = 0;
     const append = (kind: 'log' | 'error', args: unknown[]) => {
       const line = document.createElement('div');
       line.className = kind === 'error' ? 'console-line console-line-error' : 'console-line';
       line.textContent = args.map(a => this.formatValue(a)).join(' ');
       output.appendChild(line);
+      emitted++;
     };
 
     // A sandboxed console keeps the page console clean and lets us render each
@@ -157,6 +159,17 @@ export class RxjsLessonComponent implements OnInit, OnDestroy {
       fn(sandboxConsole, ...values);
     } catch (err) {
       append('error', [err instanceof Error ? `${err.name}: ${err.message}` : String(err)]);
+      return;
+    }
+
+    // Snippet ran fine but produced no output — usually a template exercise
+    // with a `// შენი კოდი აქ` placeholder. Tell the reader what happened
+    // instead of leaving the panel empty.
+    if (emitted === 0) {
+      const hint = document.createElement('div');
+      hint.className = 'console-line console-line-hint';
+      hint.textContent = '(კოდი შესრულდა, გამოსავალი არ არის — არცერთი console.log არ გამოძახებულა)';
+      output.appendChild(hint);
     }
   }
 

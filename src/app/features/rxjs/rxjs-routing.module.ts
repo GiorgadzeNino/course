@@ -4,6 +4,7 @@ import { RxjsCourseComponent } from './page/rxjs-course/rxjs-course.component';
 import { RxjsLayoutComponent } from './layout/rxjs-layout.component';
 import { RxjsLessonComponent } from './page/lesson/rxjs-lesson.component';
 import { RxjsLessonsIndexComponent } from './page/lessons-index/rxjs-lessons-index.component';
+import { RxjsQuizComponent } from './page/quiz/rxjs-quiz.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,12 @@ const routes: Routes = [
         component: RxjsLessonComponent
       }
     ]
+  },
+  {
+    // Quiz owns its own dark full-screen theme — kept outside RxjsLayoutComponent
+    // so the sidebar/organic tokens don't fight its palette.
+    path: 'quiz/1-2',
+    component: RxjsQuizComponent
   }
 ];
 

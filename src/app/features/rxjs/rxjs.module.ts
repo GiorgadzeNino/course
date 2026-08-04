@@ -8,6 +8,7 @@ import { RxjsCourseComponent } from './page/rxjs-course/rxjs-course.component';
 import { RxjsLayoutComponent } from './layout/rxjs-layout.component';
 import { RxjsLessonComponent } from './page/lesson/rxjs-lesson.component';
 import { RxjsLessonsIndexComponent } from './page/lessons-index/rxjs-lessons-index.component';
+import { RxjsQuizComponent } from './page/quiz/rxjs-quiz.component';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SharedModule } from '../../shared/shared.module';
     RxjsCourseComponent,
     RxjsLayoutComponent,
     RxjsLessonComponent,
-    RxjsLessonsIndexComponent
+    RxjsLessonsIndexComponent,
+    RxjsQuizComponent
   ],
   imports: [
     CommonModule,

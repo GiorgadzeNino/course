@@ -1,0 +1,115 @@
+<canvas class="rail" #rail aria-hidden="true"></canvas>
+
+<div class="wrap">
+  <button type="button" class="back-link" (click)="goBack()">← უკან დაბრუნება</button>
+
+  <header>
+    <div class="eyebrow">RxJS · შემოწმების ტესტი</div>
+    <h1>ლექცია <span class="accent">1 &amp; 2</span></h1>
+    <div class="marble-line" aria-hidden="true">
+      <span class="m n">1</span>
+      <span class="m n2">2</span>
+      <span class="m c">?</span>
+      <span class="m-bar">|</span>
+      <span style="color:var(--dim)">// შენი ცოდნის ნაკადი</span>
+    </div>
+    <div class="meta">
+      <span class="chip"><b>{{ total }}</b> კითხვა</span>
+      <span class="chip">არჩევითპასუხიანი</span>
+      <span class="chip">ლ.1 — <b>რატომ რეაქტიული</b></span>
+      <span class="chip">ლ.2 — <b>Observable-ის საფუძვლები</b></span>
+      @if (savedBest) {
+        <span class="chip chip-best">🏆 საუკეთესო: <b>{{ savedBest.score }}/{{ savedBest.total }}</b></span>
+      }
+    </div>
+  </header>
+
+  <div class="progress-shell">
+    <div class="progress-track"><div class="progress-fill" [style.width.%]="progressPct"></div></div>
+    <div class="progress-label">
+      <span>{{ answeredCount }} / {{ total }} გავეცი პასუხი</span>
+      <span class="mono">score: {{ score }}</span>
+    </div>
+  </div>
+
+  <!-- LECTURE 1 -->
+  <div class="lecture-head">
+    <span class="lecture-num">ლექცია 1</span>
+    <span class="lecture-title">რატომ რეაქტიული პროგრამირება</span>
+  </div>
+
+  @for (item of questions.a; track $index; let qi = $index) {
+    <div class="q" [class.answered]="answered['a' + qi]" [id]="'card-a' + qi">
+      <div class="q-top">
+        <span class="q-index">A·{{ qi + 1 }}</span>
+        <div class="q-text" [innerHTML]="item.q"></div>
+      </div>
+      <div class="opts">
+        @for (opt of item.opts; track $index; let oi = $index) {
+          <button type="button"
+                  class="opt"
+                  [class]="'opt ' + optionClass('a', qi, oi, item.correct)"
+                  [disabled]="answered['a' + qi]"
+                  (click)="pick('a', qi, item.correct); $event.currentTarget && ($any($event.currentTarget)).blur()">
+            <span class="key">{{ keys[oi] }}</span>
+            <span class="otext" [innerHTML]="opt"></span>
+            <span class="mark">{{ optionMark('a', qi, oi, item.correct) }}</span>
+          </button>
+        }
+      </div>
+      <div class="explain" [class.show]="answered['a' + qi]" [innerHTML]="item.ex"></div>
+    </div>
+  }
+
+  <!-- LECTURE 2 -->
+  <div class="lecture-head">
+    <span class="lecture-num two">ლექცია 2</span>
+    <span class="lecture-title">პირველი ნაბიჯები Observable-თან</span>
+  </div>
+
+  @for (item of questions.b; track $index; let qi = $index) {
+    <div class="q" [class.answered]="answered['b' + qi]" [id]="'card-b' + qi">
+      <div class="q-top">
+        <span class="q-index">B·{{ qi + 1 }}</span>
+        <div class="q-text" [innerHTML]="item.q"></div>
+      </div>
+      <div class="opts">
+        @for (opt of item.opts; track $index; let oi = $index) {
+          <button type="button"
+                  class="opt"
+                  [class]="'opt ' + optionClass('b', qi, oi, item.correct)"
+                  [disabled]="answered['b' + qi]"
+                  (click)="pick('b', qi, item.correct); $event.currentTarget && ($any($event.currentTarget)).blur()">
+            <span class="key">{{ keys[oi] }}</span>
+            <span class="otext" [innerHTML]="opt"></span>
+            <span class="mark">{{ optionMark('b', qi, oi, item.correct) }}</span>
+          </button>
+        }
+      </div>
+      <div class="explain" [class.show]="answered['b' + qi]" [innerHTML]="item.ex"></div>
+    </div>
+  }
+
+  @if (finished) {
+    <div class="result show" id="quiz-result">
+      <div class="score-marbles">
+        @for (m of scoreMarbles; track m.id) {
+          <span class="sm" [class.hit]="m.hit" [class.miss]="!m.hit"></span>
+        }
+      </div>
+      <h2>ტესტი დასრულდა</h2>
+      <div class="big"><span class="accent">{{ score }}/{{ total }}</span></div>
+      <div class="verdict">{{ verdict }}</div>
+      <div class="sub">{{ subverdict }}</div>
+      <div class="result-actions">
+        <button type="button" class="btn" (click)="reset()">↻ თავიდან დაწყება</button>
+        <button type="button" class="btn btn-primary" (click)="goBack()">← ლექციაზე დაბრუნება</button>
+      </div>
+    </div>
+  }
+
+  <footer>
+    <span class="m-bar">next → error → complete</span> <span class="m-bar">|</span><br>
+    RxJS კურსი · 0-დან advanced-მდე
+  </footer>
+</div>

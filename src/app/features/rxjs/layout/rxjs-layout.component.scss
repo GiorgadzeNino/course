@@ -139,6 +139,53 @@
   }
 }
 
+/* Recap quiz row — same layout as .nav-item but a distinctive accent so it
+   doesn't visually pass as another lecture. */
+.nav-recap {
+  color: var(--color-accent-700);
+  font-weight: 600;
+  font-size: 0.82rem;
+  margin: 0.15rem 0;
+
+  .recap-icon {
+    width: 18px;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    flex: none;
+  }
+
+  .title {
+    flex: 1;
+    line-height: 1.3;
+  }
+
+  .recap-score {
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--color-accent-2-100);
+    color: var(--color-accent-2-800);
+    font-weight: 700;
+    flex: none;
+  }
+
+  &:hover { background: var(--color-accent-100); }
+
+  &.active {
+    background: var(--color-accent-200);
+    color: var(--color-accent-900);
+  }
+
+  /* After completion the whole row picks up the "done" tint used by
+     lectures — same green ✓ checkmark reads consistently. */
+  &.is-taken {
+    color: var(--color-accent-2-800);
+
+    .recap-icon { opacity: 0.75; }
+  }
+}
+
 .content {
   flex: 1 1 auto;
   padding: 2.5rem clamp(1.25rem, 4vw, 3rem);

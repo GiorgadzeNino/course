@@ -22,16 +22,35 @@
       @for (lv of levels; track lv.key) {
       <div class="level">
         <div class="level-head">{{ lv.emoji }} {{ lv.label }}</div>
-        @for (ls of lv.lessons; track ls.id) {
-        <a class="nav-item" [class.active]="activeNum === ls.num"
-          [routerLink]="['/courses', 'rxjs', 'lectures', ls.num]" (click)="closeSidenav()">
-          <span class="check" [class.is-done]="isDone(done, ls.num)">✓</span>
-          <span class="mono num">{{ pad(ls.num) }}</span>
-          <span class="title">{{ ls.title }}</span>
-          @if (!ls.free) {
-          <span class="lock">🔒</span>
+        @for (row of lv.rows; track $index) {
+          @if (row.kind === 'lesson') {
+          <a class="nav-item" [class.active]="activeNum === row.lesson.num"
+            [routerLink]="['/courses', 'rxjs', 'lectures', row.lesson.num]" (click)="closeSidenav()">
+            <span class="check" [class.is-done]="isDone(done, row.lesson.num)">✓</span>
+            <span class="mono num">{{ pad(row.lesson.num) }}</span>
+            <span class="title">{{ row.lesson.title }}</span>
+            @if (!row.lesson.free) {
+            <span class="lock">🔒</span>
+            }
+          </a>
+          } @else {
+          <!-- Recap quiz row — visually distinct from lecture rows.
+               Score badge appears once the quiz has been completed at least
+               once (best score is what QuizProgressService stores). -->
+          @let result = recapResult$(row.recap) | async;
+          <a class="nav-item nav-recap"
+             [class.active]="activeRecap === row.recap.urlKey"
+             [class.is-taken]="!!result"
+             [routerLink]="row.recap.link"
+             (click)="closeSidenav()">
+            <span class="check" [class.is-done]="!!result">✓</span>
+            <span class="recap-icon" aria-hidden="true">🎯</span>
+            <span class="title">{{ row.recap.label }}</span>
+            @if (result) {
+              <span class="recap-score mono">{{ result.score }}/{{ result.total }}</span>
+            }
+          </a>
           }
-        </a>
         }
       </div>
       }

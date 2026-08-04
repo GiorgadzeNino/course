@@ -372,6 +372,7 @@ h1 {
   }
 
   .console-line-error { color: #e39a86; }
+  .console-line-hint { color: #b8ae99; font-style: italic; }
 
   /* Editors are followed by their console, so drop the editor's bottom gap
      only when one is present. */
