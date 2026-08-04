@@ -30,6 +30,72 @@
   overflow-x: hidden;
 }
 
+/* Indigo variant — swaps stream cyan for stream-2 indigo where the accent
+   shows the "current" quiz (headers, badges, borders). Palette variables
+   themselves aren't overwritten, so anywhere we deliberately reach for
+   stream (option .otext code, marble line dots) stays cyan. */
+:host[data-variant="indigo"] {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(129, 140, 248, .09), transparent 60%),
+    radial-gradient(900px 500px at 0% 110%, rgba(52, 211, 153, .07), transparent 55%),
+    var(--void);
+
+  .eyebrow { color: var(--stream-2); }
+  .eyebrow::before { background: var(--stream-2); box-shadow: var(--glow) var(--stream-2); }
+
+  .progress-fill {
+    background: linear-gradient(90deg, var(--stream-2), var(--complete));
+    box-shadow: var(--glow) rgba(129, 140, 248, .6);
+  }
+
+  .lecture-num {
+    background: var(--stream-2);
+    box-shadow: var(--glow) rgba(129, 140, 248, .35);
+    /* Second-lecture variant is only meaningful when the palette itself is
+       cyan; in indigo the whole quiz already uses stream-2. */
+    &.two { background: var(--stream-2); box-shadow: var(--glow) rgba(129, 140, 248, .35); }
+  }
+
+  .q::before { background: linear-gradient(var(--stream-2), var(--complete)); }
+  .q-index { color: var(--stream-2); }
+
+  .opt:focus-visible { outline-color: var(--stream-2); }
+  .explain::before { color: var(--stream-2); }
+
+  .result .big .accent {
+    background: linear-gradient(120deg, var(--stream-2), var(--complete));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .btn { color: var(--stream-2); border-color: var(--stream-2); }
+  .btn:hover { background: var(--stream-2); color: var(--void); box-shadow: var(--glow) rgba(129, 140, 248, .45); }
+  .btn:focus-visible { outline-color: var(--stream-2); }
+
+  .btn-primary { background: var(--stream-2); color: var(--void); }
+  .btn-primary:hover { background: var(--complete); border-color: var(--complete); box-shadow: var(--glow) rgba(52, 211, 153, .5); }
+}
+
+/* Optional inline code block a question can carry alongside its prompt. */
+.code-block {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  background: var(--void);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 14px;
+  color: var(--ink);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+@media (max-width: 560px) {
+  .code-block { font-size: 12px; }
+}
+
 /* The global `* { font-family: 'Noto Sans Georgian' }` in styles.scss would
    otherwise override JetBrains Mono anywhere we need it. Reassert per class. */
 :host * { box-sizing: border-box; }

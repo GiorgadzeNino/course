@@ -32,6 +32,13 @@ const RECAPS: RecapEntry[] = [
     urlKey: '/courses/rxjs/quiz/1-2',
     quizId: '1-2',
   },
+  {
+    afterNum: 3,
+    label: 'შეჯამება 2',
+    link: ['/courses', 'rxjs', 'quiz', '3'],
+    urlKey: '/courses/rxjs/quiz/3',
+    quizId: '3',
+  },
 ];
 
 /** Sidebar row — either a lecture or a recap. `@switch` in the template

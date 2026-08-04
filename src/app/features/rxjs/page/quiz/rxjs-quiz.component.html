@@ -1,11 +1,13 @@
 <canvas class="rail" #rail aria-hidden="true"></canvas>
 
+@if (config) {
 <div class="wrap">
   <button type="button" class="back-link" (click)="goBack()">← უკან დაბრუნება</button>
 
   <header>
     <div class="eyebrow">RxJS · შემოწმების ტესტი</div>
-    <h1>ლექცია <span class="accent">1 &amp; 2</span></h1>
+    <h1>{{ config.heading.prefix }} <span class="accent">{{ config.heading.accent }}</span></h1>
+
     <div class="marble-line" aria-hidden="true">
       <span class="m n">1</span>
       <span class="m n2">2</span>
@@ -13,11 +15,11 @@
       <span class="m-bar">|</span>
       <span style="color:var(--dim)">// შენი ცოდნის ნაკადი</span>
     </div>
+
     <div class="meta">
-      <span class="chip"><b>{{ total }}</b> კითხვა</span>
-      <span class="chip">არჩევითპასუხიანი</span>
-      <span class="chip">ლ.1 — <b>რატომ რეაქტიული</b></span>
-      <span class="chip">ლ.2 — <b>Observable-ის საფუძვლები</b></span>
+      @for (chip of config.chips; track $index) {
+        <span class="chip" [innerHTML]="chip"></span>
+      }
       @if (savedBest) {
         <span class="chip chip-best">🏆 საუკეთესო: <b>{{ savedBest.score }}/{{ savedBest.total }}</b></span>
       }
@@ -32,62 +34,36 @@
     </div>
   </div>
 
-  <!-- LECTURE 1 -->
-  <div class="lecture-head">
-    <span class="lecture-num">ლექცია 1</span>
-    <span class="lecture-title">რატომ რეაქტიული პროგრამირება</span>
-  </div>
-
-  @for (item of questions.a; track $index; let qi = $index) {
-    <div class="q" [class.answered]="answered['a' + qi]" [id]="'card-a' + qi">
-      <div class="q-top">
-        <span class="q-index">A·{{ qi + 1 }}</span>
-        <div class="q-text" [innerHTML]="item.q"></div>
-      </div>
-      <div class="opts">
-        @for (opt of item.opts; track $index; let oi = $index) {
-          <button type="button"
-                  class="opt"
-                  [class]="'opt ' + optionClass('a', qi, oi, item.correct)"
-                  [disabled]="answered['a' + qi]"
-                  (click)="pick('a', qi, item.correct); $event.currentTarget && ($any($event.currentTarget)).blur()">
-            <span class="key">{{ keys[oi] }}</span>
-            <span class="otext" [innerHTML]="opt"></span>
-            <span class="mark">{{ optionMark('a', qi, oi, item.correct) }}</span>
-          </button>
-        }
-      </div>
-      <div class="explain" [class.show]="answered['a' + qi]" [innerHTML]="item.ex"></div>
+  @for (section of config.sections; track section.prefix) {
+    <div class="lecture-head">
+      <span class="lecture-num" [class.two]="!$first">{{ section.numberLabel }}</span>
+      <span class="lecture-title">{{ section.title }}</span>
     </div>
-  }
 
-  <!-- LECTURE 2 -->
-  <div class="lecture-head">
-    <span class="lecture-num two">ლექცია 2</span>
-    <span class="lecture-title">პირველი ნაბიჯები Observable-თან</span>
-  </div>
-
-  @for (item of questions.b; track $index; let qi = $index) {
-    <div class="q" [class.answered]="answered['b' + qi]" [id]="'card-b' + qi">
-      <div class="q-top">
-        <span class="q-index">B·{{ qi + 1 }}</span>
-        <div class="q-text" [innerHTML]="item.q"></div>
-      </div>
-      <div class="opts">
-        @for (opt of item.opts; track $index; let oi = $index) {
-          <button type="button"
-                  class="opt"
-                  [class]="'opt ' + optionClass('b', qi, oi, item.correct)"
-                  [disabled]="answered['b' + qi]"
-                  (click)="pick('b', qi, item.correct); $event.currentTarget && ($any($event.currentTarget)).blur()">
-            <span class="key">{{ keys[oi] }}</span>
-            <span class="otext" [innerHTML]="opt"></span>
-            <span class="mark">{{ optionMark('b', qi, oi, item.correct) }}</span>
-          </button>
+    @for (item of section.questions; track $index; let qi = $index) {
+      <div class="q" [class.answered]="isAnswered(section, qi)" [id]="'card-' + section.prefix + qi">
+        <div class="q-top">
+          <span class="q-index">{{ section.prefix.toUpperCase() }}·{{ qi + 1 }}</span>
+          <div class="q-text" [innerHTML]="item.q"></div>
+        </div>
+        @if (item.code) {
+          <div class="code-block" [innerHTML]="item.code"></div>
         }
+        <div class="opts">
+          @for (opt of item.opts; track $index; let oi = $index) {
+            <button type="button"
+                    [class]="'opt ' + optionClass(section, qi, oi, item.correct)"
+                    [disabled]="isAnswered(section, qi)"
+                    (click)="pick(section, qi, item.correct); $event.currentTarget && ($any($event.currentTarget)).blur()">
+              <span class="key">{{ keys[oi] }}</span>
+              <span class="otext" [innerHTML]="opt"></span>
+              <span class="mark">{{ optionMark(section, qi, oi, item.correct) }}</span>
+            </button>
+          }
+        </div>
+        <div class="explain" [class.show]="isAnswered(section, qi)" [innerHTML]="item.ex"></div>
       </div>
-      <div class="explain" [class.show]="answered['b' + qi]" [innerHTML]="item.ex"></div>
-    </div>
+    }
   }
 
   @if (finished) {
@@ -109,7 +85,8 @@
   }
 
   <footer>
-    <span class="m-bar">next → error → complete</span> <span class="m-bar">|</span><br>
+    <span [innerHTML]="config.footerLine"></span><br>
     RxJS კურსი · 0-დან advanced-მდე
   </footer>
 </div>
+}

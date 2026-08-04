@@ -33,9 +33,19 @@ const COLORS = {
 const PLAIN_LANGUAGES = new Set(['text', 'console', 'output', 'bash', 'sh']);
 
 /** Fences we execute in-browser when the reader clicks Run. An empty language
- *  is treated as JS — lesson bodies are JS-heavy, so a bare ``` fence should
- *  still get the editor + Run button. */
+ *  is treated as JS *only* when the content actually looks like code — see
+ *  {@link looksLikeDiagram}. Lessons author diagrams and tables inside bare
+ *  ``` fences too, and those must not offer a Run button. */
 const RUNNABLE_LANGUAGES = new Set(['', 'js', 'javascript', 'ts', 'typescript']);
+
+/**
+ * Heuristic: does this fence body read as ASCII art / a marble diagram
+ * rather than JavaScript? Any of the box-drawing or arrow characters we
+ * use in lesson diagrams is enough to disqualify it.
+ */
+function looksLikeDiagram(code: string): boolean {
+  return /[─│┌┐└┘├┤┬┴┼━┃┏┓┗┛▶◀►◄→←↑↓⇒⇐▷]/.test(code);
+}
 
 
 function escapeHtml(value: string): string {
@@ -194,10 +204,13 @@ export class MarkdownPipe implements PipeTransform {
         return renderConsole(text);
       }
 
-      const runnable = RUNNABLE_LANGUAGES.has(language);
-      // JS/TS is always the editor — a filename is nice but no longer required.
-      // Everything else stays a plain block unless it carries a filename.
-      if (!runnable && (PLAIN_LANGUAGES.has(language) || !filename)) {
+      // An empty-language fence that carries diagram characters is a marble
+      // chart or ASCII table — never runnable, never even styled as an editor.
+      // Everything else falls through the normal rules.
+      const isDiagram = !language && looksLikeDiagram(text);
+      const runnable = !isDiagram && RUNNABLE_LANGUAGES.has(language);
+
+      if (isDiagram || (!runnable && (PLAIN_LANGUAGES.has(language) || !filename))) {
         return `<pre class="code-plain"><code>${escapeHtml(text)}</code></pre>`;
       }
 

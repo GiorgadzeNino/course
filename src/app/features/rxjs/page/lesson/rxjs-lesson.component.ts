@@ -162,15 +162,18 @@ export class RxjsLessonComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Snippet ran fine but produced no output — usually a template exercise
-    // with a `// შენი კოდი აქ` placeholder. Tell the reader what happened
-    // instead of leaving the panel empty.
-    if (emitted === 0) {
-      const hint = document.createElement('div');
-      hint.className = 'console-line console-line-hint';
-      hint.textContent = '(კოდი შესრულდა, გამოსავალი არ არის — არცერთი console.log არ გამოძახებულა)';
-      output.appendChild(hint);
-    }
+    // Snippet ran fine but produced no output *yet* — could be a template
+    // exercise with a `// შენი კოდი აქ` placeholder, or it could be async
+    // (interval, setTimeout, fromEvent). Wait a beat before deciding; if
+    // anything shows up in the meantime, stay quiet.
+    setTimeout(() => {
+      if (emitted === 0) {
+        const hint = document.createElement('div');
+        hint.className = 'console-line console-line-hint';
+        hint.textContent = '(კოდი შესრულდა, გამოსავალი არ არის — არცერთი console.log არ გამოძახებულა)';
+        output.appendChild(hint);
+      }
+    }, 1000);
   }
 
   private formatValue(value: unknown): string {

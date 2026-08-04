@@ -30,8 +30,9 @@ const routes: Routes = [
   },
   {
     // Quiz owns its own dark full-screen theme — kept outside RxjsLayoutComponent
-    // so the sidebar/organic tokens don't fight its palette.
-    path: 'quiz/1-2',
+    // so the sidebar/organic tokens don't fight its palette. The :id param
+    // selects the config from RXJS_QUIZZES.
+    path: 'quiz/:id',
     component: RxjsQuizComponent
   }
 ];

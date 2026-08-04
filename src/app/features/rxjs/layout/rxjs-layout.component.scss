@@ -30,6 +30,14 @@
   padding: 1.25rem 1rem;
   z-index: 30;
   border-right: 1px solid var(--color-divider);
+
+  /* Stay in view as the reader scrolls the long lesson body. Own scrollbar
+     when the lesson list itself overflows. */
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .back-link {
