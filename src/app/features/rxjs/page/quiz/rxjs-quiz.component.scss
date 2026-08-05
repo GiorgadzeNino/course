@@ -77,6 +77,50 @@
   .btn-primary:hover { background: var(--complete); border-color: var(--complete); box-shadow: var(--glow) rgba(52, 211, 153, .5); }
 }
 
+/* Green variant — accent = --complete. Used by quizzes that showcase
+   composition/pipe (lecture 4+): headers, badges, borders adopt green,
+   in-code `<span class="fn|str|kw|cm">` tokens are handled below. */
+:host[data-variant="green"] {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(52, 211, 153, .08), transparent 60%),
+    radial-gradient(900px 500px at 0% 110%, rgba(56, 189, 248, .07), transparent 55%),
+    var(--void);
+
+  .eyebrow { color: var(--complete); }
+  .eyebrow::before { background: var(--complete); box-shadow: var(--glow) var(--complete); }
+
+  .progress-fill {
+    background: linear-gradient(90deg, var(--complete), var(--stream));
+    box-shadow: var(--glow) rgba(52, 211, 153, .6);
+  }
+
+  .lecture-num {
+    background: var(--complete);
+    box-shadow: var(--glow) rgba(52, 211, 153, .35);
+    &.two { background: var(--complete); box-shadow: var(--glow) rgba(52, 211, 153, .35); }
+  }
+
+  .q::before { background: linear-gradient(var(--complete), var(--stream)); }
+  .q-index { color: var(--complete); }
+
+  .opt:focus-visible { outline-color: var(--complete); }
+  .explain::before { color: var(--complete); }
+
+  .result .big .accent {
+    background: linear-gradient(120deg, var(--complete), var(--stream));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .btn { color: var(--complete); border-color: var(--complete); }
+  .btn:hover { background: var(--complete); color: var(--void); box-shadow: var(--glow) rgba(52, 211, 153, .45); }
+  .btn:focus-visible { outline-color: var(--complete); }
+
+  .btn-primary { background: var(--complete); color: var(--void); }
+  .btn-primary:hover { background: var(--stream); border-color: var(--stream); box-shadow: var(--glow) rgba(56, 189, 248, .5); }
+}
+
 /* Optional inline code block a question can carry alongside its prompt. */
 .code-block {
   font-family: 'JetBrains Mono', monospace;
@@ -90,6 +134,13 @@
   color: var(--ink);
   overflow-x: auto;
   white-space: pre;
+
+  /* Token colours for `<span class="…">` injected via [innerHTML]. ::ng-deep
+     is required because that HTML doesn't get the component's scope attr. */
+  ::ng-deep .cm { color: var(--dim); }
+  ::ng-deep .fn { color: var(--stream); }
+  ::ng-deep .kw { color: var(--stream-2); }
+  ::ng-deep .str { color: var(--complete); }
 }
 
 @media (max-width: 560px) {

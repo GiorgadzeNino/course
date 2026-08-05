@@ -40,8 +40,8 @@ export interface QuizConfig {
   heading: { prefix: string; accent: string };
   /** Bullet chips shown in the hero (plain HTML). */
   chips: string[];
-  /** Colour variant swap — 'cyan' (default) or 'indigo'. */
-  variant: 'cyan' | 'indigo';
+  /** Colour variant swap — 'cyan' (default), 'indigo', or 'green'. */
+  variant: 'cyan' | 'indigo' | 'green';
   /** Sections in display order. */
   sections: QuizSection[];
   /** Verdict text keyed to score thresholds. */
@@ -317,5 +317,112 @@ export const RXJS_QUIZZES: Record<string, QuizConfig> = {
       weak: { title: 'დაბრუნდი ლექციაზე', sub: 'interval vs timer, eager vs lazy, defer — ეს ცნებები კიდევ ერთხელ გავიაროთ.' },
     },
     footerLine: '<span class="m-bar">of · from · interval · timer · range · fromEvent · defer</span>',
+  },
+
+  '4': {
+    id: '4',
+    heading: { prefix: 'ლექცია', accent: '4' },
+    chips: [
+      '<b>8</b> კითხვა',
+      'არჩევითპასუხიანი',
+      '<code>pipe()</code> და ოპერატორები',
+      '<code>map · filter · tap</code>',
+    ],
+    variant: 'green',
+    sections: [
+      {
+        numberLabel: 'ლექცია 4',
+        title: 'pipe() და პირველი ოპერატორები',
+        prefix: 'q',
+        questions: [
+          {
+            q: 'რას აბრუნებს pipeable ოპერატორი, როცა Observable-ს გარდაქმნის?',
+            opts: [
+              'ცვლის საწყის Observable-ს ადგილზე',
+              'აბრუნებს ახალ Observable-ს, საწყისს არ ცვლის',
+              'აბრუნებს მასივს',
+              'აბრუნებს Promise-ს',
+            ],
+            correct: 1,
+            ex: 'ოპერატორი ყოველთვის <b>ახალ Observable-ს</b> ქმნის — საწყისი უცვლელი რჩება. ეს <b>immutability</b>-ია: იმავე წყაროზე რამდენიმე განსხვავებული pipe შეიძლება აეწყოს, ერთმანეთზე გავლენის გარეშე.',
+          },
+          {
+            q: 'როგორ მიედინება მნიშვნელობა <code>pipe()</code>-ში?',
+            opts: [
+              'ჯერ ყველა მნიშვნელობა გადის პირველ ოპერატორს, მერე ყველა — მეორეს',
+              'თითო მნიშვნელობა ცალ-ცალკე გადის მთელ ჯაჭვს ბოლომდე, მერე მოდის შემდეგი',
+              'ყველა ოპერატორი პარალელურად სრულდება',
+              'მნიშვნელობები შემთხვევითი თანმიმდევრობით მიდის',
+            ],
+            correct: 1,
+            ex: '<b>თითო მნიშვნელობა ცალ-ცალკე გადის მთელ pipe-ს ბოლომდე</b>, მერე იწყება შემდეგი. ეს განსხვავდება მასივის <code>.filter().map()</code>-ისგან, სადაც ჯერ მთელი მასივი ფილტრდება, მერე მთელი map-დება.',
+          },
+          {
+            q: 'რას დაბეჭდავს ეს კოდი?',
+            code: '<span class="fn">of</span>(<span class="str">1</span>,<span class="str">2</span>,<span class="str">3</span>,<span class="str">4</span>).<span class="fn">pipe</span>(\n  <span class="fn">filter</span>(x => x % <span class="str">2</span> === <span class="str">0</span>),\n  <span class="fn">map</span>(x => x * <span class="str">10</span>)\n).<span class="fn">subscribe</span>(<span class="fn">console</span>.log);',
+            opts: ['10, 20, 30, 40', '20, 40', '2, 4', '10, 30'],
+            correct: 1,
+            ex: 'ჯერ <code>filter</code> ტოვებს მხოლოდ ლუწებს (2, 4), მერე <code>map</code> ამრავლებს 10-ზე → <b>20, 40</b>. 1 და 3 filter-ზევე გაიფილტრა და map-მდე ვერ მიაღწია.',
+          },
+          {
+            q: 'რას აკეთებს <code>tap</code> მნიშვნელობასთან?',
+            opts: [
+              'გარდაქმნის მას ფუნქციის მიხედვით',
+              'არ ცვლის — უბრალოდ საშუალებას იძლევა გვერდითი ეფექტისთვის (log, debug)',
+              'ფილტრავს პირობის მიხედვით',
+              'აჩერებს ნაკადს',
+            ],
+            correct: 1,
+            ex: '<code>tap</code> <b>არ ცვლის</b> მნიშვნელობას — ის უბრალოდ "იყურება" მასში გვერდითი ეფექტისთვის: ლოგირება, debug, analytics. მისი <code>return</code> იგნორირდება. გარდაქმნისთვის <code>map</code>-ია.',
+          },
+          {
+            q: 'რას დაბეჭდავს? <code>of(5, 10).pipe(tap(x => x * 2)).subscribe(console.log)</code>',
+            opts: ['10, 20', '5, 10', '0', 'error'],
+            correct: 1,
+            ex: '<code>tap</code>-ის <code>return</code> <b>იგნორირდება</b> — ის მნიშვნელობას ვერ შეცვლის. ამიტომ გამოვა <b>5, 10</b> (უცვლელი). გასაორმაგებლად საჭიროა <code>map(x => x * 2)</code>.',
+          },
+          {
+            q: 'რომელია <b>არასუფთა</b> (impure) გამოყენება <code>map</code>-ისთვის?',
+            opts: [
+              '<code>map(x => x * 2)</code>',
+              '<code>map(u => ({ ...u, active: true }))</code>',
+              '<code>map(x => { counter++; return x; })</code>',
+              '<code>map(s => s.toUpperCase())</code>',
+            ],
+            correct: 2,
+            ex: '<code>counter++</code> გარე მდგომარეობას ცვლის — ეს <b>side effect</b>-ია, ე.ი. არასუფთა. <code>map</code>-ის ფუნქცია სუფთა უნდა იყოს. გვერდითი ეფექტისთვის <code>tap</code>-ია.',
+          },
+          {
+            q: 'რას გამოიწვევს <code>map(user => { user.active = true; return user; })</code>?',
+            opts: [
+              'უსაფრთხოა — ასე უნდა გაკეთდეს',
+              'mutation-ს — ცვლის საწყის ობიექტს, რაც shared bug-ს იწვევს',
+              'error-ს — RxJS კრძალავს ამას',
+              'არაფერს — map ობიექტებს ვერ ცვლის',
+            ],
+            correct: 1,
+            ex: 'ეს <b>mutation</b>-ია — საწყისი ობიექტი იცვლება ადგილზე. თუ იმავე ობიექტს რამდენიმე subscriber იღებს, ერთის ცვლილება მეორესაც შეეხება. სწორია immutable: <code>map(u => ({ ...u, active: true }))</code>.',
+          },
+          {
+            q: 'რამდენჯერ დაიბეჭდება <code>tap</code>-ის ლოგი, თუ ერთსა და იმავე pipe-ს ორი subscriber აქვს?',
+            opts: [
+              'ერთხელ — გაზიარებულია',
+              'ორჯერ — თითო subscribe-ზე ცალკე სრულდება',
+              'არასდროს — pipe lazy-ა',
+              'დამოკიდებულია ოპერატორებზე',
+            ],
+            correct: 1,
+            ex: 'pipe <b>cold ნაკადს ინარჩუნებს</b> — ყოველი subscribe ცალკე ასრულებს მთელ ჯაჭვს. ორი subscriber = <code>tap</code> ორჯერ. (გაზიარებისთვის <code>share</code>/<code>shareReplay</code> გვჭირდება — ლექცია 13.)',
+          },
+        ],
+      },
+    ],
+    verdict: {
+      perfect: { title: 'უნაკლო ნაკადი! 🌊', sub: 'pipe, map, filter, tap — მყარად გაქვს. immutability-ც გესმის. მზად ხარ filtering ოპერატორებისთვის (ლექცია 5).' },
+      strong: { title: 'ძლიერი შედეგი', sub: 'ოპერატორები კარგად გესმის. გადახედე ერთ-ორ ახსნას და გააგრძელე.' },
+      ok: { title: 'კარგი დასაწყისი', sub: 'ბაზისი გაქვს, მაგრამ tap vs map და immutability ღირს გავიმეოროთ.' },
+      weak: { title: 'დაბრუნდი ლექციაზე', sub: 'pipe-ის მიედინება, tap vs map, სუფთა ფუნქციები — ეს ცნებები კიდევ ერთხელ.' },
+    },
+    footerLine: '<span class="m-bar">map · filter · tap · pipe · pure · immutable · lazy</span>',
   },
 };

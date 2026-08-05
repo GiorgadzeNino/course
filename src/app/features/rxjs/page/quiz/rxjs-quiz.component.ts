@@ -59,7 +59,7 @@ export class RxjsQuizComponent implements OnInit, AfterViewInit, OnDestroy {
   savedBest: ReturnType<QuizProgressService['result']> = null;
 
   /** Bound to the host element so SCSS can key off the palette variant. */
-  @HostBinding('attr.data-variant') hostVariant: 'cyan' | 'indigo' = 'cyan';
+  @HostBinding('attr.data-variant') hostVariant: 'cyan' | 'indigo' | 'green' = 'cyan';
 
   private readonly route = inject(ActivatedRoute);
   private readonly quizProgress = inject(QuizProgressService);
